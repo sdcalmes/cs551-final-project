@@ -1,0 +1,9 @@
+*.bak
+work/
+*.wlf
+*.mpf
+*.class
+Vcheck.*
+*.mti
+*.out
+*.sh
