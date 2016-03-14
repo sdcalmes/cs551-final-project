@@ -1,32 +1,30 @@
-module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, memWrite, ALUSrc, regWrite, branch_eq_z,
-		branch_gt_z, branch_lt_z);
+module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, memWrite, ALUSrc, regWrite, 
+               branch_eq_z, branch_gt_z, branch_lt_z);
 
-	output	jump, branch, memRead, memWrite, ALUSrc, regWrite, ALUOp, branch_eq_z,
-		branch_gt_z, branch_lt_z;
-	output [1:0] regDst, memToReg;
-
+    output  jump, branch, memRead, memWrite, ALUSrc, regWrite, ALUOp, sign_alu, branch_eq_z,
+        branch_gt_z, branch_lt_z;
+    output [1:0] regDst, memToReg;
+    
 	input [4:0] instr;
 
-	reg jump_w, branch_w, memRead_w, memWrite_w, ALUSrc_w, regWrite_w,  ALUOp_w,
-		branch_eq_z_w, branch_gt_z_w, branch_lt_z_w;
+    reg jump_w, branch_w, memRead_w, memWrite_w, ALUSrc_w, regWrite_w, sign_alu_w, ALUOp_w,
+        branch_eq_z_w, branch_gt_z_w, branch_lt_z_w;
+    reg [3:0] ALUOp_w;
+    
+    reg [1:0] regDst_w, memToReg_w;
 
-	reg [1:0] regDst_w, memToReg_w;
+    localparam HALT  = 5'b0_0000;
+    localparam NOP   = 5'b0_0001;
 
-	localparam HALT  = 5'b0_0000;
-	localparam NOP   = 5'b0_0001;
+    localparam IMM_ARITH  = 5'b0_10xx;
+    localparam IMM_SHIFT  = 5'b1_01xx;
+    localparam ST    = 5'b1_0000;
+    localparam LD    = 5'b1_0001;
+    localparam STU   = 5'b1_0011;
 
-	localparam IMM_ARITH  = 5'b0_10xx;
-	localparam IMM_SHIFT  = 5'b1_01xx;
-	localparam ST    = 5'b1_0000;
-	localparam LD    = 5'b1_0001;
-	localparam STU   = 5'b1_0011;
-
-	localparam BTR   = 5'b1_1001;
-	localparam ALU1  = 5'b1_101x;
-	localparam SEQ   = 5'b1_1100;
-	localparam SLT   = 5'b1_1101;
-	localparam SLE   = 5'b1_1110;
-	localparam SCO   = 5'b1_1111;
+    localparam BTR   = 5'b1_1001;
+    localparam ALU1  = 5'b1_101x;
+    localparam SEQ   = 5'b1_11xx;
 
 	localparam BEQZ  = 5'b0_1100;
 	localparam BNEZ  = 5'b0_1101;
@@ -51,16 +49,19 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, memWrite, 
 	assign memToReg = memToReg_w;
 	assign memWrite = memWrite_w;
 	assign ALUSrc = ALUSrc_w;
+	assign ALUOp = ALUOp_w;
+    assign sign_alu = sign_alu_w;
 	assign regWrite = regWrite_w;
 	assign branch_eq_z = branch_eq_z_w;
 	assign branch_gt_z = branch_gt_z_w;
 	assign branch_lt_z = branch_lt_z_w;
-	assign ALUOp = instr[0];
 
 	always@(*) begin
 
 		regDst_w = 2'b00;
 		ALUSrc_w = 1'b0;
+        ALUOp_w  = 4'h0;
+        sign_alu_w = 1'b0;
 		jump_w = 1'b1;
 		memToReg_w = 2'b00;
 		regWrite_w = 1'b0;
@@ -79,13 +80,23 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, memWrite, 
 			end
 
 			IMM_ARITH: begin
+                sign_alu_w = 1'b1;
 				ALUSrc_w = 1'b1;
 				regWrite_w = 1'b1;
+                ALUOp_w = {2'b11,instr[1:0]};
 			end
 
+            IMM_SHIFT: begin
+                ALUOp_w = {2'b10, instr[1:0]};
+                ALUSrc_w = 1'b1;
+                regWrite_w = 1'b1;
+            end
+
 			ST: begin
+                sign_alu_w = 1'b1;
 				ALUSrc_w = 1'b1;
 				memWrite_w = 1'b1;
+                ALUOp_w = 3'b1100;
 			end
 
 			LD: begin
@@ -93,12 +104,16 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, memWrite, 
 				memToReg_w = 2'b01;
 				regWrite_w = 1'b1;
 				memRead_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1100;
 			end
 
 			STU: begin
 				ALUSrc_w = 1'b1;
 				regWrite_w = 1'b1;
 				memWrite_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1100;
 			end
 
 			BTR: begin
@@ -111,85 +126,89 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, memWrite, 
 				regDst_w = 2'b01;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
+                ALUOp_w = {1'b1, instr[0], 2'b00};
 			end
 
 			SEQ: begin
 				regDst_w = 2'b01;
+                sign_alu_w = 1'b1;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
-			end
-
-			SLT: begin
-				regDst_w = 2'b01;
-				jump_w = 1'b1;
-				regWrite_w = 1'b1;
-			end
-
-			SLE: begin
-				regDst_w = 2'b01;
-				jump_w = 1'b1;
-				regWrite_w = 1'b1;
-			end
-
-			SCO: begin
-				regDst_w = 2'b01;
-				jump_w = 1'b1;
-				regWrite_w = 1'b1;
+                ALUOp_w = 4'b1101;
 			end
 
 			BEQZ: begin
 				jump_w = 1'b1;
 				branch_w = 1'b1;
 				branch_eq_z_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1101;
 			end
 
 			BNEZ: begin
 				jump_w = 1'b1;
 				branch_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1101;
 			end
 
 			BLTZ: begin
 				jump_w = 1'b1;
 				branch_w = 1'b1;
 				branch_lt_z_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1101;
 			end
 
 			BGEZ: begin
 				jump_w = 1'b1;
 				branch_w = 1'b1;
 				branch_gt_z_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1101;
 			end
 
 			LBI: begin
 				ALUSrc_w = 1'b1;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
+                sign_alu_w = 1'b1;
 			end
 
 			SLBI: begin
 				ALUSrc_w = 1'b1;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
+                sign_alu_w = 1'b0;
+                ALUOp_w = 4'b1010;
 			end
 
 			J: begin
 				jump_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1100;
 			end
 
 			JR: begin
 				ALUSrc_w = 1'b1;
 				jump_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1100;
 			end
 
 			JAL: begin
 				regDst_w = 2'b10;
 				jump_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1100;
 			end
 
 			JALR: begin
 				regDst_w = 2'b10;
 				jump_w = 1'b1;
 				ALUSrc_w = 1'b1;
+                sign_alu_w = 1'b1;
+                ALUOp_w = 4'b1100;
 			end
 
 			SIIC: begin
@@ -197,6 +216,8 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, memWrite, 
 
 			RTI: begin
 			end
+
+            default : err = 1'b1;
 
 	endcase
 end endmodule 

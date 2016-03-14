@@ -40,9 +40,10 @@ module proc (/*AUTOARG*/
     wire enable_read, enable_write;
 
     //control elements
-    wire jump, branch, memRead, ALUOp, memWrite, ALUSrc, regWrite,
+    wire jump, branch, memRead, memWrite, ALUSrc, regWrite,
 	    branch_eq_z, branch_gt_z, branch_lt_z;
     wire [1:0] memToReg, regDst;
+    wire [3:0] ALUOp
 
     //register components
     reg [2:0] read_reg_1, read_reg_2, write_reg;
@@ -51,11 +52,11 @@ module proc (/*AUTOARG*/
 
     //branch alu elemtns
     wire [15:0] sign_ext_low_bits, branch_out;
-    wire b_ofl, b_z;
+    wire b_ofl, b_z, b_zero;
 
     //main alu elements
     wire [15:0] alu_b_input, main_alu_out;
-    wire main_ofl, main_z;
+    wire main_ofl, main_z, main_lt_z;
     wire [2:0] alu_op;
 
     //shifter elements
@@ -66,50 +67,47 @@ module proc (/*AUTOARG*/
     wire [15:0] branch_address;
     wire [15:0] jump_address;
     wire branch_logic_out;
-    wire lt_zero;
 
     ////////////////////////////////
     /////    Instantiate     //////
     //////////////////////////////
-    
-    alu         main_alu(.A(read_reg_1_data), .B(alu_b_input), .Cin(1'b0), .Op(alu_op),
-	    			.invA(1'b0), .invB(1'b0), .sign(1'b0), .Out(main_alu_out),
-				.Ofl(main_ofl), .Z(main_z), .lt_zero(lt_zero));
 
     memory2c    inst_mem(.data_in(PC), .data_out(instruction), .addr(),
-	    			.enable(enable_read), .wr(enable_write), 
-                         	.createdump(1'b0), .clk(clk), .rst(rst));
+	    		.enable(enable_read), .wr(enable_write), .createdump(1'b0), 
+                .clk(clk), .rst(rst));
 
     rf_bypass   register(.read1regsel(read_reg_1), .read2regsel(read_reg_2),
-	    			.writeregsel(write_reg), .writedata(write_data_reg), 
-                         	.write(regWrite), .read1data(read_reg_1_data),
-				.read2data(read_reg_2_data), .err(reg_err), .clk(clk), .rst(rst));
-
-    memory2c    data_mem(.data_in(write_data_mem), .data_out(read_data), .addr(mem_address),
-	    			.enable(enable_read), .wr(enable_write), 
-                         	.createdump(1'b0), .clk(clk), .rst(rst));
+	    		.writeregsel(write_reg), .writedata(write_data_reg), .write(regWrite), 
+                .read1data(read_reg_1_data), .read2data(read_reg_2_data), .err(reg_err), 
+                .clk(clk), .rst(rst));
 
     control     control(.instr(instruction[15:11]), .regDst(regDst), .jump(jump), .branch(branch),
-	    			.memRead(memRead), .memToReg(memToReg), .ALUOp(ALUOp),
+                .memRead(memRead), .memToReg(memToReg), .ALUOp(ALUOp), .sign_alu(sign_alu),
 				.memWrite(memWrite), .ALUSrc(ALUSrc), .regWrite(regWrite),
 				.branch_eq_z(branch_eq_z), .branch_gt_z(branch_gt_z),
 				.branch_lt_z(branch_lt_z));
 
-    alu_control alu_cntl(.cmd(ALUOp), .alu_op(), .lowerBits());
+    alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]));
+
+    alu         main_alu(.A(read_reg_1_data), .B(alu_b_input), .Cin(1'b0), .Op(alu_op),
+	    		.invA(1'b0), .invB(1'b0), .sign(sign_alu), .Out(main_alu_out),
+				.Ofl(main_ofl), .Z(main_z), .lt_zero(main_lt_z));
 
     alu         pc_add(.A(PC), .B(16'h0002), .Cin(1'b0), .Op(3'b100), .invA(1'b0), .invB(1'b0),
-    				.sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z), .lt_zero(lt_zero));
+    			.sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z));
 
     alu		branch_add(.A(pc_plus), .B(shift_out), .Cin(1'b0), .Op(3'b100), .invA(1'b0),
-	    			.invB(1'b0), .sign(1'b0), .Out(branch_out), .Ofl(b_ofl), .Z(b_z),
-				.lt_zero(lt_zero));
+	    		.invB(1'b0), .sign(1'b0), .Out(branch_out), .Ofl(b_ofl), .Z(b_z),
+				.lt_zero(b_zero));
 
     shifter	branch_shifter(.In(shift_in), .Cnt(shift_cnt), .Op(shift_op), .Out(shift_out));
 
     branch_control	branch_control(.control_eq_z(branch_eq_z), .control_gt_zero(branch_gt_z),
-	    			.alu_lt_zero(alu_lt_zero), .control_lt_zero(branch_lt_z),
+	    		.alu_lt_zero(alu_lt_zero), .control_lt_zero(branch_lt_z),
 				.branch(branch), .branch_logic_out(branch_logic_out), .Z(main_z));
 
+    memory2c    data_mem(.data_in(write_data_mem), .data_out(read_data), .addr(mem_address),
+	    		.enable(enable_read), .wr(enable_write), .createdump(1'b0), .clk(clk), .rst(rst));
 
 
     //////////////////////////////
