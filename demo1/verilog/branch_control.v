@@ -1,4 +1,4 @@
-module branch_control(control_eq_z, Z, control_gt_zero, alu_lt_zero, control_lt_zero, branch);
+module branch_control(control_eq_z, Z, control_gt_zero, alu_lt_zero, control_lt_zero, branch, branch_logic_out);
 
 	input control_eq_z, Z, control_gt_zero, alu_lt_zero, control_lt_zero, branch;
 	output branch_logic_out;

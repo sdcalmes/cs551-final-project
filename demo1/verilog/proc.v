@@ -24,61 +24,70 @@ module proc (/*AUTOARG*/
     /////////////////////////////////
     /////    REG/Wire          /////
     ///////////////////////////////
-   
+  
+
+    wire [4:0] halt = 5'b00000;
     //pc adder stuff
-    reg [15:0] pc_plus;
+    wire [15:0] pc_plus;
     wire ofl, z;
-    reg PC;
+    wire [15:0] PC;
     //memory2c elements
-    reg [15:0] instruction;
+    wire [15:0] instruction;
     reg [15:0] PC_address;
     reg [15:0] mem_address;
     reg [15:0] write_data_mem;
-    reg [15:0] read_data;
+    wire [15:0] read_data;
     wire enable_read, enable_write;
 
     //control elements
-    wire regDst, jump, branch, memRead, memToReg, ALUOp, memWrite, ALUSrc, regWrite,
+    wire jump, branch, memRead, ALUOp, memWrite, ALUSrc, regWrite,
 	    branch_eq_z, branch_gt_z, branch_lt_z;
+    wire [1:0] memToReg, regDst;
 
     //register components
     reg [2:0] read_reg_1, read_reg_2, write_reg;
-    reg [15:0] write_data_reg, read_reg_1_data, read_reg_2_data;
+    wire [15:0] write_data_reg, read_reg_1_data, read_reg_2_data;
     wire reg_err;
 
     //branch alu elemtns
-    reg [15:0] sign_ext_low_bits;
-    wire branch_out, b_ofl, b_z;
+    wire [15:0] sign_ext_low_bits, branch_out;
+    wire b_ofl, b_z;
 
     //main alu elements
-    reg [15:0] alu_b_input, main_alu_out;
+    wire [15:0] alu_b_input, main_alu_out;
     wire main_ofl, main_z;
+    wire [2:0] alu_op;
 
     //shifter elements
-    reg [15:0] shift_in, shift_out;
-    reg [3:0] shift_cnt;
-    reg [1:0] shift_op;
+    wire [15:0] shift_in, shift_out;
+    wire [3:0] shift_cnt;
+    wire [1:0] shift_op;
+    //branch/jump things
+    wire [15:0] branch_address;
+    wire [15:0] jump_address;
+    wire branch_logic_out;
+    wire lt_zero;
 
     ////////////////////////////////
     /////    Instantiate     //////
     //////////////////////////////
     
-    alu         main_alu(.A(read_reg_1), .B(alu_b_input), .Cin(1'b0), .Op(alu_op),
+    alu         main_alu(.A(read_reg_1_data), .B(alu_b_input), .Cin(1'b0), .Op(alu_op),
 	    			.invA(1'b0), .invB(1'b0), .sign(1'b0), .Out(main_alu_out),
-				.Ofl(main_ofl), .Z(main_z));
+				.Ofl(main_ofl), .Z(main_z), .lt_zero(lt_zero));
 
     memory2c    inst_mem(.data_in(PC_address), .data_out(instruction), .addr(),
 	    			.enable(enable_read), .wr(enable_write), 
-                         	.createdump(), .clk(clk), .rst(rst));
+                         	.createdump(1'b0), .clk(clk), .rst(rst));
 
     rf_bypass   register(.read1regsel(read_reg_1), .read2regsel(read_reg_2),
 	    			.writeregsel(write_reg), .writedata(write_data_reg), 
                          	.write(regWrite), .read1data(read_reg_1_data),
-				.read2data(read_reg_2_data), .err(reg_err));
+				.read2data(read_reg_2_data), .err(reg_err), .clk(clk), .rst(rst));
 
     memory2c    data_mem(.data_in(write_data_mem), .data_out(read_data), .addr(mem_address),
 	    			.enable(enable_read), .wr(enable_write), 
-                         	.createdump(), .clk(clk), .rst(rst));
+                         	.createdump(1'b0), .clk(clk), .rst(rst));
 
     control     control(.instr(instruction[15:11]), .regDst(regDst), .jump(jump), .branch(branch),
 	    			.memRead(memRead), .memToReg(memToReg), .ALUOp(ALUOp),
@@ -89,16 +98,17 @@ module proc (/*AUTOARG*/
     alu_control alu_cntl(.cmd(ALUOp), .alu_op(), .lowerBits());
 
     alu         pc_add(.A(PC), .B(16'h0002), .Cin(1'b0), .Op(3'b100), .invA(1'b0), .invB(1'b0),
-    				.sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z));
+    				.sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z), .lt_zero(lt_zero));
 
     alu		branch_add(.A(pc_plus), .B(shift_out), .Cin(1'b0), .Op(3'b100), .invA(1'b0),
-	    			.invB(1'b0), .sign(1'b0), .Out(branch_out), .Ofl(b_ofl), .Z(b_z));
+	    			.invB(1'b0), .sign(1'b0), .Out(branch_out), .Ofl(b_ofl), .Z(b_z),
+				.lt_zero(lt_zero));
 
     shifter	branch_shifter(.In(shift_in), .Cnt(shift_cnt), .Op(shift_op), .Out(shift_out));
 
     branch_control	branch_control(.control_eq_z(branch_eq_z), .control_gt_zero(branch_gt_z),
 	    			.alu_lt_zero(alu_lt_zero), .control_lt_zero(branch_lt_z),
-				.branch(branch));
+				.branch(branch), .branch_logic_out(branch_logic_out), .Z(main_z));
 
 
 
@@ -106,9 +116,11 @@ module proc (/*AUTOARG*/
     /////    Logic          /////
     ////////////////////////////
     
-    //pc update (jump or dont jump?
-    assign PC = jump ? jump_address : branch_address;
+    //pc update (jump or dont jump?)
+     
+    assign jump_address = {pc_plus[15:13], {instruction[12:0], 2'b0}};
     assign branch_address = branch_logic_out ? branch_out : pc_plus;
+    assign PC = jump ? jump_address : branch_address;
 
     //sign extended lower 8 bits
     assign sign_ext_low_bits = { {8{instruction[7]}}, instruction[7:0]};

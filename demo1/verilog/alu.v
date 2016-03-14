@@ -10,10 +10,11 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero);
         output [15:0] Out;
         output Ofl;
         output Z;
+	output lt_zero;
 
         reg [15:0] outreg, inA, inB;
         wire [3:0]  add1, add2, add3, add4;
-        reg overflow;
+        reg overflow, lt_zero_w;
         wire [15:0] out;
         wire Cout, c1, c2, c3;
 
