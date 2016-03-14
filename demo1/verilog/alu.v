@@ -69,7 +69,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z);
 
             3'b100: outreg = {add4, add3, add2, add1};
 
-            3'b101: outreg = inA | inB;
+            3'b101: outreg = {add4, add3, add2, add1};
 
             3'b110: outreg = inA ^ inB;
 
