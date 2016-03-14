@@ -1,4 +1,4 @@
-module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z);
+module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero);
    
         input [15:0] A;
         input [15:0] B;
@@ -17,9 +17,10 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z);
         wire [15:0] out;
         wire Cout, c1, c2, c3;
 
-        assign Out = outreg;
-        assign Ofl = overflow;
-        assign Z   = ~Cout && ~(|outreg);
+        assign Out     = outreg;
+        assign Ofl     = overflow;
+        assign Z       = ~Cout && ~(|outreg);
+	assign lt_zero = lt_zero_w;
 
    shifter sh ( .In(inA),
                 .Cnt(inB[3:0]),
@@ -79,9 +80,15 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z);
 
     always @(*)
         case(sign)
-            1'b1: overflow = (inA[15] & inB[15] & ~add4[3]) || (~inA[15] & ~inB[15] & add4[3]);
+		1'b1: begin
+			overflow = (inA[15] & inB[15] & ~add4[3]) || (~inA[15] & ~inB[15] & add4[3]);
+			lt_zero_w = outreg[15];
+		end
 
-            1'b0: overflow = Cout;
+		1'b0: begin
+			overflow = Cout;
+			lt_zero_w = 1'b0;
+		end
         endcase
     
 endmodule

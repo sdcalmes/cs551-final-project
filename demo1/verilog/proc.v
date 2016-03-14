@@ -96,14 +96,19 @@ module proc (/*AUTOARG*/
 
     shifter	branch_shifter(.In(shift_in), .Cnt(shift_cnt), .Op(shift_op), .Out(shift_out));
 
+    branch_control	branch_control(.control_eq_z(branch_eq_z), .control_gt_zero(branch_gt_z),
+	    			.alu_lt_zero(alu_lt_zero), .control_lt_zero(branch_lt_z),
+				.branch(branch));
+
 
 
     //////////////////////////////
     /////    Logic          /////
     ////////////////////////////
     
-    //pc update
-    assign PC = branch_logic_out ? branch_out : pc_plus;
+    //pc update (jump or dont jump?
+    assign PC = jump ? jump_address : branch_address;
+    assign branch_address = branch_logic_out ? branch_out : pc_plus;
 
     //sign extended lower 8 bits
     assign sign_ext_low_bits = { {8{instruction[7]}}, instruction[7:0]};
@@ -115,7 +120,6 @@ module proc (/*AUTOARG*/
     assign shift_in = sign_ext_low_bits;
     assign shift_cnt = 2'b10;
     assign shift_op = 2'b01;
-
 
 
 

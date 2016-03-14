@@ -1,5 +1,6 @@
 *.bak
 work/
+__work/
 *.wlf
 *.mpf
 *.class
@@ -8,3 +9,4 @@ Vcheck.*
 *.out
 *.sh
 *.swp
+transcript
