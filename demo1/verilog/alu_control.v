@@ -1,6 +1,6 @@
 module alu_control(cmd, alu_op, lowerBits);
 
-    input cmd;
+    input [3:0] cmd;
     input [1:0] lowerBits;
     output [2:0] alu_op;
 

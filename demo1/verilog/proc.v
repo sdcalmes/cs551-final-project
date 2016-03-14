@@ -43,7 +43,7 @@ module proc (/*AUTOARG*/
     wire jump, branch, memRead, memWrite, ALUSrc, regWrite,
 	    branch_eq_z, branch_gt_z, branch_lt_z;
     wire [1:0] memToReg, regDst;
-    wire [3:0] ALUOp
+    wire [3:0] ALUOp;
 
     //register components
     reg [2:0] read_reg_1, read_reg_2, write_reg;
@@ -68,6 +68,9 @@ module proc (/*AUTOARG*/
     wire [15:0] jump_address;
     wire branch_logic_out;
 
+    //errors
+    wire control_err;
+
     ////////////////////////////////
     /////    Instantiate     //////
     //////////////////////////////
@@ -85,7 +88,7 @@ module proc (/*AUTOARG*/
                 .memRead(memRead), .memToReg(memToReg), .ALUOp(ALUOp), .sign_alu(sign_alu),
 				.memWrite(memWrite), .ALUSrc(ALUSrc), .regWrite(regWrite),
 				.branch_eq_z(branch_eq_z), .branch_gt_z(branch_gt_z),
-				.branch_lt_z(branch_lt_z));
+				.branch_lt_z(branch_lt_z), .err(control_err));
 
     alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]));
 
@@ -94,7 +97,7 @@ module proc (/*AUTOARG*/
 				.Ofl(main_ofl), .Z(main_z), .lt_zero(main_lt_z));
 
     alu         pc_add(.A(PC), .B(16'h0002), .Cin(1'b0), .Op(3'b100), .invA(1'b0), .invB(1'b0),
-    			.sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z));
+    			.sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z), .lt_zero());
 
     alu		branch_add(.A(pc_plus), .B(shift_out), .Cin(1'b0), .Op(3'b100), .invA(1'b0),
 	    		.invB(1'b0), .sign(1'b0), .Out(branch_out), .Ofl(b_ofl), .Z(b_z),
