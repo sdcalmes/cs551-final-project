@@ -46,6 +46,7 @@ module proc_hier_bench();
          if (Halt || RegWrite || MemWrite) begin
             inst_count = inst_count + 1;
          end
+	 //$display("BranchOut: %d", BranchLogicOut);
          $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
                   DUT.c0.cycle_count,
                   PC,
@@ -76,11 +77,12 @@ module proc_hier_bench();
                         WriteData,
                         MemAddress);
             end else begin
-               $fdisplay(trace_file,"INUM: %8d PC: 0x%04x REG: %d VALUE: 0x%04x",
+               $fdisplay(trace_file,"INUM: %8d PC: 0x%04x REG: %d VALUE: 0x%04x, BRANCHOUT: %d",
                          (inst_count-1),
                         PC,
                         WriteRegister,
-                        WriteData );
+                        WriteData,
+			BranchLogicOut);
             end
          end else if (Halt) begin
             $fdisplay(sim_log_file, "SIMLOG:: Processor halted\n");
@@ -88,7 +90,7 @@ module proc_hier_bench();
             $fdisplay(sim_log_file, "SIMLOG:: inst_count %d\n", inst_count);
             $fdisplay(trace_file, "INUM: %8d PC: 0x%04x",
                       (inst_count-1),
-                      PC );
+                      PC);
 
             $fclose(trace_file);
             $fclose(sim_log_file);
@@ -153,6 +155,7 @@ module proc_hier_bench();
    // Is processor halted (1 bit signal)
    
    /* Add anything else you want here */
+   assign BranchLogicOut = DUT.p0.branch_logic_out;
 
    
 endmodule

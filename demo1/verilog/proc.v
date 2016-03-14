@@ -76,7 +76,7 @@ module proc (/*AUTOARG*/
 	    			.invA(1'b0), .invB(1'b0), .sign(1'b0), .Out(main_alu_out),
 				.Ofl(main_ofl), .Z(main_z), .lt_zero(lt_zero));
 
-    memory2c    inst_mem(.data_in(PC_address), .data_out(instruction), .addr(),
+    memory2c    inst_mem(.data_in(PC), .data_out(instruction), .addr(),
 	    			.enable(enable_read), .wr(enable_write), 
                          	.createdump(1'b0), .clk(clk), .rst(rst));
 
@@ -120,7 +120,8 @@ module proc (/*AUTOARG*/
      
     assign jump_address = {pc_plus[15:13], {instruction[12:0], 2'b0}};
     assign branch_address = branch_logic_out ? branch_out : pc_plus;
-    assign PC = jump ? jump_address : branch_address;
+    assign PC = pc_plus;
+    //assign PC = jump ? jump_address : branch_address;
 
     //sign extended lower 8 bits
     assign sign_ext_low_bits = { {8{instruction[7]}}, instruction[7:0]};
