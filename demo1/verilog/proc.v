@@ -26,6 +26,17 @@ module proc (/*AUTOARG*/
     ///////////////////////////////
 
     reg PC;
+    //memory2c elements
+    reg [15:0] instruction;
+    reg [15:0] PC_address;
+    reg [15:0] mem_address;
+    reg [15:0] write_data;
+    reg [15:0] read_data;
+    wire enable_read, enable_write;
+
+    //control elements
+    wire regDst, jump, branch, memRead, memToReg, ALUOp, memWrite, ALUSrc, regWrite,
+	    branch_eq_z, branch_gt_z, branch_lt_z;
 
     ////////////////////////////////
     /////    Instantiate     //////
@@ -34,16 +45,22 @@ module proc (/*AUTOARG*/
     alu         main_alu(.A(), .B(), .Cin, .Op(), .invA(), .invB(), .sign(), 
                          .Out(), .Ofl(), .Z());
 
-    memory2c    inst_mem(.data_in(), .data_out(), .addr(), .enable(), .wr(), 
-                         .createdump(), .clk(), .rst());
+    memory2c    inst_mem(.data_in(PC_address), .data_out(instruction), .addr(),
+	    			.enable(enable_read), .wr(enable_write), 
+                         	.createdump(), .clk(clk), .rst(rst));
 
     rf_bypass   register(.read1regsel(), .read2regsel(), .writeregsel(), .writedata(), 
                          .write(), .read1data(), .read2data(), .err());
 
-    memory2c    data_mem(.data_in(), .data_out(), .addr(), .enable(), .wr(), 
-                         .createdump(), .clk(), .rst());
+    memory2c    data_mem(.data_in(write_data), .data_out(read_data), .addr(mem_address),
+	    			.enable(enable_read), .wr(enable_write), 
+                         	.createdump(), .clk(clk), .rst(rst));
 
-    control     control ();
+    control     control(.instr(instruction[4:0]), .regDst(regDst), .jump(jump), .branch(branch),
+	    			.memRead(memRead), .memToReg(memToReg), .ALUOp(ALUOp),
+				.memWrite(memWrite), .ALUSrc(ALUSrc), .regWrite(regWrite),
+				.branch_eq_z(branch_eq_z), .branch_gt_z(branch_gt_z),
+				.branch_lt_z(branch_lt_z));
 
     alu_control alu_cntl();
 
