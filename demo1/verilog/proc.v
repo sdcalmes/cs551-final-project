@@ -30,6 +30,7 @@ module proc (/*AUTOARG*/
     wire [15:0] pc_plus;
     wire ofl, z;
     wire [15:0] PC;
+    
     //memory2c elements
     wire [15:0] instruction;
     reg [15:0] PC_address;
@@ -46,9 +47,11 @@ module proc (/*AUTOARG*/
     wire halt;
 
     //register components
-    reg [2:0] read_reg_1, read_reg_2, write_reg;
-    wire [15:0] write_data_reg, read_reg_1_data, read_reg_2_data;
-    wire reg_err;
+    reg [2:0] read_reg_1, read_reg_2, write_reg_w;
+    wire [2:0] write_reg;
+    reg [15:0] mem_write_back_w;
+    wire [15:0] mem_write_back, read_reg_1_data, read_reg_2_data;
+    wire write_data_err;
 
     //branch alu elemtns
     wire [15:0] sign_ext_low_bits, branch_out;
@@ -83,7 +86,7 @@ module proc (/*AUTOARG*/
                 .clk(clk), .rst(rst));
 
     rf_bypass   register(.read1regsel(instruction[10:8]), .read2regsel(instruction[7:5]),
-	    		.writeregsel(instruction[4:2]), .writedata(read_data), .write(regWrite), 
+	    		.writeregsel(write_data_reg), .writedata(mem_write_back), .write(regWrite), 
                 .read1data(read_reg_1_data), .read2data(read_reg_2_data), .err(reg_err), 
                 .clk(clk), .rst(rst));
 
@@ -137,6 +140,27 @@ module proc (/*AUTOARG*/
     assign shift_in = sign_ext_low_bits;
     assign shift_cnt = 2'b10;
     assign shift_op = 2'b01;
+
+    //write data back to register
+    assign mem_write_back = mem_write_back_w;
+    always @(*) begin
+        case(memToReg)
+            2'b00 : mem_write_back_w = read_data;           // read data from data memory
+            2'b01 : mem_write_back_w = main_alu_out;        // data from alu
+            2'b10 : mem_write_back_w = pc_plus;             // save (pc+2) to R7
+            2'b11 : mem_write_back_w = sign_ext_low_bits;   // store immediate value to 
+        endcase
+    end
+
+    assign write_reg = write_reg_w;
+    always @(*) begin
+        case(regDst)
+            2'b00 : write_reg_w = instruction[10:8];
+            2'b01 : write_reg_w = instruction[4:2];
+            2'b10 : write_reg_w = 3'b111;
+            default : write_data_err = 1'b1;
+        endcase
+    end
 
 
 
