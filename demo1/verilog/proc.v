@@ -26,7 +26,6 @@ module proc (/*AUTOARG*/
     ///////////////////////////////
   
 
-    wire [4:0] halt = 5'b00000;
     //pc adder stuff
     wire [15:0] pc_plus;
     wire ofl, z;
@@ -44,6 +43,7 @@ module proc (/*AUTOARG*/
 	    branch_eq_z, branch_gt_z, branch_lt_z;
     wire [1:0] memToReg, regDst;
     wire [3:0] ALUOp;
+    wire halt;
 
     //register components
     reg [2:0] read_reg_1, read_reg_2, write_reg;
@@ -74,13 +74,16 @@ module proc (/*AUTOARG*/
     ////////////////////////////////
     /////    Instantiate     //////
     //////////////////////////////
+    //
+    
+    reg_16	pc_reg(.WriteData(pc_plus), .WriteSel(1'b1), .ReadData(PC), .clk(clk), .rst(rst));
 
-    memory2c    inst_mem(.data_in(PC), .data_out(instruction), .addr(),
-	    		.enable(enable_read), .wr(enable_write), .createdump(1'b0), 
+    memory2c    inst_mem(.data_in(), .data_out(instruction), .addr(PC),
+	    		.enable(1'b1), .wr(1'b0), .createdump(1'b0), 
                 .clk(clk), .rst(rst));
 
-    rf_bypass   register(.read1regsel(read_reg_1), .read2regsel(read_reg_2),
-	    		.writeregsel(write_reg), .writedata(write_data_reg), .write(regWrite), 
+    rf_bypass   register(.read1regsel(instruction[10:8]), .read2regsel(instruction[7:5]),
+	    		.writeregsel(instruction[4:2]), .writedata(read_data), .write(regWrite), 
                 .read1data(read_reg_1_data), .read2data(read_reg_2_data), .err(reg_err), 
                 .clk(clk), .rst(rst));
 
@@ -88,7 +91,7 @@ module proc (/*AUTOARG*/
                 .memRead(memRead), .memToReg(memToReg), .ALUOp(ALUOp), .sign_alu(sign_alu),
 				.memWrite(memWrite), .ALUSrc(ALUSrc), .regWrite(regWrite),
 				.branch_eq_z(branch_eq_z), .branch_gt_z(branch_gt_z),
-				.branch_lt_z(branch_lt_z), .err(control_err));
+				.branch_lt_z(branch_lt_z), .err(control_err), .halt(halt));
 
     alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]));
 
@@ -110,7 +113,8 @@ module proc (/*AUTOARG*/
 				.branch(branch), .branch_logic_out(branch_logic_out), .Z(main_z));
 
     memory2c    data_mem(.data_in(write_data_mem), .data_out(read_data), .addr(mem_address),
-	    		.enable(enable_read), .wr(enable_write), .createdump(1'b0), .clk(clk), .rst(rst));
+	    		.enable(memRead), .wr(memWrite), .createdump(1'b0), .clk(clk), .rst(rst));
+
 
 
     //////////////////////////////
@@ -121,7 +125,6 @@ module proc (/*AUTOARG*/
      
     assign jump_address = {pc_plus[15:13], {instruction[12:0], 2'b0}};
     assign branch_address = branch_logic_out ? branch_out : pc_plus;
-    assign PC = pc_plus;
     //assign PC = jump ? jump_address : branch_address;
 
     //sign extended lower 8 bits

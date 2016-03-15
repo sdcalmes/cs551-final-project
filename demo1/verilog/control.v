@@ -1,5 +1,5 @@
 module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, memWrite, ALUSrc, regWrite, 
-               branch_eq_z, branch_gt_z, branch_lt_z, err);
+               branch_eq_z, branch_gt_z, branch_lt_z, err, halt);
 
     output  jump, branch, memRead, memWrite, ALUSrc, regWrite, sign_alu, branch_eq_z,
         branch_gt_z, branch_lt_z, err;
@@ -13,6 +13,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
     reg [3:0] ALUOp_w;
     
     reg [1:0] regDst_w, memToReg_w;
+    output reg halt;
 
     localparam HALT  = 5'b0_0000;
     localparam NOP   = 5'b0_0001;
@@ -42,7 +43,6 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 	localparam SIIC  = 5'b0_0010;
 	localparam RTI   = 5'b0_0011;
 
-
 	assign regDst = regDst_w;
 	assign jump = jump_w;
 	assign branch = branch_w;
@@ -51,19 +51,21 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 	assign memWrite = memWrite_w;
 	assign ALUSrc = ALUSrc_w;
 	assign ALUOp = ALUOp_w;
-    assign sign_alu = sign_alu_w;
+    	assign sign_alu = sign_alu_w;
 	assign regWrite = regWrite_w;
 	assign branch_eq_z = branch_eq_z_w;
 	assign branch_gt_z = branch_gt_z_w;
 	assign branch_lt_z = branch_lt_z_w;
 	assign err = err_w;
 
-	always@(*) begin
+	always@(*)begin
+
 
 		regDst_w = 2'b00;
 		ALUSrc_w = 1'b0;
-        ALUOp_w  = 4'h0;
-        sign_alu_w = 1'b0;
+       	        ALUOp_w  = 4'h0;
+		halt = 1'b0;
+       		sign_alu_w = 1'b0;
 		jump_w = 1'b1;
 		memToReg_w = 2'b00;
 		regWrite_w = 1'b0;
@@ -76,6 +78,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 
 		casex(instr)
 			HALT: begin
+				halt = 1'b1;
 			end
 
 			NOP: begin
@@ -222,4 +225,8 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
             default : err_w = 1'b1;
 
 	endcase
-end endmodule 
+
+
+end 
+
+endmodule 
