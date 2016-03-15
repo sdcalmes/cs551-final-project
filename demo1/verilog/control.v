@@ -85,6 +85,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			IMM_ARITH: begin
+                regDst_w = 2'b01;
                 sign_alu_w = 1'b1;
 				ALUSrc_w = 1'b1;
 				regWrite_w = 1'b1;
@@ -92,6 +93,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
             IMM_SHIFT: begin
+                regDst_w = 2'b01;
                 ALUOp_w = {2'b10, instr[1:0]};
                 ALUSrc_w = 1'b1;
                 regWrite_w = 1'b1;
@@ -105,6 +107,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			LD: begin
+                regDst_w = 2'b01;
 				ALUSrc_w = 1'b1;
 				memToReg_w = 2'b01;
 				regWrite_w = 1'b1;
@@ -114,6 +117,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			STU: begin
+                regDst_w = 2'b10;
 				ALUSrc_w = 1'b1;
 				regWrite_w = 1'b1;
 				memWrite_w = 1'b1;
