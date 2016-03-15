@@ -67,7 +67,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 		halt = 1'b0;
        		sign_alu_w = 1'b0;
 		jump_w = 1'b1;
-		memToReg_w = 2'b00;
+		memToReg_w = 2'b01;
 		regWrite_w = 1'b0;
 		memRead_w = 1'b0;
 		memWrite_w = 1'b0;
@@ -85,44 +85,44 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			IMM_ARITH: begin
-                regDst_w = 2'b01;
-                sign_alu_w = 1'b1;
+                		regDst_w = 2'b01;
+                		sign_alu_w = 1'b1;
 				ALUSrc_w = 1'b1;
 				regWrite_w = 1'b1;
-                ALUOp_w = {2'b11,instr[1:0]};
+                		ALUOp_w = {2'b11,instr[1:0]};
 			end
 
-            IMM_SHIFT: begin
-                regDst_w = 2'b01;
-                ALUOp_w = {2'b10, instr[1:0]};
-                ALUSrc_w = 1'b1;
-                regWrite_w = 1'b1;
-            end
+            		IMM_SHIFT: begin
+                		regDst_w = 2'b01;
+                		ALUOp_w = {2'b10, instr[1:0]};
+                		ALUSrc_w = 1'b1;
+                		regWrite_w = 1'b1;
+           		 end
 
 			ST: begin
-                sign_alu_w = 1'b1;
+                		sign_alu_w = 1'b1;
 				ALUSrc_w = 1'b1;
 				memWrite_w = 1'b1;
-                ALUOp_w = 4'b1100;
+                		ALUOp_w = 4'b1100;
 			end
 
 			LD: begin
-                regDst_w = 2'b01;
+        		        regDst_w = 2'b01;
 				ALUSrc_w = 1'b1;
-				memToReg_w = 2'b01;
+				memToReg_w = 2'b00;
 				regWrite_w = 1'b1;
 				memRead_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1100;
+               			sign_alu_w = 1'b1;
+               			ALUOp_w = 4'b1100;
 			end
 
 			STU: begin
-                regDst_w = 2'b10;
+               			regDst_w = 2'b10;
 				ALUSrc_w = 1'b1;
 				regWrite_w = 1'b1;
 				memWrite_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1100;
+                		sign_alu_w = 1'b1;
+                		ALUOp_w = 4'b1100;
 			end
 
 			BTR: begin
@@ -135,89 +135,94 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 				regDst_w = 2'b01;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
-                ALUOp_w = {1'b1, instr[0], 2'b00};
+                		ALUOp_w = {1'b1, instr[0], 2'b00};
 			end
 
 			SEQ: begin
 				regDst_w = 2'b01;
-                sign_alu_w = 1'b1;
+                		sign_alu_w = 1'b1;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
-                ALUOp_w = 4'b1101;
+                		ALUOp_w = 4'b1101;
 			end
 
 			BEQZ: begin
 				jump_w = 1'b1;
 				branch_w = 1'b1;
 				branch_eq_z_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1101;
+                		sign_alu_w = 1'b1;
+                		ALUOp_w = 4'b1101;
 			end
 
 			BNEZ: begin
 				jump_w = 1'b1;
 				branch_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1101;
+                		sign_alu_w = 1'b1;
+                		ALUOp_w = 4'b1101;
 			end
 
 			BLTZ: begin
 				jump_w = 1'b1;
 				branch_w = 1'b1;
 				branch_lt_z_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1101;
+                		sign_alu_w = 1'b1;
+                		ALUOp_w = 4'b1101;
 			end
 
 			BGEZ: begin
 				jump_w = 1'b1;
 				branch_w = 1'b1;
 				branch_gt_z_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1101;
+                		sign_alu_w = 1'b1;
+                		ALUOp_w = 4'b1101;
 			end
 
 			LBI: begin
+				memToReg_w = 2'b11;
+				regDst_w = 2'b10;
 				ALUSrc_w = 1'b1;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
-                sign_alu_w = 1'b1;
+                		sign_alu_w = 1'b1;
 			end
 
 			SLBI: begin
+				memToReg_w = 2'b11;
+				regDst_w = 2'b10;
 				ALUSrc_w = 1'b1;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
-                sign_alu_w = 1'b0;
-                ALUOp_w = 4'b1010;
+        	        	sign_alu_w = 1'b0;
+        		        ALUOp_w = 4'b1010;
 			end
 
 			J: begin
 				jump_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1100;
+                		sign_alu_w = 1'b1;
+                		ALUOp_w = 4'b1100;
 			end
 
 			JR: begin
 				ALUSrc_w = 1'b1;
 				jump_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1100;
+                		sign_alu_w = 1'b1;
+                		ALUOp_w = 4'b1100;
 			end
 
 			JAL: begin
+				memToReg_w = 2'b10;
 				regDst_w = 2'b10;
 				jump_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1100;
+                		sign_alu_w = 1'b1;
+                		ALUOp_w = 4'b1100;
 			end
 
 			JALR: begin
 				regDst_w = 2'b10;
 				jump_w = 1'b1;
 				ALUSrc_w = 1'b1;
-                sign_alu_w = 1'b1;
-                ALUOp_w = 4'b1100;
+                		sign_alu_w = 1'b1;
+                		ALUOp_w = 4'b1100;
 			end
 
 			SIIC: begin
