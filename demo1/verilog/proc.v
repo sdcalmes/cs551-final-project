@@ -41,8 +41,8 @@ module proc (/*AUTOARG*/
 
     //control elements
     wire jump, branch, memRead, memWrite, regWrite,
-	    branch_eq_z, branch_gt_z, branch_lt_z, i_type_1;
-    wire [1:0] memToReg, regDst, ALUSrc;
+	    branch_eq_z, branch_gt_z, branch_lt_z;
+    wire [1:0] memToReg, regDst, ALUSrc, i_type_1;
     wire [3:0] ALUOp;
     wire halt;
 
@@ -141,7 +141,6 @@ module proc (/*AUTOARG*/
     //assign PC = jump ? jump_address : branch_address;
 
     //sign extended lower 8 bits
-    assign sign_ext_low_bits = i_type_1 ? { {8{instruction[7]}}, instruction[7:0]} : { {11{instruction[4]}}, instruction[4:0]};
 
     always@(*) begin
 	    case(i_type_1)
