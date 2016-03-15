@@ -2,23 +2,24 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
                branch_eq_z, branch_gt_z, branch_lt_z, err, halt, i_type_1);
 
     output  jump, branch, memRead, memWrite, regWrite, sign_alu, branch_eq_z,
-        branch_gt_z, branch_lt_z, err, i_type_1;
-    output [1:0] regDst, memToReg, ALUSrc;
+        branch_gt_z, branch_lt_z, err;
+    output [1:0] regDst, memToReg, ALUSrc, i_type_1;
     output [3:0] ALUOp;
     
 	input [4:0] instr;
 
     reg jump_w, branch_w, memRead_w, memWrite_w, regWrite_w, sign_alu_w,
-        branch_eq_z_w, branch_gt_z_w, branch_lt_z_w, err_w, i_type_1_w;
+        branch_eq_z_w, branch_gt_z_w, branch_lt_z_w, err_w;
     reg [3:0] ALUOp_w;
     
-    reg [1:0] regDst_w, memToReg_w, ALUSrc_w;
+    reg [1:0] regDst_w, memToReg_w, ALUSrc_w, i_type_1_w;
     output reg halt;
 
     localparam HALT  = 5'b0_0000;
     localparam NOP   = 5'b0_0001;
 
-    localparam IMM_ARITH  = 5'b0_10xx;
+    localparam IMM_ARITH  = 5'b0_100x;
+    localparam IMM_LOGIC  = 5'b0_101x;
     localparam IMM_SHIFT  = 5'b1_01xx;
     localparam ST    = 5'b1_0000;
     localparam LD    = 5'b1_0001;
@@ -76,7 +77,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 		branch_eq_z_w = 1'b0;
 		branch_gt_z_w = 1'b0;
 		branch_lt_z_w = 1'b0;
-		i_type_1_w = 1'b0;
+		i_type_1_w = 2'b00;
 
 		casex(instr)
 			HALT: begin
@@ -92,6 +93,15 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 				ALUSrc_w = 2'b01;
 				regWrite_w = 1'b1;
                 		ALUOp_w = {2'b11,instr[1:0]};
+			end
+
+			IMM_LOGIC: begin
+                		regDst_w = 2'b11;
+                		sign_alu_w = 1'b1;
+				ALUSrc_w = 2'b01;
+				regWrite_w = 1'b1;
+                		ALUOp_w = {2'b11,instr[1:0]};
+				i_type_1_w = 2'b10;
 			end
 
             		IMM_SHIFT: begin
@@ -149,7 +159,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			BEQZ: begin
-				i_type_1_w = 1'b1;
+				i_type_1_w = 2'b01;
 				jump_w = 1'b1;
 				branch_w = 1'b1;
 				branch_eq_z_w = 1'b1;
@@ -158,7 +168,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			BNEZ: begin
-				i_type_1_w = 1'b1;
+				i_type_1_w = 2'b01;
 				jump_w = 1'b1;
 				branch_w = 1'b1;
                 		sign_alu_w = 1'b1;
@@ -166,7 +176,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			BLTZ: begin
-				i_type_1_w = 1'b1;
+				i_type_1_w = 2'b01;
 				jump_w = 1'b1;
 				branch_w = 1'b1;
 				branch_lt_z_w = 1'b1;
@@ -175,7 +185,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			BGEZ: begin
-				i_type_1_w = 1'b1;
+				i_type_1_w = 2'b01;
 				jump_w = 1'b1;
 				branch_w = 1'b1;
 				branch_gt_z_w = 1'b1;
@@ -184,7 +194,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			LBI: begin
-				i_type_1_w = 1'b1;
+				i_type_1_w = 2'b01;
 				memToReg_w = 2'b11;
 				ALUSrc_w = 2'b01;
 				jump_w = 1'b1;
@@ -193,7 +203,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			SLBI: begin
-				i_type_1_w = 1'b1;
+				i_type_1_w = 2'b01;
 				memToReg_w = 2'b01;
 				ALUSrc_w = 2'b10;
 				jump_w = 1'b1;
@@ -209,7 +219,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			JR: begin
-				i_type_1_w = 1'b1;
+				i_type_1_w = 2'b01;
 				ALUSrc_w = 2'b01;
 				jump_w = 1'b1;
                 		sign_alu_w = 1'b1;
@@ -225,7 +235,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			JALR: begin
-				i_type_1_w = 1'b1;
+				i_type_1_w = 2'b01;
 				regDst_w = 2'b10;
 				jump_w = 1'b1;
 				ALUSrc_w = 2'b01;

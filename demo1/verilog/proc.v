@@ -56,6 +56,7 @@ module proc (/*AUTOARG*/
     //branch alu elemtns
     wire [15:0] sign_ext_low_bits, branch_out;
     wire b_ofl, b_z, b_zero;
+    reg [15:0] sign_ext_low_bits_w;
 
     //main alu elements
     wire [15:0] alu_b_input, main_alu_out;
@@ -80,6 +81,8 @@ module proc (/*AUTOARG*/
     wire control_err;
     wire alu_src_err;
     reg alu_src_err_w;
+    wire i_type_err;
+    reg i_type_err_w;
 
     ////////////////////////////////
     /////    Instantiate     //////
@@ -139,6 +142,17 @@ module proc (/*AUTOARG*/
 
     //sign extended lower 8 bits
     assign sign_ext_low_bits = i_type_1 ? { {8{instruction[7]}}, instruction[7:0]} : { {11{instruction[4]}}, instruction[4:0]};
+
+    always@(*) begin
+	    case(i_type_1)
+		    2'b00 : sign_ext_low_bits_w = { {11{instruction[4]}}, instruction[4:0]};
+		    2'b01 : sign_ext_low_bits_w = { {8{instruction[7]}}, instruction[7:0]};
+		    2'b10 : sign_ext_low_bits_w = { 11'b0, instruction[4:0] };
+		    default : i_type_err_w = 1'b1;
+	    endcase
+    end
+    assign sign_ext_low_bits = sign_ext_low_bits_w;
+    assign i_type_err = i_type_err_w;
     
     //mux before main alu
     always@(*) begin
