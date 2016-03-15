@@ -34,6 +34,7 @@ module alu_control(cmd, alu_op, lowerBits, invB, invA, Cin);
 		    3'b111 : invB_w = 1'b1;
 
 		    default : begin
+			    invA_w = 1'b0;
 			    invB_w = 1'b0;
 			    Cin_w = 1'b0;
 		    end

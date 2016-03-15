@@ -40,9 +40,9 @@ module proc (/*AUTOARG*/
     wire enable_read, enable_write;
 
     //control elements
-    wire jump, branch, memRead, memWrite, ALUSrc, regWrite,
-	    branch_eq_z, branch_gt_z, branch_lt_z;
-    wire [1:0] memToReg, regDst;
+    wire jump, branch, memRead, memWrite, regWrite,
+	    branch_eq_z, branch_gt_z, branch_lt_z, i_type_1;
+    wire [1:0] memToReg, regDst, ALUSrc;
     wire [3:0] ALUOp;
     wire halt;
 
@@ -62,6 +62,7 @@ module proc (/*AUTOARG*/
     wire main_ofl, main_z, main_lt_z;
     wire [2:0] alu_op;
     wire Cin;
+    reg [15:0] alu_b_input_w;
     //not sure about invA yet
     wire invA, invB;
 
@@ -77,6 +78,8 @@ module proc (/*AUTOARG*/
 
     //errors
     wire control_err;
+    wire alu_src_err;
+    reg alu_src_err_w;
 
     ////////////////////////////////
     /////    Instantiate     //////
@@ -89,7 +92,7 @@ module proc (/*AUTOARG*/
 	    		.enable(1'b1), .wr(1'b0), .createdump(1'b0), 
                 .clk(clk), .rst(rst));
 
-    rf_bypass   register(.read1regsel(instruction[10:8]), .read2regsel(instruction[7:5]),
+    rf   register(.read1regsel(instruction[10:8]), .read2regsel(instruction[7:5]),
 	    		.writeregsel(write_reg), .writedata(mem_write_back), .write(regWrite), 
                 .read1data(read_reg_1_data), .read2data(read_reg_2_data), .err(reg_err), 
                 .clk(clk), .rst(rst));
@@ -98,7 +101,7 @@ module proc (/*AUTOARG*/
                 .memRead(memRead), .memToReg(memToReg), .ALUOp(ALUOp), .sign_alu(sign_alu),
 				.memWrite(memWrite), .ALUSrc(ALUSrc), .regWrite(regWrite),
 				.branch_eq_z(branch_eq_z), .branch_gt_z(branch_gt_z),
-				.branch_lt_z(branch_lt_z), .err(control_err), .halt(halt));
+				.branch_lt_z(branch_lt_z), .err(control_err), .halt(halt), .i_type_1(i_type_1));
 
     alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]), .invB(invB), .invA(invA), .Cin(Cin));
 
@@ -135,10 +138,19 @@ module proc (/*AUTOARG*/
     //assign PC = jump ? jump_address : branch_address;
 
     //sign extended lower 8 bits
-    assign sign_ext_low_bits = { {8{instruction[7]}}, instruction[7:0]};
+    assign sign_ext_low_bits = i_type_1 ? { {8{instruction[7]}}, instruction[7:0]} : { {11{instruction[4]}}, instruction[4:0]};
     
     //mux before main alu
-    assign alu_b_input = ALUSrc ? sign_ext_low_bits : read_reg_2_data;
+    always@(*) begin
+	    case(ALUSrc)
+		    2'b00 : alu_b_input_w = read_reg_2_data;
+		    2'b01 : alu_b_input_w = sign_ext_low_bits;
+		    2'b10 : alu_b_input_w = 4'b1000;
+		    default : alu_src_err_w = 1'b1;
+	    endcase
+    end
+    assign alu_b_input = alu_b_input_w;
+    assign alu_src_err = alu_src_err_w;
 
     //branch alu input
     assign shift_in = sign_ext_low_bits;
@@ -158,10 +170,12 @@ module proc (/*AUTOARG*/
 
     assign write_reg = write_reg_w;
     always @(*) begin
+	    write_reg_w = 3'b000;
         case(regDst)
             2'b00 : write_reg_w = instruction[10:8];
             2'b01 : write_reg_w = instruction[4:2];
             2'b10 : write_reg_w = 3'b111;
+	    2'b11 : write_reg_w = instruction[7:5];
             default : write_data_err = 1'b1;
         endcase
     end
