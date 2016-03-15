@@ -51,7 +51,7 @@ module proc (/*AUTOARG*/
     wire [2:0] write_reg;
     reg [15:0] mem_write_back_w;
     wire [15:0] mem_write_back, read_reg_1_data, read_reg_2_data;
-    wire write_data_err;
+    reg write_data_err;
 
     //branch alu elemtns
     wire [15:0] sign_ext_low_bits, branch_out;
@@ -61,6 +61,8 @@ module proc (/*AUTOARG*/
     wire [15:0] alu_b_input, main_alu_out;
     wire main_ofl, main_z, main_lt_z;
     wire [2:0] alu_op;
+    //not sure about invA yet
+    wire invA, invB;
 
     //shifter elements
     wire [15:0] shift_in, shift_out;
@@ -70,6 +72,7 @@ module proc (/*AUTOARG*/
     wire [15:0] branch_address;
     wire [15:0] jump_address;
     wire branch_logic_out;
+   
 
     //errors
     wire control_err;
@@ -86,7 +89,7 @@ module proc (/*AUTOARG*/
                 .clk(clk), .rst(rst));
 
     rf_bypass   register(.read1regsel(instruction[10:8]), .read2regsel(instruction[7:5]),
-	    		.writeregsel(write_data_reg), .writedata(mem_write_back), .write(regWrite), 
+	    		.writeregsel(write_reg), .writedata(mem_write_back), .write(regWrite), 
                 .read1data(read_reg_1_data), .read2data(read_reg_2_data), .err(reg_err), 
                 .clk(clk), .rst(rst));
 
@@ -96,10 +99,10 @@ module proc (/*AUTOARG*/
 				.branch_eq_z(branch_eq_z), .branch_gt_z(branch_gt_z),
 				.branch_lt_z(branch_lt_z), .err(control_err), .halt(halt));
 
-    alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]));
+    alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]), .invB(invB));
 
     alu         main_alu(.A(read_reg_1_data), .B(alu_b_input), .Cin(1'b0), .Op(alu_op),
-	    		.invA(1'b0), .invB(1'b0), .sign(sign_alu), .Out(main_alu_out),
+	    		.invA(1'b0), .invB(invB), .sign(sign_alu), .Out(main_alu_out),
 				.Ofl(main_ofl), .Z(main_z), .lt_zero(main_lt_z));
 
     alu         pc_add(.A(PC), .B(16'h0002), .Cin(1'b0), .Op(3'b100), .invA(1'b0), .invB(1'b0),

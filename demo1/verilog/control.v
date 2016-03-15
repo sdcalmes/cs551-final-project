@@ -179,7 +179,6 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 
 			LBI: begin
 				memToReg_w = 2'b11;
-				regDst_w = 2'b10;
 				ALUSrc_w = 1'b1;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
@@ -188,7 +187,6 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 
 			SLBI: begin
 				memToReg_w = 2'b11;
-				regDst_w = 2'b10;
 				ALUSrc_w = 1'b1;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;

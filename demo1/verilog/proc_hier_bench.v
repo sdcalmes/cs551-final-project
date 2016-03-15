@@ -77,12 +77,11 @@ module proc_hier_bench();
                         WriteData,
                         MemAddress);
             end else begin
-               $fdisplay(trace_file,"INUM: %8d PC: 0x%04x REG: %d VALUE: 0x%04x, BRANCHOUT: %d",
+               $fdisplay(trace_file,"INUM: %8d PC: 0x%04x REG: %d VALUE: 0x%04x",
                          (inst_count-1),
                         PC,
                         WriteRegister,
-                        WriteData,
-			BranchLogicOut);
+                        WriteData);
             end
          end else if (Halt) begin
             $fdisplay(sim_log_file, "SIMLOG:: Processor halted\n");
