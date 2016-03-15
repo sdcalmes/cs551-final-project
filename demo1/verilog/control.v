@@ -85,7 +85,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			IMM_ARITH: begin
-                		regDst_w = 2'b01;
+                		regDst_w = 2'b00;
                 		sign_alu_w = 1'b1;
 				ALUSrc_w = 1'b1;
 				regWrite_w = 1'b1;
@@ -135,7 +135,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 				regDst_w = 2'b01;
 				jump_w = 1'b1;
 				regWrite_w = 1'b1;
-                		ALUOp_w = {1'b1, instr[0], 2'b00};
+                		ALUOp_w = {1'b0, instr[0], 2'b00};
 			end
 
 			SEQ: begin

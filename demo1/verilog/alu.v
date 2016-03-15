@@ -60,6 +60,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero);
         inA = invA ? (~A) : A;
         inB = invB ? (~B) : B;
 
+
         case(Op)
             3'b000: outreg = out;
           
@@ -71,7 +72,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero);
 
             3'b100: outreg = {add4, add3, add2, add1};
 
-            3'b101: outreg = {add4, add3, add2, add1};
+	    3'b101: outreg = {add4, add3, add2, add1};
 
             3'b110: outreg = inA ^ inB;
 
