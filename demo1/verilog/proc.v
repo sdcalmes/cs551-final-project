@@ -167,7 +167,7 @@ module proc (/*AUTOARG*/
     //assign read_reg_1_data = shifted_data_1 ? ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]}) : read_data_1; 
     always @(*) begin
         case(shifted_data_1)
-            2'b01 : read_reg_1_data_w = ({8'b0, sign_ext_low_bits[7:0]} | {8'b0, sign_ext_low_bits[7:0]});
+            2'b01 : read_reg_1_data_w = ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]});
             2'b00 : read_reg_1_data_w = read_data_1;
             2'b10 : read_reg_1_data_w = {read_data_1[0], read_data_1[1], read_data_1[2], read_data_1[3],
                     read_data_1[4], read_data_1[5], read_data_1[6], read_data_1[7], read_data_1[8],
