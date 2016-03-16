@@ -1,15 +1,9 @@
 // things to consider (+)
 // things are left todo (->)
 
-    + jump block
-    + branch block
-    + decode block
-    + BTR does not make sense
-    + SEQ SLT SLE SLE don't make sense
+
+Failing just 6 tests now. Sort of random.
+
+Syntesis works, no latches are formed.
 
 
-    -> instantiate blocks in proc.v
-    -> wire blocks in proc.v
-        ->
-
-    ->BEQZ relies on SLT, need to get SLT working...look at proc for notes on inverting.

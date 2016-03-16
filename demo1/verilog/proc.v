@@ -171,6 +171,7 @@ module proc (/*AUTOARG*/
     //use read data1 or readdata1 shifted 8 bits?
     //assign read_reg_1_data = shifted_data_1 ? ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]}) : read_data_1; 
     always @(*) begin
+	    read_reg_1_data_w = 2'b00;
         case(shifted_data_1)
             2'b01 : read_reg_1_data_w = ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]});
             2'b00 : read_reg_1_data_w = read_data_1;
@@ -187,6 +188,7 @@ module proc (/*AUTOARG*/
     //sign extended lower 8 bits
 
     always@(*) begin
+	    sign_ext_low_bits_w = 2'b00;
 	    case(i_type_1)
 		    2'b00 : sign_ext_low_bits_w = { {11{instruction[4]}}, instruction[4:0]};
 		    2'b01 : sign_ext_low_bits_w = { {8{instruction[7]}}, instruction[7:0]};
