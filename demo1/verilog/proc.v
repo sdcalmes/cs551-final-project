@@ -24,7 +24,10 @@ module proc (/*AUTOARG*/
     /////////////////////////////////
     /////    REG/Wire          /////
     ///////////////////////////////
+    //random wires
+    wire rand_wire [15:0];
   
+
 
     //pc adder stuff
     wire [15:0] pc_plus;
@@ -160,6 +163,8 @@ module proc (/*AUTOARG*/
 
     //use read data1 or readdata1 shifted 8 bits?
     assign read_reg_1_data = shifted_data_1 ? ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]}) : read_data_1; 
+
+    assign rand_wire = {read_data_1[0], read_data_1[1], read_data_1[2], read_data_1[3], read_data_1[4], read_data_1[5], read_data_1[6], read_data_1[7], read_data_1[8], read_data_1[9], read_data_1[10], read_data_1[11], read_data_1[12], read_data_1[13], read_data_1[14], read_data_1[15]} 
 
     //sign extended lower 8 bits
 
