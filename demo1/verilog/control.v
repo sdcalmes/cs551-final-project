@@ -185,9 +185,11 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			BNEZ: begin
 				i_type_1_w = 2'b01;
 				jump_w = 1'b0;
+				branch_gt_z_w = 1'b1;
+				branch_lt_z_w = 1'b1;
 				branch_w = 1'b1;
                 		sign_alu_w = 1'b1;
-                		ALUOp_w = 4'b1101;
+                		ALUOp_w = 4'b1000;
 			end
 
 			BLTZ: begin
@@ -205,7 +207,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 				branch_w = 1'b1;
 				branch_gt_z_w = 1'b1;
                 		sign_alu_w = 1'b1;
-                		ALUOp_w = 4'b1101;
+                		ALUOp_w = 4'b1000;
 			end
 
 			LBI: begin

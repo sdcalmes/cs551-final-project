@@ -3,14 +3,15 @@ module branch_control(control_eq_z, Z, control_gt_zero, alu_lt_zero, control_lt_
 	input control_eq_z, Z, control_gt_zero, alu_lt_zero, control_lt_zero, branch;
 	output branch_logic_out;
 
-	wire xnor_out, alu_not_lt_zero, and1, and2, or1, and3;
+	wire xnor_out, alu_not_lt_zero, and1, and2, or1, and3, not_eq_z;
 
 	//level 1 logic
 	and u1(xnor_out, control_eq_z, Z);
-	nand u7(nand_out, control_eq_z, Z);
-	xnor  u8(xor_out, xnor_out, nand_out);
+	nor u7(nand_out, control_eq_z, Z);
+	xor  u8(xor_out, xnor_out, nand_out);
 	not  u2(alu_not_lt_zero, alu_lt_zero);
-	and  u3(and1, control_gt_zero, alu_not_lt_zero);
+	not  u9(not_eq_z, Z);
+	and  u3(and1, control_gt_zero, alu_not_lt_zero, not_eq_z);
 	and  u4(and2, control_lt_zero, alu_lt_zero);
 
 	//2nd level logic
