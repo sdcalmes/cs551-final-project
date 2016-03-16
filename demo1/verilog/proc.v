@@ -44,7 +44,7 @@ module proc (/*AUTOARG*/
 
     //control elements
     wire jump, branch, memRead, memWrite, regWrite, ALUSrc,
-	    branch_eq_z, branch_gt_z, branch_lt_z, alu_result_select;
+	    branch_eq_z, branch_gt_z, branch_lt_z, alu_result_select, jr;
     wire [1:0] memToReg, regDst, i_type_1, set_select, shifted_data_1;
     wire [3:0] ALUOp;
     wire halt;
@@ -78,6 +78,7 @@ module proc (/*AUTOARG*/
     wire [15:0] branch_address;
     wire [15:0] jump_address;
     wire [15:0] pc_decision;
+    wire [15:0] jump_decision;
     wire branch_logic_out;
    
 
@@ -112,7 +113,7 @@ module proc (/*AUTOARG*/
 				.branch_eq_z(branch_eq_z), .branch_gt_z(branch_gt_z),
 				.branch_lt_z(branch_lt_z), .err(control_err), .halt(halt), .i_type_1(i_type_1),
 				.set_select(set_select), .alu_result_select(alu_result_select),
-				.shifted_data_1(shifted_data_1));
+				.shifted_data_1(shifted_data_1), .jr(jr));
 
     alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]), .invB(invB), .invA(invA), .Cin(Cin));
 
@@ -155,13 +156,17 @@ module proc (/*AUTOARG*/
 	    endcase
     end
     assign main_alu_out = alu_result_select ? set_out : alu_result;
+
     
     //pc update (jump or dont jump?)
     //assign jump_address = {{instruction[10:0], 2'b0}, pc_plus[15:13]};
     //need to change this to add, not concatenate
 //    assign jump_address = {pc_plus[15:12], {instruction[10:0], 1'b0}};
     assign branch_address = branch_logic_out ? branch_out : pc_plus;
-    assign pc_decision = jump ? jump_address : branch_address;
+    assign jump_decision = jump ? jump_address : branch_address;
+    assign pc_decision = jr ? main_alu_out : jump_decision;
+
+
 
     //use read data1 or readdata1 shifted 8 bits?
     //assign read_reg_1_data = shifted_data_1 ? ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]}) : read_data_1; 
