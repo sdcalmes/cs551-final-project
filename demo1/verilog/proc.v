@@ -150,9 +150,9 @@ module proc (/*AUTOARG*/
     always @(*) begin
 	    case(set_select)
 		    2'b00 : set_out = {15'b0, main_z};
-		    2'b01 : set_out = {15'b0, main_lt_z};
+		    2'b01 : set_out = {15'b0, ~main_lt_z & ~main_z};
 		    2'b11 : set_out = {15'b0, main_Cout};
-		    2'b10 : set_out = {15'b0, (~main_lt_z && ~main_z) || (main_lt_z && ~main_z)};
+		    2'b10 : set_out = {15'b0, ~main_lt_z | main_z};
 	    endcase
     end
     assign main_alu_out = alu_result_select ? set_out : alu_result;
