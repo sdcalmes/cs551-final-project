@@ -87,6 +87,8 @@ module proc (/*AUTOARG*/
     reg alu_src_err_w;
     wire i_type_err;
     reg i_type_err_w;
+    reg shifted_data_err_w;
+    wire shifted_data_err;
 
     ////////////////////////////////
     /////    Instantiate     //////
@@ -163,8 +165,18 @@ module proc (/*AUTOARG*/
 
     //use read data1 or readdata1 shifted 8 bits?
     assign read_reg_1_data = shifted_data_1 ? ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]}) : read_data_1; 
-
-    assign rand_wire = {read_data_1[0], read_data_1[1], read_data_1[2], read_data_1[3], read_data_1[4], read_data_1[5], read_data_1[6], read_data_1[7], read_data_1[8], read_data_1[9], read_data_1[10], read_data_1[11], read_data_1[12], read_data_1[13], read_data_1[14], read_data_1[15]} 
+    always @(*) begin
+        case(shifted_data_1)
+            2'b00 : read_reg_1_data = {8'b0, sign_ext_low_bits[7:0]};
+            2'b01 : read_reg_1_data = read_data_1;
+            2'b10 : read_reg_1_data = {read_data_1[0], read_data_1[1], read_data_1[2], read_data_1[3],
+                    read_data_1[4], read_data_1[5], read_data_1[6], read_data_1[7], read_data_1[8],
+                    read_data_1[9], read_data_1[10], read_data_1[11], read_data_1[12], read_data_1[13],
+                    read_data_1[14], read_data_1[15]};
+            default : shifted_data_err_w = 1'b1;
+        endcase
+    end
+    assign shifted_data_err = shifted_data_err_w;
 
     //sign extended lower 8 bits
 
