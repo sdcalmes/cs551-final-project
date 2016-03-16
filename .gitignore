@@ -11,12 +11,10 @@ Vcheck.*
 *.swp
 transcript
 
-*.list
 *.ptrace
 *.trace
 *.vcd
 *.img
-tests/
 *.log
 *.lst
 *.dmem
