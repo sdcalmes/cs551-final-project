@@ -43,9 +43,9 @@ module proc (/*AUTOARG*/
     wire enable_read, enable_write;
 
     //control elements
-    wire jump, branch, memRead, memWrite, regWrite, ALUSrc,
+    wire jump, branch, memRead, memWrite, regWrite,
 	    branch_eq_z, branch_gt_z, branch_lt_z, alu_result_select, jr;
-    wire [1:0] memToReg, regDst, i_type_1, set_select, shifted_data_1;
+    wire [1:0] memToReg, regDst, i_type_1, set_select, shifted_data_1, ALUSrc;
     wire [3:0] ALUOp;
     wire halt;
 
@@ -202,8 +202,9 @@ module proc (/*AUTOARG*/
     //mux before main alu
     always@(*) begin
 	    case(ALUSrc)
-		    1'b0 : alu_b_input_w = read_reg_2_data;
-		    1'b1 : alu_b_input_w = sign_ext_low_bits;
+		    2'b00 : alu_b_input_w = read_reg_2_data;
+		    2'b01 : alu_b_input_w = sign_ext_low_bits;
+		    2'b10 : alu_b_input_w = 16'b0;
 		    default : alu_src_err_w = 1'b1;
 	    endcase
     end

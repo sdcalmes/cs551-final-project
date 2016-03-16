@@ -20,7 +20,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, Cout);
 
         assign Out     = outreg;
         assign Ofl     = overflow;
-        assign Z       = ~Cout && ~(|outreg);
+        assign Z       = ~(|outreg);
 	assign lt_zero = lt_zero_w;
 
    shifter sh ( .In(inA),
