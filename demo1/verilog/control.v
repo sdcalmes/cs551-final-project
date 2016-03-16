@@ -85,7 +85,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 		i_type_1_w = 2'b00;
 		set_select_w = 2'b00;
 		alu_result_select_w = 1'b0;
-		shifted_data_1_w = 2'b0;
+		shifted_data_1_w = 2'b00;
 
 		casex(instr)
 			HALT: begin
@@ -124,14 +124,17 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 
 			ST: begin
                 		sign_alu_w = 1'b1;
+				jump_w = 1'b0;
 				ALUSrc_w = 1'b1;
+				memRead_w = 1'b1;
 				memWrite_w = 1'b1;
                 		ALUOp_w = 4'b1100;
 			end
 
 			LD: begin
-        		        regDst_w = 2'b01;
+        		        regDst_w = 2'b11;
 				ALUSrc_w = 1'b1;
+				jump_w = 1'b0;
 				memToReg_w = 2'b00;
 				regWrite_w = 1'b1;
 				memRead_w = 1'b1;

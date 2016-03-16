@@ -137,7 +137,7 @@ module proc (/*AUTOARG*/
 	    		.alu_lt_zero(main_lt_z), .control_lt_zero(branch_lt_z),
 				.branch(branch), .branch_logic_out(branch_logic_out), .Z(main_z));
 
-    memory2c    data_mem(.data_in(write_data_mem), .data_out(read_data), .addr(mem_address),
+    memory2c    data_mem(.data_in(read_reg_2_data), .data_out(read_data),.addr(main_alu_out),
 	    		.enable(memRead), .wr(memWrite), .createdump(1'b0), .clk(clk), .rst(rst));
 
 
