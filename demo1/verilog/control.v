@@ -144,8 +144,11 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 			end
 
 			STU: begin
-               			regDst_w = 2'b10;
+
+               			regDst_w = 2'b00;
+				jump_w = 1'b0;
 				ALUSrc_w = 1'b1;
+				memRead_w = 1'b1;
 				regWrite_w = 1'b1;
 				memWrite_w = 1'b1;
                 		sign_alu_w = 1'b1;
