@@ -117,7 +117,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
             		IMM_SHIFT: begin
 				regDst_w = 2'b11;
 				jump_w = 1'b0;
-                		regDst_w = 2'b01;
+                		regDst_w = 2'b11;
                 		ALUOp_w = {2'b10, instr[1:0]};
                 		ALUSrc_w = 1'b1;
                 		regWrite_w = 1'b1;
