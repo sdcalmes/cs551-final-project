@@ -27,7 +27,10 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 
     localparam BTR   = 5'b1_1001;
     localparam ALU1  = 5'b1_101x;
-    localparam SEQ   = 5'b1_11xx;
+    localparam SEQ   = 5'b1_1100;
+    localparam SLT   = 5'b1_1101;
+    localparam SLE   = 5'b1_1110;
+    localparam SCO   = 5'b1_1111;
 
 	localparam BEQZ  = 5'b0_1100;
 	localparam BNEZ  = 5'b0_1101;
@@ -178,6 +181,36 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 				jump_w = 1'b0;
 				regWrite_w = 1'b1;
                 		ALUOp_w = 4'b1101;
+				set_select_w = instr[1:0];
+				alu_result_select_w = 1'b1;
+			end
+
+			SCO: begin
+				regDst_w = 2'b01;
+				sign_alu_w = 1'b1;
+				jump_w = 1'b0;
+				regWrite_w = 1'b1;
+				ALUOp_w = 4'b1100;
+				set_select_w = instr[1:0];
+				alu_result_select_w = 1'b1;
+			end
+
+			SLT: begin
+				regDst_w = 2'b01;
+				sign_alu_w = 1'b1;
+				jump_w = 1'b0;
+				regWrite_w = 1'b1;
+				ALUOp_w = 4'b1101;
+				set_select_w = instr[1:0];
+				alu_result_select_w = 1'b1;
+			end
+
+			SLE: begin
+				regDst_w = 2'b01;
+				sign_alu_w = 1'b1;
+				jump_w = 1'b0;
+				regWrite_w = 1'b1;
+				ALUOp_w = 4'b1101;
 				set_select_w = instr[1:0];
 				alu_result_select_w = 1'b1;
 			end

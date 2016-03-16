@@ -1,4 +1,4 @@
-module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero);
+module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, Cout);
    
         input [15:0] A;
         input [15:0] B;
@@ -8,7 +8,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero);
         input invB;
         input sign;
         output [15:0] Out;
-        output Ofl;
+        output Ofl, Cout;
         output Z;
 	output lt_zero;
 
