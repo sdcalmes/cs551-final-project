@@ -44,15 +44,15 @@ module proc (/*AUTOARG*/
 
     //control elements
     wire jump, branch, memRead, memWrite, regWrite, ALUSrc,
-	    branch_eq_z, branch_gt_z, branch_lt_z, alu_result_select, shifted_data_1;
-    wire [1:0] memToReg, regDst, i_type_1, set_select;
+	    branch_eq_z, branch_gt_z, branch_lt_z, alu_result_select;
+    wire [1:0] memToReg, regDst, i_type_1, set_select, shifted_data_1;
     wire [3:0] ALUOp;
     wire halt;
 
     //register components
     reg [2:0] read_reg_1, read_reg_2, write_reg_w;
     wire [2:0] write_reg;
-    reg [15:0] mem_write_back_w;
+    reg [15:0] mem_write_back_w, read_reg_1_data_w;
     wire [15:0] mem_write_back, read_reg_1_data, read_reg_2_data, read_data_1;
     reg write_data_err;
 
@@ -164,12 +164,12 @@ module proc (/*AUTOARG*/
     assign pc_decision = jump ? jump_address : branch_address;
 
     //use read data1 or readdata1 shifted 8 bits?
-    assign read_reg_1_data = shifted_data_1 ? ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]}) : read_data_1; 
+    //assign read_reg_1_data = shifted_data_1 ? ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]}) : read_data_1; 
     always @(*) begin
         case(shifted_data_1)
-            2'b00 : read_reg_1_data = {8'b0, sign_ext_low_bits[7:0]};
-            2'b01 : read_reg_1_data = read_data_1;
-            2'b10 : read_reg_1_data = {read_data_1[0], read_data_1[1], read_data_1[2], read_data_1[3],
+            2'b01 : read_reg_1_data_w = ({8'b0, sign_ext_low_bits[7:0]} | {8'b0, sign_ext_low_bits[7:0]});
+            2'b00 : read_reg_1_data_w = read_data_1;
+            2'b10 : read_reg_1_data_w = {read_data_1[0], read_data_1[1], read_data_1[2], read_data_1[3],
                     read_data_1[4], read_data_1[5], read_data_1[6], read_data_1[7], read_data_1[8],
                     read_data_1[9], read_data_1[10], read_data_1[11], read_data_1[12], read_data_1[13],
                     read_data_1[14], read_data_1[15]};
@@ -177,6 +177,7 @@ module proc (/*AUTOARG*/
         endcase
     end
     assign shifted_data_err = shifted_data_err_w;
+    assign read_reg_1_data = read_reg_1_data_w;
 
     //sign extended lower 8 bits
 
