@@ -169,6 +169,7 @@ module proc (/*AUTOARG*/
 
 
     //use read data1 or readdata1 shifted 8 bits?
+    // --> Should be caled alu_a_input
     //assign read_reg_1_data = shifted_data_1 ? ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]}) : read_data_1; 
     always @(*) begin
 	    read_reg_1_data_w = 2'b00;
