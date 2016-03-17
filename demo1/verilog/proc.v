@@ -135,7 +135,7 @@ module proc (/*AUTOARG*/
 
     branch_control	branch_control(.control_eq_z(branch_eq_z), .control_gt_zero(branch_gt_z),
 	    		.alu_lt_zero(main_lt_z), .control_lt_zero(branch_lt_z),
-				.branch(branch), .branch_logic_out(branch_logic_out), .Z(main_z));
+				.branch(branch), .branch_logic_out(branch_logic_out), .Z(main_z), .data_1(read_reg_1_data));
 
     memory2c    data_mem(.data_in(read_reg_2_data), .data_out(read_data),.addr(main_alu_out),
 	    		.enable(memRead), .wr(memWrite), .createdump(1'b0), .clk(clk), .rst(rst));
@@ -150,7 +150,7 @@ module proc (/*AUTOARG*/
     always @(*) begin
 	    case(set_select)
 		    2'b00 : set_out = {15'b0, main_z};
-		    2'b01 : set_out = {15'b0, ~main_lt_z & ~main_z};
+		    2'b01 : set_out = {15'b0, main_lt_z};
 		    2'b11 : set_out = {15'b0, main_Cout};
 		    2'b10 : set_out = {15'b0, ~main_lt_z | main_z};
 	    endcase
