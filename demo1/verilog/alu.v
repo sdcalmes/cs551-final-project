@@ -86,7 +86,8 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout, A_l
         endcase
     end
 
-    always @(*)
+    always @(*) begin
+	    sle_lt_zero_w = 1'b0;
         case(sign)
 		1'b1: begin
 			overflow = (inA[15] & inB[15] & ~add4[3]) || (~inA[15] & ~inB[15] & add4[3]);
@@ -102,5 +103,6 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout, A_l
 	    sle_lt_zero_w = lt_zero_w & ((A[15] ~^ B[15]) | (A[15] ^ B[15]));
 		end
         endcase
+end
     
 endmodule

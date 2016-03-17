@@ -202,6 +202,7 @@ module proc (/*AUTOARG*/
    
     //mux before main alu
     always@(*) begin
+	    alu_b_input_w = 2'b00;
 	    case(ALUSrc)
 		    2'b00 : alu_b_input_w = read_reg_2_data;
 		    2'b01 : alu_b_input_w = sign_ext_low_bits;
