@@ -2,8 +2,10 @@
 // things are left todo (->)
 
 
-Failing just 6 tests now. Sort of random.
+Failing just 5 tests now. Sort of random.
 
 Syntesis works, no latches are formed.
 
+ SEQ, SLE, SLT, SCO work, mostly.
 
+ made sle_7 to test an edge case
