@@ -1,4 +1,4 @@
-module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout, A_lt_z);
+module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout, A_lt_z, sle_lt_z);
    
         input [15:0] A;
         input [15:0] B;
@@ -10,13 +10,13 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout, A_l
         output [15:0] Out;
         output Ofl, Cout;
         output Z;
-	output lt_zero;
+	output lt_zero, sle_lt_z;
     	output EQ;
 	output A_lt_z;
 
         reg [15:0] outreg, inA, inB;
         wire [3:0]  add1, add2, add3, add4;
-        reg overflow, lt_zero_w;
+        reg overflow, lt_zero_w, sle_lt_zero_w;
         wire [15:0] out, andAB;
         wire Cout, c1, c2, c3;
 
@@ -27,6 +27,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout, A_l
    	assign andAB = (A&B);
     	assign EQ = (&andAB);
 	assign A_lt_z = A[15];
+	assign sle_lt_z = sle_lt_zero_w;
 
    shifter sh ( .In(inA),
                 .Cnt(inB[3:0]),
@@ -94,7 +95,11 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout, A_l
 
 		1'b0: begin
 			overflow = Cout;
+			//for SLT
             lt_zero_w = ((~A[15] & ~B[15] & Cout & (|outreg)) | (A[15] & B[15] & Cout & (|outreg)) | (A[15] & ~B[15]));
+
+	    //for SLE
+	    sle_lt_zero_w = lt_zero_w & ((A[15] ~^ B[15]) | (A[15] ^ B[15]));
 		end
         endcase
     

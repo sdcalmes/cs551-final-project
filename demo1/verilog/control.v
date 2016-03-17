@@ -208,7 +208,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
 
 			SLE: begin
 				regDst_w = 2'b01;
-				sign_alu_w = 1'b1;
+				sign_alu_w = 1'b0;
 				jump_w = 1'b0;
 				regWrite_w = 1'b1;
 				ALUOp_w = 4'b1101;
