@@ -67,6 +67,7 @@ module proc (/*AUTOARG*/
     wire [2:0] alu_op;
     wire Cin;
     reg [15:0] alu_b_input_w, set_out;
+    wire A_lt_z, sle_lt_zero;
     //not sure about invA yet
     wire invA, invB;
 
@@ -119,23 +120,23 @@ module proc (/*AUTOARG*/
 
     alu         main_alu(.A(read_reg_1_data), .B(alu_b_input), .Cin(Cin), .Op(alu_op),
 	    		.invA(invA), .invB(invB), .sign(sign_alu), .Out(alu_result),
-                .Ofl(main_ofl), .Z(main_z), .lt_zero(main_lt_z), .EQ(main_eq), .Cout(main_Cout));
+                .Ofl(main_ofl), .Z(main_z), .lt_zero(main_lt_z), .EQ(main_eq), .Cout(main_Cout), .A_lt_z(a_lt_z), .sle_lt_z(sle_lt_zero));
 
     alu         pc_add(.A(PC), .B(16'h0002), .Cin(1'b0), .Op(3'b100), .invA(1'b0), .invB(1'b0),
-                .sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z), .lt_zero(), .EQ(), .Cout());
+                .sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z), .lt_zero(), .EQ(), .Cout(), .A_lt_z(), .sle_lt_z());
 
     alu		jump_add(.A(pc_plus), .B({{5{instruction[10]}},{instruction[10:0]}}), .Cin(1'b0), .Op(3'b100),
-	    		 .invA(1'b0), .invB(1'b0), .sign(1'b1), .Out(jump_address), .Ofl(), .Z(), .lt_zero(), .EQ(), .Cout());
+	    		 .invA(1'b0), .invB(1'b0), .sign(1'b1), .Out(jump_address), .Ofl(), .Z(), .lt_zero(), .EQ(), .Cout(), .A_lt_z(), .sle_lt_z());
 
     alu		branch_add(.A(pc_plus), .B({{8{instruction[7]}},instruction[7:0]}), .Cin(1'b0), .Op(3'b100), .invA(1'b0),
 	    		.invB(1'b0), .sign(1'b0), .Out(branch_out), .Ofl(b_ofl), .Z(b_z),
-				.lt_zero(b_zero), .Cout(), .EQ());
+				.lt_zero(b_zero), .Cout(), .EQ(), .A_lt_z(), .sle_lt_z());
 
     shifter	branch_shifter(.In(shift_in), .Cnt(shift_cnt), .Op(shift_op), .Out(shift_out));
 
     branch_control	branch_control(.control_eq_z(branch_eq_z), .control_gt_zero(branch_gt_z),
 	    		.alu_lt_zero(main_lt_z), .control_lt_zero(branch_lt_z),
-				.branch(branch), .branch_logic_out(branch_logic_out), .Z(main_z), .data_1(read_reg_1_data));
+				.branch(branch), .branch_logic_out(branch_logic_out), .Z(main_z), .data_1(read_reg_1_data), .A_lt_z(a_lt_z));
 
     memory2c    data_mem(.data_in(read_reg_2_data), .data_out(read_data),.addr(main_alu_out),
 	    		.enable(memRead), .wr(memWrite), .createdump(1'b0), .clk(clk), .rst(rst));
@@ -151,7 +152,7 @@ module proc (/*AUTOARG*/
 	    case(set_select)
 		    2'b00 : set_out = {15'b0, main_z};
 		    2'b01 : set_out = {15'b0, main_lt_z};
-            2'b10 : set_out = {15'b0, (~main_lt_z | main_z)};
+            	    2'b10 : set_out = {15'b0, (sle_lt_zero | main_z)};
 		    2'b11 : set_out = {15'b0, main_Cout};
 	    endcase
     end
@@ -202,6 +203,7 @@ module proc (/*AUTOARG*/
    
     //mux before main alu
     always@(*) begin
+	    alu_b_input_w = 2'b00;
 	    case(ALUSrc)
 		    2'b00 : alu_b_input_w = read_reg_2_data;
 		    2'b01 : alu_b_input_w = sign_ext_low_bits;
