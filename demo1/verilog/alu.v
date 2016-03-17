@@ -21,7 +21,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout);
 
         assign Out     = outreg;
         assign Ofl     = overflow;
-        assign Z       = ~Cout & ~(|outreg);
+        assign Z       = Cout & ~(|outreg);
 	assign lt_zero = lt_zero_w;
     assign andAB = (A&B);
     assign EQ = (&andAB);
