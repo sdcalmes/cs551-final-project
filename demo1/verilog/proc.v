@@ -63,7 +63,7 @@ module proc (/*AUTOARG*/
 
     //main alu elements
     wire [15:0] alu_b_input, main_alu_out, alu_result;
-    wire main_ofl, main_z, main_lt_z, main_Cout;
+    wire main_ofl, main_z, main_lt_z, main_Cout, main_eq;
     wire [2:0] alu_op;
     wire Cin;
     reg [15:0] alu_b_input_w, set_out;
@@ -119,17 +119,17 @@ module proc (/*AUTOARG*/
 
     alu         main_alu(.A(read_reg_1_data), .B(alu_b_input), .Cin(Cin), .Op(alu_op),
 	    		.invA(invA), .invB(invB), .sign(sign_alu), .Out(alu_result),
-				.Ofl(main_ofl), .Z(main_z), .lt_zero(main_lt_z), .Cout(main_Cout));
+                .Ofl(main_ofl), .Z(main_z), .lt_zero(main_lt_z), .EQ(main_eq), .Cout(main_Cout));
 
     alu         pc_add(.A(PC), .B(16'h0002), .Cin(1'b0), .Op(3'b100), .invA(1'b0), .invB(1'b0),
-    			.sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z), .lt_zero(), .Cout());
+                .sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z), .lt_zero(), .EQ(), .Cout());
 
     alu		jump_add(.A(pc_plus), .B({{5{instruction[10]}},{instruction[10:0]}}), .Cin(1'b0), .Op(3'b100),
-	    		 .invA(1'b0), .invB(1'b0), .sign(1'b1), .Out(jump_address), .Ofl(), .Z(), .lt_zero(), .Cout());
+	    		 .invA(1'b0), .invB(1'b0), .sign(1'b1), .Out(jump_address), .Ofl(), .Z(), .lt_zero(), .EQ(), .Cout());
 
     alu		branch_add(.A(pc_plus), .B({{8{instruction[7]}},instruction[7:0]}), .Cin(1'b0), .Op(3'b100), .invA(1'b0),
 	    		.invB(1'b0), .sign(1'b0), .Out(branch_out), .Ofl(b_ofl), .Z(b_z),
-				.lt_zero(b_zero), .Cout());
+				.lt_zero(b_zero), .Cout(), .EQ());
 
     shifter	branch_shifter(.In(shift_in), .Cnt(shift_cnt), .Op(shift_op), .Out(shift_out));
 
@@ -151,8 +151,8 @@ module proc (/*AUTOARG*/
 	    case(set_select)
 		    2'b00 : set_out = {15'b0, main_z};
 		    2'b01 : set_out = {15'b0, main_lt_z};
+            2'b10 : set_out = {15'b0, (~main_lt_z | main_z)};
 		    2'b11 : set_out = {15'b0, main_Cout};
-		    2'b10 : set_out = {15'b0, ~main_lt_z | main_z};
 	    endcase
     end
     assign main_alu_out = alu_result_select ? set_out : alu_result;
