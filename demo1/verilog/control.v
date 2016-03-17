@@ -181,7 +181,7 @@ module control(instr, regDst, jump, branch, memRead, memToReg, ALUOp, sign_alu, 
                 		sign_alu_w = 1'b1;
 				jump_w = 1'b0;
 				regWrite_w = 1'b1;
-                		ALUOp_w = 4'b1111;
+                		ALUOp_w = 4'b1101;
 				set_select_w = instr[1:0];
 				alu_result_select_w = 1'b1;
 			end
