@@ -1,4 +1,4 @@
-module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout);
+module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout, A_lt_z);
    
         input [15:0] A;
         input [15:0] B;
@@ -11,7 +11,8 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout);
         output Ofl, Cout;
         output Z;
 	output lt_zero;
-    output EQ;
+    	output EQ;
+	output A_lt_z;
 
         reg [15:0] outreg, inA, inB;
         wire [3:0]  add1, add2, add3, add4;
@@ -23,8 +24,9 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, lt_zero, EQ, Cout);
         assign Ofl     = overflow;
         assign Z       = Cout & ~(|outreg);
 	assign lt_zero = lt_zero_w;
-    assign andAB = (A&B);
-    assign EQ = (&andAB);
+   	assign andAB = (A&B);
+    	assign EQ = (&andAB);
+	assign A_lt_z = A[15];
 
    shifter sh ( .In(inA),
                 .Cnt(inB[3:0]),
