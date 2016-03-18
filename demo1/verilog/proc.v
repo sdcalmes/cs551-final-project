@@ -163,6 +163,9 @@ module proc (/*AUTOARG*/
     //assign jump_address = {{instruction[10:0], 2'b0}, pc_plus[15:13]};
     //need to change this to add, not concatenate
 //    assign jump_address = {pc_plus[15:12], {instruction[10:0], 1'b0}};
+    
+    
+    //Make one pc_update
     assign branch_address = branch_logic_out ? branch_out : pc_plus;
     assign jump_decision = jump ? jump_address : branch_address;
     assign pc_decision = jr ? main_alu_out : jump_decision;
@@ -230,6 +233,7 @@ module proc (/*AUTOARG*/
         endcase
     end
 
+    // change to wrtite_reg_dst
     assign write_reg = write_reg_w;
     always @(*) begin
 	    write_reg_w = 3'b000;
