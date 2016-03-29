@@ -144,18 +144,16 @@ module proc_hier_bench();
    //assign MemWrite = (DUT.p0.memory0.memReadorWrite & DUT.p0.memory0.memWrite);
    // Is memory being written to (1 bit signal)
    
-   assign MemAddress = DUT.p0.main_alu_out;
+   assign MemAddress = DUT.p0.alu_out;
    // Address to access memory with (for both reads and writes to memory, 16 bits)
    
-   assign MemData = DUT.p0.read_reg_2_data;
+   assign MemData = DUT.p0.reg2_data;
    // Data to be written to memory for memory writes (16 bits)
    
    assign Halt = DUT.p0.control.halt;
    // Is processor halted (1 bit signal)
    
    /* Add anything else you want here */
-   assign BranchLogicOut = DUT.p0.branch_logic_out;
-
    
 endmodule
 

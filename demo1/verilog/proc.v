@@ -33,6 +33,12 @@ module proc (/*AUTOARG*/
     wire [15:0] pc_plus;
     wire ofl, z;
     wire [15:0] PC;
+    reg [15:0] pc_decision_w;
+    wire [15:0] pc_decision;
+    //branch/jump things
+    wire [15:0] branch_address;
+    wire [15:0] jump_address;
+    wire [15:0] jump_decision;
     
     //memory2c elements
     wire [15:0] instruction;
@@ -40,20 +46,20 @@ module proc (/*AUTOARG*/
     reg [15:0] mem_address;
     reg [15:0] write_data_mem;
     wire [15:0] read_data;
-    wire enable_read, enable_write;
+    wire enable_read, enable_write, createdump;
 
     //control elements
-    wire jump, branch, memRead, memWrite, regWrite,
-	    branch_eq_z, branch_gt_z, branch_lt_z, alu_result_select, jr;
-    wire [1:0] memToReg, regDst, i_type_1, set_select, shifted_data_1, ALUSrc;
+    wire branch, memRead, memWrite, regWrite, sign_alu,
+        branch_eqz, branch_gtz, branch_ltz, alu_res_sel;
+    wire [1:0] memToReg, regDst, sign_extd, set_select, ALUSrc_a, ALUSrc_b, pc_dec;
     wire [3:0] ALUOp;
     wire halt;
 
     //register components
     reg [2:0] read_reg_1, read_reg_2, write_reg_w;
     wire [2:0] write_reg;
-    reg [15:0] mem_write_back_w, read_reg_1_data_w;
-    wire [15:0] mem_write_back, read_reg_1_data, read_reg_2_data, read_data_1;
+    reg [15:0] mem_write_back_w, alu_a_input_w;
+    wire [15:0] mem_write_back, alu_a_input, reg2_data, reg1_data;
     reg write_data_err;
 
     //branch alu elemtns
@@ -61,26 +67,15 @@ module proc (/*AUTOARG*/
     wire b_ofl, b_z, b_zero;
     reg [15:0] sign_ext_low_bits_w;
 
-    //main alu elements
-    wire [15:0] alu_b_input, main_alu_out, alu_result;
-    wire main_ofl, main_z, main_lt_z, main_Cout, main_eq;
+    //alu elements
+    wire [15:0] alu_b_input, alu_out, alu_result;
+    wire alu_z, alu_ltz, alu_Cout, sle_lt_zero;
     wire [2:0] alu_op;
     wire Cin;
     reg [15:0] alu_b_input_w, set_out;
-    wire A_lt_z, sle_lt_zero;
     //not sure about invA yet
     wire invA, invB;
 
-    //shifter elements
-    wire [15:0] shift_in, shift_out;
-    wire [3:0] shift_cnt;
-    wire [1:0] shift_op;
-    //branch/jump things
-    wire [15:0] branch_address;
-    wire [15:0] jump_address;
-    wire [15:0] pc_decision;
-    wire [15:0] jump_decision;
-    wire branch_logic_out;
    
 
     //errors
@@ -95,51 +90,45 @@ module proc (/*AUTOARG*/
     ////////////////////////////////
     /////    Instantiate     //////
     //////////////////////////////
-    //
     
-    reg_16	pc_reg(.WriteData(pc_decision), .WriteSel(1'b1), .ReadData(PC), .clk(clk), .rst(rst));
+    reg_16      pc_reg(.WriteData(pc_decision), .WriteSel(1'b1), .ReadData(PC), .clk(clk),
+                .rst(rst));
 
     memory2c    inst_mem(.data_in(), .data_out(instruction), .addr(PC),
-	    		.enable(1'b1), .wr(1'b0), .createdump(1'b0), 
+                .enable(1'b1), .wr(1'b0), .createdump(createdump), 
                 .clk(clk), .rst(rst));
 
-    rf   register(.read1regsel(instruction[10:8]), .read2regsel(instruction[7:5]),
-	    		.writeregsel(write_reg), .writedata(mem_write_back), .write(regWrite), 
-                .read1data(read_data_1), .read2data(read_reg_2_data), .err(reg_err), 
-                .clk(clk), .rst(rst));
+    rf          register(.read1regsel(instruction[10:8]), .read2regsel(instruction[7:5]),
+                .writeregsel(write_reg), .writedata(mem_write_back), .write(regWrite),
+                .read1data(reg1_data), .read2data(reg2_data), .clk(clk), .rst(rst));
 
-    control     control(.instr(instruction[15:11]), .regDst(regDst), .jump(jump), .branch(branch),
-                .memRead(memRead), .memToReg(memToReg), .ALUOp(ALUOp), .sign_alu(sign_alu),
-				.memWrite(memWrite), .ALUSrc(ALUSrc), .regWrite(regWrite),
-				.branch_eq_z(branch_eq_z), .branch_gt_z(branch_gt_z),
-				.branch_lt_z(branch_lt_z), .err(control_err), .halt(halt), .i_type_1(i_type_1),
-				.set_select(set_select), .alu_result_select(alu_result_select),
-				.shifted_data_1(shifted_data_1), .jr(jr));
+    control     control(.instr(instruction[15:11]), .regDst(regDst), .regWrite(regWrite),
+                .sign_extd(sign_extd), .ALUSrc_a(ALUSrc_a), .ALUSrc_b(ALUSrc_b), .ALUOp(ALUOp),
+                .sign_alu(sign_alu), .set_select(set_select), .alu_res_sel(alu_res_sel),
+                .memToReg(memToReg), .pc_dec(pc_dec), .branch(branch), .branch_eqz(branch_eqz),
+                .branch_gtz(branch_gtz), .branch_ltz(branch_ltz), .memRead(memRead),
+                .memWrite(memWrite), .err(control_err), .halt(halt), .createdump(createdump));
 
-    alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]), .invB(invB), .invA(invA), .Cin(Cin));
+    alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]),
+                .invB(invB), .invA(invA), .Cin(Cin));
 
-    alu         main_alu(.A(read_reg_1_data), .B(alu_b_input), .Cin(Cin), .Op(alu_op),
-	    		.invA(invA), .invB(invB), .sign(sign_alu), .Out(alu_result),
-                .Ofl(main_ofl), .Z(main_z), .lt_zero(main_lt_z), .EQ(main_eq), .Cout(main_Cout), .A_lt_z(a_lt_z), .sle_lt_z(sle_lt_zero));
+    alu         alu(.A(alu_a_input), .B(alu_b_input), .Cin(Cin), .Op(alu_op), .invA(invA),
+                .invB(invB), .sign(sign_alu), .Out(alu_result), .Z(alu_z), .lt_zero(alu_ltz),
+                .Cout(alu_Cout), .sle_lt_zero(sle_lt_zero));
 
-    alu         pc_add(.A(PC), .B(16'h0002), .Cin(1'b0), .Op(3'b100), .invA(1'b0), .invB(1'b0),
-                .sign(1'b0), .Out(pc_plus), .Ofl(ofl), .Z(z), .lt_zero(), .EQ(), .Cout(), .A_lt_z(), .sle_lt_z());
+    pc_inc      pc_add(.A(PC), .Out(pc_plus));
 
-    alu		jump_add(.A(pc_plus), .B({{5{instruction[10]}},{instruction[10:0]}}), .Cin(1'b0), .Op(3'b100),
-	    		 .invA(1'b0), .invB(1'b0), .sign(1'b1), .Out(jump_address), .Ofl(), .Z(), .lt_zero(), .EQ(), .Cout(), .A_lt_z(), .sle_lt_z());
+    add_16      jump_add(.A(pc_plus), .B({{5{instruction[10]}},{instruction[10:0]}}),
+                .Out(jump_address));
 
-    alu		branch_add(.A(pc_plus), .B({{8{instruction[7]}},instruction[7:0]}), .Cin(1'b0), .Op(3'b100), .invA(1'b0),
-	    		.invB(1'b0), .sign(1'b0), .Out(branch_out), .Ofl(b_ofl), .Z(b_z),
-				.lt_zero(b_zero), .Cout(), .EQ(), .A_lt_z(), .sle_lt_z());
+    branch_control  branch_control(.control_eqz(branch_eqz), .control_gtz(branch_gtz),
+                .control_ltz(branch_ltz), .branch(branch), .alu_z(alu_z), .alu_ltz(alu_ltz),
+                .pc_plus(pc_plus), .branch_offset({{8{instruction[7]}},instruction[7:0]}),
+                .branch_address(branch_address));
 
-    shifter	branch_shifter(.In(shift_in), .Cnt(shift_cnt), .Op(shift_op), .Out(shift_out));
-
-    branch_control	branch_control(.control_eq_z(branch_eq_z), .control_gt_zero(branch_gt_z),
-	    		.alu_lt_zero(main_lt_z), .control_lt_zero(branch_lt_z),
-				.branch(branch), .branch_logic_out(branch_logic_out), .Z(main_z), .data_1(read_reg_1_data), .A_lt_z(a_lt_z));
-
-    memory2c    data_mem(.data_in(read_reg_2_data), .data_out(read_data),.addr(main_alu_out),
-	    		.enable(memRead), .wr(memWrite), .createdump(1'b0), .clk(clk), .rst(rst));
+    memory2c    data_mem(.data_in(reg2_data), .data_out(read_data),.addr(alu_out),
+                .enable(memRead), .wr(memWrite), .createdump(createdump), .clk(clk),
+                .rst(rst));
 
 
 
@@ -149,85 +138,80 @@ module proc (/*AUTOARG*/
     
     //set select crap...if we not it, it works with negatives.
     always @(*) begin
-	    case(set_select)
-		    2'b00 : set_out = {15'b0, main_z};
-		    2'b01 : set_out = {15'b0, main_lt_z};
-            	    2'b10 : set_out = {15'b0, (sle_lt_zero | main_z)};
-		    2'b11 : set_out = {15'b0, main_Cout};
-	    endcase
+        case(set_select)
+            2'b00 : set_out = {15'b0, alu_z};                   //SEQ
+            2'b01 : set_out = {15'b0, alu_ltz};                 //SLT
+            2'b10 : set_out = {15'b0, (sle_lt_zero | alu_z)};   //SLE
+            2'b11 : set_out = {15'b0, alu_Cout};                //SCO
+        endcase
     end
-    assign main_alu_out = alu_result_select ? set_out : alu_result;
+    assign alu_out = alu_res_sel ? set_out : alu_result;
 
     
     //pc update (jump or dont jump?)
-    //assign jump_address = {{instruction[10:0], 2'b0}, pc_plus[15:13]};
-    //need to change this to add, not concatenate
-//    assign jump_address = {pc_plus[15:12], {instruction[10:0], 1'b0}};
-    
-    
-    //Make one pc_update
-    assign branch_address = branch_logic_out ? branch_out : pc_plus;
-    assign jump_decision = jump ? jump_address : branch_address;
-    assign pc_decision = jr ? main_alu_out : jump_decision;
-
-
-
-    //use read data1 or readdata1 shifted 8 bits?
-    // --> Should be caled alu_a_input
-    //assign read_reg_1_data = shifted_data_1 ? ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]}) : read_data_1; 
     always @(*) begin
-	    read_reg_1_data_w = 2'b00;
-        case(shifted_data_1)
-            2'b01 : read_reg_1_data_w = ({read_data_1[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]});
-            2'b00 : read_reg_1_data_w = read_data_1;
-            2'b10 : read_reg_1_data_w = {read_data_1[0], read_data_1[1], read_data_1[2], read_data_1[3],
-                    read_data_1[4], read_data_1[5], read_data_1[6], read_data_1[7], read_data_1[8],
-                    read_data_1[9], read_data_1[10], read_data_1[11], read_data_1[12], read_data_1[13],
-                    read_data_1[14], read_data_1[15]};
+        pc_decision_w = 16'h0000;
+        case(pc_dec)
+            2'b00 : pc_decision_w = pc_plus;
+            2'b01 : pc_decision_w = branch_address;
+            2'b10 : pc_decision_w = jump_address;
+            2'b11 : pc_decision_w = alu_out;
+        endcase
+    end
+    assign pc_decision = pc_decision_w;
+    
+
+    //use read data1 or readdata1 shifted 8 bits?e
+    always @(*) begin
+        alu_a_input_w = 2'b00;
+        case(ALUSrc_a)
+            2'b00 : alu_a_input_w = reg1_data;
+            2'b01 : alu_a_input_w = ({reg1_data[7:0], 8'b0} | {8'b0, sign_ext_low_bits[7:0]});
+            2'b10 : alu_a_input_w = {reg1_data[0], reg1_data[1], reg1_data[2], reg1_data[3],
+                    reg1_data[4], reg1_data[5], reg1_data[6], reg1_data[7], reg1_data[8],
+                    reg1_data[9], reg1_data[10], reg1_data[11], reg1_data[12], reg1_data[13],
+                    reg1_data[14], reg1_data[15]};
+            2'b11 : alu_a_input_w = reg2_data;
             default : shifted_data_err_w = 1'b1;
         endcase
     end
     assign shifted_data_err = shifted_data_err_w;
-    assign read_reg_1_data = read_reg_1_data_w;
+    assign alu_a_input = alu_a_input_w;
 
     //sign extended lower 8 bits
 
     always@(*) begin
-	    sign_ext_low_bits_w = 2'b00;
-	    case(i_type_1)
-		    2'b00 : sign_ext_low_bits_w = { {11{instruction[4]}}, instruction[4:0]};
-		    2'b01 : sign_ext_low_bits_w = { {8{instruction[7]}}, instruction[7:0]};
-		    2'b10 : sign_ext_low_bits_w = { 11'b0, instruction[4:0] };
-		    default : i_type_err_w = 1'b1;
-	    endcase
+        sign_ext_low_bits_w = 2'b00;
+        case(sign_extd)
+            2'b00 : sign_ext_low_bits_w = { {11{instruction[4]}}, instruction[4:0]};
+            2'b01 : sign_ext_low_bits_w = { {8{instruction[7]}}, instruction[7:0]};
+            2'b10 : sign_ext_low_bits_w = { 11'b0, instruction[4:0] };
+            default : i_type_err_w = 1'b1;
+        endcase
     end
     assign sign_ext_low_bits = sign_ext_low_bits_w;
     assign i_type_err = i_type_err_w;
    
-    //mux before main alu
+    //mux before alu
     always@(*) begin
-	    alu_b_input_w = 2'b00;
-	    case(ALUSrc)
-		    2'b00 : alu_b_input_w = read_reg_2_data;
-		    2'b01 : alu_b_input_w = sign_ext_low_bits;
-		    2'b10 : alu_b_input_w = 16'b0;
-		    default : alu_src_err_w = 1'b1;
-	    endcase
+        alu_b_input_w = 2'b00;
+        case(ALUSrc_b)
+            2'b00 : alu_b_input_w = reg2_data;
+            2'b01 : alu_b_input_w = sign_ext_low_bits;
+            2'b10 : alu_b_input_w = 16'b0;
+            2'b11 : alu_b_input_w = reg1_data;
+            default : alu_src_err_w = 1'b1;
+        endcase
     end
     assign alu_b_input = alu_b_input_w;
     assign alu_src_err = alu_src_err_w;
-
-    //branch alu input
-    assign shift_in = sign_ext_low_bits;
-    assign shift_cnt = 2'b10;
-    assign shift_op = 2'b01;
 
     //write data back to register
     assign mem_write_back = mem_write_back_w;
     always @(*) begin
         case(memToReg)
             2'b00 : mem_write_back_w = read_data;           // read data from data memory
-            2'b01 : mem_write_back_w = main_alu_out;        // data from alu
+            2'b01 : mem_write_back_w = alu_out;        // data from alu
             2'b10 : mem_write_back_w = pc_plus;             // save (pc+2) to R7
             2'b11 : mem_write_back_w = sign_ext_low_bits;   // store immediate value to 
         endcase
@@ -236,17 +220,15 @@ module proc (/*AUTOARG*/
     // change to wrtite_reg_dst
     assign write_reg = write_reg_w;
     always @(*) begin
-	    write_reg_w = 3'b000;
+        write_reg_w = 3'b000;
         case(regDst)
             2'b00 : write_reg_w = instruction[10:8];
             2'b01 : write_reg_w = instruction[4:2];
             2'b10 : write_reg_w = 3'b111;
-	    2'b11 : write_reg_w = instruction[7:5];
+            2'b11 : write_reg_w = instruction[7:5];
             default : write_data_err = 1'b1;
         endcase
     end
-
-
 
 endmodule // proc
 // DUMMY LINE FOR REV CONTROL :0:

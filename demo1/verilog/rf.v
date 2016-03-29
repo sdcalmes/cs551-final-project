@@ -3,7 +3,7 @@
 /* $Rev: 45 $ */
 module rf (
            // Outputs
-           read1data, read2data, err,
+           read1data, read2data, //err,
            // Inputs
            clk, rst, read1regsel, read2regsel, writeregsel, writedata, write
            );
@@ -16,7 +16,7 @@ module rf (
 
    output [15:0] read1data;
    output [15:0] read2data;
-   output        err;
+   //output        err;
 
    // your code
    reg writeSel1, writeSel2, writeSel3, writeSel4, writeSel5, writeSel6, writeSel7, writeSel8;
