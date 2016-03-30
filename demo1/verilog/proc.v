@@ -90,42 +90,44 @@ module proc (/*AUTOARG*/
     ////////////////////////////////
     /////    Instantiate     //////
     //////////////////////////////
-    
+
+    //fetch
     reg_16      pc_reg(.WriteData(pc_decision), .WriteSel(1'b1), .ReadData(PC), .clk(clk),
                 .rst(rst));
-
+    //fetch
     memory2c    inst_mem(.data_in(), .data_out(instruction), .addr(PC),
                 .enable(1'b1), .wr(1'b0), .createdump(createdump), 
                 .clk(clk), .rst(rst));
-
+    //decode
     rf          register(.read1regsel(instruction[10:8]), .read2regsel(instruction[7:5]),
                 .writeregsel(write_reg), .writedata(mem_write_back), .write(regWrite),
                 .read1data(reg1_data), .read2data(reg2_data), .clk(clk), .rst(rst));
-
+    //decode
     control     control(.instr(instruction[15:11]), .regDst(regDst), .regWrite(regWrite),
                 .sign_extd(sign_extd), .ALUSrc_a(ALUSrc_a), .ALUSrc_b(ALUSrc_b), .ALUOp(ALUOp),
                 .sign_alu(sign_alu), .set_select(set_select), .alu_res_sel(alu_res_sel),
                 .memToReg(memToReg), .pc_dec(pc_dec), .branch(branch), .branch_eqz(branch_eqz),
                 .branch_gtz(branch_gtz), .branch_ltz(branch_ltz), .memRead(memRead),
                 .memWrite(memWrite), .err(control_err), .halt(halt), .createdump(createdump));
-
+    //decode
     alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op), .lowerBits(instruction[1:0]),
                 .invB(invB), .invA(invA), .Cin(Cin));
-
+    //execute
     alu         alu(.A(alu_a_input), .B(alu_b_input), .Cin(Cin), .Op(alu_op), .invA(invA),
                 .invB(invB), .sign(sign_alu), .Out(alu_result), .Z(alu_z), .lt_zero(alu_ltz),
                 .Cout(alu_Cout), .sle_lt_zero(sle_lt_zero));
-
+    //fetch
     pc_inc      pc_add(.A(PC), .Out(pc_plus));
-
+    
+    //execute
     add_16      jump_add(.A(pc_plus), .B({{5{instruction[10]}},{instruction[10:0]}}),
                 .Out(jump_address));
-
+    //execute
     branch_control  branch_control(.control_eqz(branch_eqz), .control_gtz(branch_gtz),
                 .control_ltz(branch_ltz), .branch(branch), .alu_z(alu_z), .alu_ltz(alu_ltz),
                 .pc_plus(pc_plus), .branch_offset({{8{instruction[7]}},instruction[7:0]}),
                 .branch_address(branch_address));
-
+    //mem
     memory2c    data_mem(.data_in(reg2_data), .data_out(read_data),.addr(alu_out),
                 .enable(memRead), .wr(memWrite), .createdump(createdump), .clk(clk),
                 .rst(rst));
@@ -137,6 +139,8 @@ module proc (/*AUTOARG*/
     ////////////////////////////
     
     //set select crap...if we not it, it works with negatives.
+    //after alu, SLE, SLT, SEQ, SCO
+    //Execute
     always @(*) begin
         case(set_select)
             2'b00 : set_out = {15'b0, alu_z};                   //SEQ
@@ -149,6 +153,7 @@ module proc (/*AUTOARG*/
 
     
     //pc update (jump or dont jump?)
+    //Mem
     always @(*) begin
         pc_decision_w = 16'h0000;
         case(pc_dec)
@@ -162,6 +167,7 @@ module proc (/*AUTOARG*/
     
 
     //use read data1 or readdata1 shifted 8 bits?e
+    //Execute
     always @(*) begin
         alu_a_input_w = 2'b00;
         case(ALUSrc_a)
@@ -179,7 +185,7 @@ module proc (/*AUTOARG*/
     assign alu_a_input = alu_a_input_w;
 
     //sign extended lower 8 bits
-
+    //decode
     always@(*) begin
         sign_ext_low_bits_w = 2'b00;
         case(sign_extd)
@@ -193,6 +199,7 @@ module proc (/*AUTOARG*/
     assign i_type_err = i_type_err_w;
    
     //mux before alu
+    //Execute
     always@(*) begin
         alu_b_input_w = 2'b00;
         case(ALUSrc_b)
@@ -207,6 +214,7 @@ module proc (/*AUTOARG*/
     assign alu_src_err = alu_src_err_w;
 
     //write data back to register
+    //Write
     assign mem_write_back = mem_write_back_w;
     always @(*) begin
         case(memToReg)
@@ -218,6 +226,7 @@ module proc (/*AUTOARG*/
     end
 
     // change to wrtite_reg_dst
+    // decode
     assign write_reg = write_reg_w;
     always @(*) begin
         write_reg_w = 3'b000;
