@@ -26,34 +26,25 @@ module proc (/*AUTOARG*/
     ///////////////////////////////
 
 
-    //pc adder stuff
-    wire [15:0] pc_plus;
-    wire [15:0] pc_decision;
-    //branch/jump things
-    wire [15:0] branch_address;
-    wire [15:0] jump_address;
+    //fetch - output
+    wire [15:0] pc_plus, instruction;
     
-    //memory2c elements
-    wire [15:0] instruction;
-    wire [15:0] read_data;
-    wire createdump;
-
-    //control elements
-    wire branch, memRead, memWrite, sign_alu,
-        branch_eqz, branch_gtz, branch_ltz, alu_res_sel;
-    wire [1:0] memToReg, set_select, ALUSrc_a, ALUSrc_b, pc_dec;
-    wire halt;
-
-    //register components
-    wire [15:0] mem_write_back, reg2_data, reg1_data, sign_ext_low_bits;
-
-    //alu elements
-    wire [15:0] alu_out;
+    //decode - output
+    wire branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite, invA, invB, Cin, sign_alu,
+	      alu_res_sel, halt, createdump;
+    wire [1:0] ALUSrc_a, ALUSrc_b, set_select, memToReg, pc_dec;
     wire [2:0] alu_op;
-    wire Cin;
-    wire invA, invB;
+    wire [15:0] reg1_data, reg2_data, sign_ext_low_bits;
 
-   
+    //execute - output
+    wire [15:0] jump_address, branch_address, alu_out;
+    
+    //memory - output
+    wire [15:0] read_data, pc_decision;
+
+    //write back - output
+    wire [15:0] mem_write_back;
+
 
     //errors
     wire fetch_err;

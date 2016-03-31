@@ -84,6 +84,7 @@ module proc_hier_bench();
                         WriteData);
             end
          end else if (Halt) begin
+            //$display("Hello world...DUMP = %b");
             $fdisplay(sim_log_file, "SIMLOG:: Processor halted\n");
             $fdisplay(sim_log_file, "SIMLOG:: sim_cycles %d\n", DUT.c0.cycle_count);
             $fdisplay(sim_log_file, "SIMLOG:: inst_count %d\n", inst_count);
@@ -152,6 +153,8 @@ module proc_hier_bench();
    
    assign Halt = DUT.p0.decode0.halt;
    // Is processor halted (1 bit signal)
+
+   assign Dump = DUT.p0.decode0.createdump;
    
    /* Add anything else you want here */
    

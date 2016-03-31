@@ -3,14 +3,14 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
 
     input [4:0] instr;
 
-    output regWrite, sign_alu, alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite, createdump;
+    output regWrite, sign_alu, alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite;
     output [1:0] regDst, sign_extd, ALUSrc_a, ALUSrc_b, set_select, memToReg, pc_dec;
     output [3:0] ALUOp;
     
-    output reg halt, err;
+    output reg halt, err, createdump;
     
     reg regWrite_w, sign_alu_w, alu_res_sel_w, branch_w, branch_eqz_w, branch_gtz_w,
-        branch_ltz_w, memRead_w, memWrite_w, createdump_w;
+        branch_ltz_w, memRead_w, memWrite_w;
     reg [1:0] regDst_w, sign_extd_w, ALUSrc_a_w, ALUSrc_b_w, set_select_w, memToReg_w, pc_dec_w;
     reg [3:0] ALUOp_w;
 
@@ -65,7 +65,6 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
     assign branch_ltz = branch_ltz_w;     //1
     assign memRead = memRead_w;             //1
     assign memWrite = memWrite_w;           //1
-    assign createdump = createdump_w;
 
     always@(*)begin
 
@@ -88,12 +87,12 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
         memRead_w = 1'b0;
         memWrite_w = 1'b0;
         halt = 1'b0;
-        createdump_w = 1'b0;
+        createdump = 1'b0;
         err = 1'b0;
 
         casex(instr)
             HALT: begin
-                createdump_w = 1'b1;
+                createdump = 1'b1;
                 halt = 1'b1;
             end
 

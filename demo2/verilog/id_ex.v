@@ -1,0 +1,162 @@
+module id_ex(id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz, id_memRead,
+             id_memWrite, id_invA, id_invB, id_Cin, id_sign_alu, id_alu_res_sel,
+             id_createdump, id_ALUSrc_a, id_ALUSrc_b, id_set_select,
+             id_memToReg, id_pc_dec, id_alu_op, id_reg1_data, id_reg2_data,
+             id_sign_ext_low_bits, id_instruction, ex_branch, ex_branch_eqz,
+             ex_branch_gtz, ex_branch_ltz, ex_memRead, ex_memWrite, ex_invA,
+             ex_invB, ex_Cin, ex_sign_alu, ex_alu_res_sel, ex_createdump,
+             ex_ALUSrc_a, ex_ALUSrc_b, ex_set_select, ex_memToReg, ex_pc_dec,
+             ex_alu_op, ex_reg1_data, ex_reg2_data, ex_sign_ext_low_bits,
+             ex_instruction);
+    
+    input id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz, id_memRead, 
+          id_memWrite, id_invA, id_invB, id_Cin, id_sign_alu, id_alu_res_sel,
+          id_createdump;
+    input [1:0] id_ALUSrc_a, id_ALUSrc_b, id_set_select, id_memToReg, id_pc_dec;
+    input [2:0] id_alu_op;
+    input [15:0] id_reg1_data, id_reg2_data, id_sign_ext_low_bits,
+                id_instruction;
+    
+    output ex_branch, ex_branch_eqz, ex_branch_gtz, ex_branch_ltz, ex_memRead, 
+           ex_memWrite, ex_invA, ex_invB, ex_Cin, ex_sign_alu, ex_alu_res_sel,
+           ex_createdump;
+    output [1:0] ex_ALUSrc_a, ex_ALUSrc_b, ex_set_select, ex_memToReg,
+                 ex_pc_dec;
+    output [2:0] ex_alu_op;
+    output [15:0] ex_reg1_data, ex_reg2_data, ex_sign_ext_low_bits,
+                 ex_instruction;
+
+    dff branch_flop(
+        .d(id_branch),
+        .q(ex_branch),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff branch_eqz_flop(
+        .d(id_branch_eqz),
+        .q(ex_branch_eqz),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff branch_gtz_flop(
+        .d(id_branch_gtz),
+        .q(ex_branch_gtz),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff branch_ltz_flop(
+        .d(id_branch_ltz),
+        .q(ex_branch_ltz),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff memRead_flop(
+        .d(id_memRead),
+        .q(ex_memRead),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff memWrite_flop(
+        .d(id_memWrite),
+        .q(ex_memWrite),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff invA_flop(
+        .d(id_invA),
+        .q(ex_invA),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff invB_flop(
+        .d(id_invB),
+        .q(ex_invB),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff Cin_flop(
+        .d(id_Cin),
+        .q(ex_Cin),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff sign_alu_flop(
+        .d(id_sign_alu),
+        .q(ex_sign_alu),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff alu_res_sel_flop(
+        .d(id_alu_res_sel),
+        .q(ex_alu_res_sel),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff createdump_flop(
+        .d(id_createdump),
+        .q(ex_createdump),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff ALUSrc_a_flop[1:0](
+        .d(id_ALUSrc_a),
+        .q(ex_ALUSrc_a),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff ALUSrc_b_flop[1:0](
+        .d(id_ALUSrc_b),
+        .q(ex_ALUSrc_b),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff set_select_flop[1:0](
+        .d(id_set_select),
+        .q(ex_set_select),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff memToReg_flop[1:0](
+        .d(id_memToReg),
+        .q(ex_memToReg),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff pc_dec_flop[1:0](
+        .d(id_pc_dec),
+        .q(ex_pc_dec),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff alu_op_flop[2:0](
+        .d(id_alu_op),
+        .q(ex_alu_op),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff reg1_data_flop[15:0](
+        .d(id_reg1_data),
+        .q(ex_reg1_data),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff reg2_data_flop[15:0](
+        .d(id_reg2_data),
+        .q(ex_reg2_data),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff sign_ext_low_bits_flop[15:0](
+        .d(id_sign_ext_low_bits),
+        .q(ex_sign_ext_low_bits),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff instruction_flop[15:0](
+        .d(id_instruction),
+        .q(ex_instruction),
+        .clk(clk),
+        .rst(rst)
+    );
+
+endmodule
