@@ -1,13 +1,11 @@
 module fetch(pc_decision, instruction, createdump, pc_plus, clk, rst, err);
 
-   input clk;
-   input rst;
+   input clk, rst, createdump;
+   input [15:0] pc_decision;
    
    output err;
-
-   input [15:0] pc_decision;
    output [15:0] instruction, pc_plus;
-   input createdump;
+
 
    wire [15:0] PC;
 

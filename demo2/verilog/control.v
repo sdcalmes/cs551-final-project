@@ -93,8 +93,8 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
 
         casex(instr)
             HALT: begin
-                halt = 1'b1;
                 createdump_w = 1'b1;
+                halt = 1'b1;
             end
 
             NOP: begin

@@ -7,6 +7,7 @@ module write_back(read_data, pc_plus, sign_ext_low_bits, alu_out, mem_write_back
    reg [15:0] mem_write_back_w;
 
    always @(*) begin
+       mem_write_back_w = 16'h0000;
         case(memToReg)
             2'b00 : mem_write_back_w = read_data;           // read data from data memory
             2'b01 : mem_write_back_w = alu_out;        // data from alu

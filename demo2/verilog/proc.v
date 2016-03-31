@@ -24,68 +24,40 @@ module proc (/*AUTOARG*/
     /////////////////////////////////
     /////    REG/Wire          /////
     ///////////////////////////////
-    //random wires
-    wire rand_wire [15:0];
-  
 
 
     //pc adder stuff
     wire [15:0] pc_plus;
-    wire ofl, z;
-    wire [15:0] PC;
-    reg [15:0] pc_decision_w;
     wire [15:0] pc_decision;
     //branch/jump things
     wire [15:0] branch_address;
     wire [15:0] jump_address;
-    wire [15:0] jump_decision;
     
     //memory2c elements
     wire [15:0] instruction;
-    reg [15:0] PC_address;
-    reg [15:0] mem_address;
-    reg [15:0] write_data_mem;
     wire [15:0] read_data;
-    wire enable_read, enable_write, createdump;
+    wire createdump;
 
     //control elements
-    wire branch, memRead, memWrite, regWrite, sign_alu,
+    wire branch, memRead, memWrite, sign_alu,
         branch_eqz, branch_gtz, branch_ltz, alu_res_sel;
-    wire [1:0] memToReg, regDst, sign_extd, set_select, ALUSrc_a, ALUSrc_b, pc_dec;
-    wire [3:0] ALUOp;
+    wire [1:0] memToReg, set_select, ALUSrc_a, ALUSrc_b, pc_dec;
     wire halt;
 
     //register components
-    reg [2:0] read_reg_1, read_reg_2, write_reg_w;
-    wire [2:0] write_reg;
-    reg [15:0] mem_write_back_w, alu_a_input_w;
-    wire [15:0] mem_write_back, alu_a_input, reg2_data, reg1_data;
-    reg write_data_err;
-
-    //branch alu elemtns
-    wire [15:0] sign_ext_low_bits, branch_out;
-    wire b_ofl, b_z, b_zero;
-    reg [15:0] sign_ext_low_bits_w;
+    wire [15:0] mem_write_back, reg2_data, reg1_data, sign_ext_low_bits;
 
     //alu elements
-    wire [15:0] alu_b_input, alu_out, alu_result;
-    wire alu_z, alu_ltz, alu_Cout, sle_lt_zero;
+    wire [15:0] alu_out;
     wire [2:0] alu_op;
     wire Cin;
-    reg [15:0] alu_b_input_w, set_out;
-    //not sure about invA yet
     wire invA, invB;
 
    
 
     //errors
+    wire fetch_err;
     wire control_err;
-    wire alu_src_err;
-    reg alu_src_err_w;
-    wire i_type_err;
-    reg i_type_err_w;
-    reg shifted_data_err_w;
-    wire shifted_data_err;
 
     ////////////////////////////////
     /////    Instantiate     //////
