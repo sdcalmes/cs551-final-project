@@ -26,25 +26,40 @@ module proc (/*AUTOARG*/
     ///////////////////////////////
 
 
-    //fetch - output
-    wire [15:0] pc_plus, instruction;
-    
-    //decode - output
-    wire branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite, invA,
-         invB, Cin, sign_alu,  alu_res_sel, halt, createdump;
-    wire [1:0] ALUSrc_a, ALUSrc_b, set_select, memToReg, pc_dec;
-    wire [2:0] alu_op;
-    wire [15:0] reg1_data, reg2_data, sign_ext_low_bits;
+    //flop 1
+    wire [15:0] if_pc_plus, if_instruction;
+    wire [15:0] id_pc_plus, id_instruction;
 
-    //execute - output
-    wire [15:0] jump_address, branch_address, alu_out;
+    //flop 2
+    wire id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz,
+         id_Cin, id_invA, id_invB, id_memRead, id_memWrite, id_sign_alu,
+          id_createdump, clk, rst;
+    wire [1:0] id_ALUSrc_a, id_ALUSrc_b, id_memToReg, id_pc_dec, id_set_select;
+    wire [2:0] id_alu_op;
+    wire [15:0] id_reg1_data, id_reg2_data, id_sign_ext_low_bits;
     
+    wire ex_alu_res_sel, ex_branch, ex_branch_eqz, ex_branch_gtz, ex_branch_ltz,
+          ex_Cin, ex_invA, ex_invB, ex_memRead, ex_memWrite, ex_sign_alu,
+          ex_createdump;
+    wire [1:0] ex_ALUSrc_a, ex_ALUSrc_b, ex_memToReg, ex_pc_dec, ex_set_select;
+    wire [2:0] ex_alu_op;
+    wire [15:0] ex_instruction, ex_pc_plus, ex_reg1_data, ex_reg2_data,
+            ex_sign_ext_low_bits;
+
+    //flop 3
+    wire [15:0] ex_alu_out;
+    wire mem_memRead, mem_memWrite, mem_createdump;
+    wire [1:0] mem_memToReg;
+    wire [15:0] mem_alu_out, mem_pc_plus, mem_reg2_data, mem_sign_ext_low_bits;
+
     //memory - output
-    wire [15:0] read_data, pc_decision;
+    wire [15:0] pc_decision;
+    wire [15:0] mem_read_data;
+    wire [1:0] wb_memToReg;
+    wire [15:0] wb_alu_out, wb_pc_plus, wb_read_data, wb_sign_ext_low_bits;
 
     //write back - output
     wire [15:0] mem_write_back;
-
 
     //errors
     wire fetch_err;
@@ -55,35 +70,80 @@ module proc (/*AUTOARG*/
     //////////////////////////////
 
     fetch	fetch0(.createdump(createdump), .pc_decision(pc_decision),
-            .instruction(instruction), .pc_plus(pc_plus), 
+            .instruction(if_instruction), .pc_plus(if_pc_plus), 
             .clk(clk), .rst(rst), .err(fetch_err));
 
-    decode	decode0(.instruction(instruction), .mem_write_back(mem_write_back),
-            .alu_res_sel(alu_res_sel), .branch(branch), .branch_eqz(branch_eqz),
-            .branch_gtz(branch_gtz), .branch_ltz(branch_ltz), .Cin(Cin),
-            .invA(invA), .invB(invB), .memRead(memRead), .memWrite(memWrite),
-            .sign_alu(sign_alu), .ALUSrc_a(ALUSrc_a), .ALUSrc_b(ALUSrc_b),
-            .memToReg(memToReg), .pc_dec(pc_dec), .set_select(set_select),
-            .alu_op(alu_op), .reg1_data(reg1_data), .reg2_data(reg2_data),
-            .sign_ext_low_bits(sign_ext_low_bits), .control_err(control_err),
+    if_id   pipe0(.if_pc_plus(if_pc_plus), .if_instruction(if_instruction),
+            .id_pc_plus(id_pc_plus), .id_instruction(id_instruction), .clk(clk),
+            .rst(rst));
+
+    decode	decode0(.instruction(id_instruction), .mem_write_back(mem_write_back),
+            .alu_res_sel(id_alu_res_sel), .branch(id_branch), .branch_eqz(id_branch_eqz),
+            .branch_gtz(id_branch_gtz), .branch_ltz(id_branch_ltz), .Cin(id_Cin),
+            .invA(id_invA), .invB(id_invB), .memRead(id_memRead), .memWrite(id_memWrite),
+            .sign_alu(id_sign_alu), .ALUSrc_a(id_ALUSrc_a), .ALUSrc_b(id_ALUSrc_b),
+            .memToReg(id_memToReg), .pc_dec(id_pc_dec), .set_select(id_set_select),
+            .alu_op(id_alu_op), .reg1_data(id_reg1_data), .reg2_data(id_reg2_data),
+            .sign_ext_low_bits(id_sign_ext_low_bits), .control_err(control_err),
             .createdump(createdump), .halt(halt), .clk(clk), .rst(rst));
 
-    execute	execute0(.alu_res_sel(alu_res_sel), .branch(branch),
-            .branch_eqz(branch_eqz), .branch_gtz(branch_gtz),
-            .branch_ltz(branch_ltz), .Cin(Cin), .invA(invA), .invB(invB),
-            .sign_alu(sign_alu), .ALUSrc_a(ALUSrc_a), .ALUSrc_b(ALUSrc_b),
-            .pc_dec(pc_dec), .set_select(set_select), .alu_op(alu_op),
-            .pc_plus(pc_plus), .instruction(instruction), .reg1_data(reg1_data),
-            .reg2_data(reg2_data), .sign_ext_low_bits(sign_ext_low_bits),
-            .alu_out(alu_out), .pc_decision(pc_decision));
+    id_ex pipe1(.id_alu_res_sel(id_alu_res_sel), .id_branch(id_branch),
+            .id_branch_eqz(id_branch_eqz), .id_branch_gtz(id_branch_gtz),
+            .id_branch_ltz(id_branch_ltz), .id_Cin(id_Cin), .id_invA(id_invA),
+            .id_invB(id_invB), .id_memRead(id_memRead), .id_memWrite(id_memWrite),
+            .id_sign_alu(id_sign_alu), .id_createdump(id_createdump),
+            .id_ALUSrc_a(id_ALUSrc_a), .id_ALUSrc_b(id_ALUSrc_b),
+            .id_memToReg(id_memToReg), .id_pc_dec(id_pc_dec),
+            .id_set_select(id_set_select), .id_alu_op(id_alu_op),
+            .id_reg1_data(id_reg1_data), .id_reg2_data(id_reg2_data),
+            .id_sign_ext_low_bits(id_sign_ext_low_bits),
+            .id_instruction(id_instruction), .id_pc_plus(id_pc_plus),
+            .ex_alu_res_sel(ex_alu_res_sel), .ex_branch(ex_branch),
+            .ex_branch_eqz(ex_branch_eqz), .ex_branch_gtz(ex_branch_gtz),
+            .ex_branch_ltz(ex_branch_ltz), .ex_Cin(ex_Cin), .ex_invA(ex_invA),
+            .ex_invB(ex_invB), .ex_memRead(ex_memRead), .ex_memWrite(ex_memWrite),
+            .ex_sign_alu(ex_sign_alu), .ex_createdump(ex_createdump),
+            .ex_ALUSrc_a(ex_ALUSrc_a), .ex_ALUSrc_b(ex_ALUSrc_b),
+            .ex_memToReg(ex_memToReg), .ex_pc_dec(ex_pc_dec),
+            .ex_set_select(ex_set_select), .ex_alu_op(ex_alu_op), 
+            .ex_instruction(ex_instruction), .ex_pc_plus(ex_pc_plus),
+            .ex_reg1_data(ex_reg1_data), .ex_reg2_data(ex_reg2_data),
+            .ex_sign_ext_low_bits(ex_sign_ext_low_bits), .clk(clk), .rst(rst));
 
-    memory	memory0(.memRead(memRead), .memWrite(memWrite), .alu_out(alu_out), 
-            .reg2_data(reg2_data), .read_data(read_data),
+    execute	execute0(.alu_res_sel(ex_alu_res_sel), .branch(ex_branch),
+            .branch_eqz(ex_branch_eqz), .branch_gtz(ex_branch_gtz),
+            .branch_ltz(ex_branch_ltz), .Cin(ex_Cin), .invA(ex_invA), .invB(ex_invB),
+            .sign_alu(ex_sign_alu), .ALUSrc_a(ex_ALUSrc_a), .ALUSrc_b(ex_ALUSrc_b),
+            .pc_dec(ex_pc_dec), .set_select(ex_set_select), .alu_op(ex_alu_op),
+            .pc_plus(ex_pc_plus), .instruction(ex_instruction), .reg1_data(ex_reg1_data),
+            .reg2_data(ex_reg2_data), .sign_ext_low_bits(ex_sign_ext_low_bits),
+            .alu_out(ex_alu_out), .pc_decision(pc_decision));
+
+    ex_mem  pipe2(.ex_memRead(ex_memRead), .ex_memWrite(ex_memWrite),
+            .ex_memToReg(ex_memToReg), .ex_createdump(ex_createdump),
+            .ex_alu_out(ex_alu_out),
+            .ex_pc_plus(ex_pc_plus), .ex_reg2_data(ex_reg2_data),
+            .ex_sign_ext_low_bits(ex_sign_ext_low_bits),
+            .mem_memRead(mem_memRead), .mem_memWrite(mem_memWrite),
+            .mem_memToReg(mem_memToReg), .mem_createdump(mem_createdump),
+            .mem_alu_out(mem_alu_out), .mem_pc_plus(mem_pc_plus),
+            .mem_reg2_data(mem_reg2_data),
+            .mem_sign_ext_low_bits(mem_sign_ext_low_bits), .clk(clk), .rst(rst));
+
+    memory	memory0(.memRead(mem_memRead), .memWrite(mem_memWrite), .alu_out(mem_alu_out), 
+            .reg2_data(mem_reg2_data), .read_data(mem_read_data),
             .createdump(createdump), .clk(clk), .rst(rst));
 
-    write_back	write_back(.memToReg(memToReg), .alu_out(alu_out),
-            .pc_plus(pc_plus), .read_data(read_data),
-            .sign_ext_low_bits(sign_ext_low_bits),
+    mem_wb  pipe3(.mem_memToReg(mem_memToReg), .mem_alu_out(mem_alu_out),
+            .mem_pc_plus(mem_pc_plus), .mem_read_data(mem_read_data), 
+            .mem_sign_ext_low_bits(mem_sign_ext_low_bits),
+            .wb_memToReg(wb_memToReg), .wb_alu_out(wb_alu_out),
+            .wb_pc_plus(wb_pc_plus), .wb_read_data(wb_read_data),
+            .wb_sign_ext_low_bits(wb_sign_ext_low_bits));
+
+    write_back	write_back(.memToReg(wb_memToReg), .alu_out(wb_alu_out),
+            .pc_plus(wb_pc_plus), .read_data(wb_read_data),
+            .sign_ext_low_bits(wb_sign_ext_low_bits),
             .mem_write_back(mem_write_back));
 
 

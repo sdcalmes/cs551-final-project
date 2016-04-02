@@ -127,7 +127,7 @@ module proc_hier_bench();
    // names on the right hand side
     
    assign PC = DUT.p0.fetch0.PC;
-   assign Inst = DUT.p0.instruction;
+   assign Inst = DUT.p0.if_instruction;
    
    assign RegWrite = DUT.p0.decode0.regWrite;
    // Is memory being read, one bit signal (1 means yes, 0 means no)

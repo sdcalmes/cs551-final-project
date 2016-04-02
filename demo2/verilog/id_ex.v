@@ -1,31 +1,63 @@
-module id_ex(id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz, id_memRead,
-             id_memWrite, id_invA, id_invB, id_Cin, id_sign_alu, id_alu_res_sel,
-             id_createdump, id_ALUSrc_a, id_ALUSrc_b, id_set_select,
-             id_memToReg, id_pc_dec, id_alu_op, id_reg1_data, id_reg2_data,
-             id_sign_ext_low_bits, id_instruction, ex_branch, ex_branch_eqz,
-             ex_branch_gtz, ex_branch_ltz, ex_memRead, ex_memWrite, ex_invA,
-             ex_invB, ex_Cin, ex_sign_alu, ex_alu_res_sel, ex_createdump,
-             ex_ALUSrc_a, ex_ALUSrc_b, ex_set_select, ex_memToReg, ex_pc_dec,
-             ex_alu_op, ex_reg1_data, ex_reg2_data, ex_sign_ext_low_bits,
-             ex_instruction);
-    
-    input id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz, id_memRead, 
-          id_memWrite, id_invA, id_invB, id_Cin, id_sign_alu, id_alu_res_sel,
-          id_createdump;
-    input [1:0] id_ALUSrc_a, id_ALUSrc_b, id_set_select, id_memToReg, id_pc_dec;
-    input [2:0] id_alu_op;
-    input [15:0] id_reg1_data, id_reg2_data, id_sign_ext_low_bits,
-                id_instruction;
-    
-    output ex_branch, ex_branch_eqz, ex_branch_gtz, ex_branch_ltz, ex_memRead, 
-           ex_memWrite, ex_invA, ex_invB, ex_Cin, ex_sign_alu, ex_alu_res_sel,
-           ex_createdump;
-    output [1:0] ex_ALUSrc_a, ex_ALUSrc_b, ex_set_select, ex_memToReg,
-                 ex_pc_dec;
-    output [2:0] ex_alu_op;
-    output [15:0] ex_reg1_data, ex_reg2_data, ex_sign_ext_low_bits,
-                 ex_instruction;
+module id_ex(id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz,
+        id_branch_ltz, id_Cin, id_invA, id_invB, id_memRead, id_memWrite,
+        id_sign_alu, id_createdump, id_ALUSrc_a, id_ALUSrc_b, id_memToReg,
+        id_pc_dec, id_set_select, id_alu_op, id_reg1_data, id_reg2_data,
+        id_sign_ext_low_bits, id_instruction, id_pc_plus, ex_alu_res_sel,
+        ex_branch, ex_branch_eqz, ex_branch_gtz, ex_branch_ltz, ex_Cin, ex_invA,
+        ex_invB, ex_memRead, ex_memWrite, ex_sign_alu,ex_createdump, ex_ALUSrc_a,
+        ex_ALUSrc_b, ex_memToReg, ex_pc_dec, ex_set_select, ex_alu_op, 
+        ex_instruction, ex_pc_plus, ex_reg1_data, ex_reg2_data,
+        ex_sign_ext_low_bits, clk, rst);
+   
 
+
+    input id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz,
+          id_Cin, id_invA, id_invB, id_memRead, id_memWrite, id_sign_alu,
+          id_createdump, clk, rst;
+    input [1:0] id_ALUSrc_a, id_ALUSrc_b, id_memToReg, id_pc_dec, id_set_select;
+    input [2:0] id_alu_op;
+    input [15:0] id_instruction, id_pc_plus, id_reg1_data, id_reg2_data,
+          id_sign_ext_low_bits;
+    
+    output ex_alu_res_sel, ex_branch, ex_branch_eqz, ex_branch_gtz, ex_branch_ltz,
+          ex_Cin, ex_invA, ex_invB, ex_memRead, ex_memWrite, ex_sign_alu,
+          ex_createdump;
+    output [1:0] ex_ALUSrc_a, ex_ALUSrc_b, ex_memToReg, ex_pc_dec, ex_set_select;
+    output [2:0] ex_alu_op;
+    output [15:0] ex_instruction, ex_pc_plus, ex_reg1_data, ex_reg2_data,
+            ex_sign_ext_low_bits;
+//assign statements
+    assign ex_alu_res_sel = id_alu_res_sel;   
+    assign ex_branch = id_branch;
+    assign ex_branch_eqz = id_branch_eqz; 
+    assign ex_branch_gtz = id_branch_gtz;
+    assign ex_branch_ltz = id_branch_ltz;
+    assign ex_Cin = id_Cin;
+    assign ex_invA = id_invA;
+    assign ex_invB = id_invB;
+    assign ex_memRead = id_memRead;
+    assign ex_memWrite = id_memWrite;
+    assign ex_sign_alu = id_sign_alu;
+    assign ex_createdump = id_createdump;    
+    assign ex_ALUSrc_a = id_ALUSrc_a;
+    assign ex_ALUSrc_b = id_ALUSrc_b;
+    assign ex_memToReg = id_memToReg;
+    assign ex_pc_dec = id_pc_dec;
+    assign ex_set_select = id_set_select;
+    assign ex_alu_op = id_alu_op;
+    assign ex_instruction = id_instruction;
+    assign ex_pc_plus = id_pc_plus;
+    assign ex_reg1_data = id_reg1_data;
+    assign ex_reg2_data = id_reg2_data;
+    assign ex_sign_ext_low_bits = id_sign_ext_low_bits; 
+
+    /*
+    dff alu_res_sel_flop(
+        .d(id_alu_res_sel),
+        .q(ex_alu_res_sel),
+        .clk(clk),
+        .rst(rst)
+    );
     dff branch_flop(
         .d(id_branch),
         .q(ex_branch),
@@ -50,15 +82,9 @@ module id_ex(id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz, id_memRead,
         .clk(clk),
         .rst(rst)
     );
-    dff memRead_flop(
-        .d(id_memRead),
-        .q(ex_memRead),
-        .clk(clk),
-        .rst(rst)
-    );
-    dff memWrite_flop(
-        .d(id_memWrite),
-        .q(ex_memWrite),
+    dff Cin_flop(
+        .d(id_Cin),
+        .q(ex_Cin),
         .clk(clk),
         .rst(rst)
     );
@@ -74,21 +100,21 @@ module id_ex(id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz, id_memRead,
         .clk(clk),
         .rst(rst)
     );
-    dff Cin_flop(
-        .d(id_Cin),
-        .q(ex_Cin),
+    dff memRead_flop(
+        .d(id_memRead),
+        .q(ex_memRead),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff memWrite_flop(
+        .d(id_memWrite),
+        .q(ex_memWrite),
         .clk(clk),
         .rst(rst)
     );
     dff sign_alu_flop(
         .d(id_sign_alu),
         .q(ex_sign_alu),
-        .clk(clk),
-        .rst(rst)
-    );
-    dff alu_res_sel_flop(
-        .d(id_alu_res_sel),
-        .q(ex_alu_res_sel),
         .clk(clk),
         .rst(rst)
     );
@@ -110,12 +136,6 @@ module id_ex(id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz, id_memRead,
         .clk(clk),
         .rst(rst)
     );
-    dff set_select_flop[1:0](
-        .d(id_set_select),
-        .q(ex_set_select),
-        .clk(clk),
-        .rst(rst)
-    );
     dff memToReg_flop[1:0](
         .d(id_memToReg),
         .q(ex_memToReg),
@@ -128,9 +148,27 @@ module id_ex(id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz, id_memRead,
         .clk(clk),
         .rst(rst)
     );
+    dff set_select_flop[1:0](
+        .d(id_set_select),
+        .q(ex_set_select),
+        .clk(clk),
+        .rst(rst)
+    );
     dff alu_op_flop[2:0](
         .d(id_alu_op),
         .q(ex_alu_op),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff instruction_flop[15:0](
+        .d(id_instruction),
+        .q(ex_instruction),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff pc_plus_flop[15:0](
+        .d(id_pc_plus),
+        .q(ex_pc_plus),
         .clk(clk),
         .rst(rst)
     );
@@ -152,11 +190,5 @@ module id_ex(id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz, id_memRead,
         .clk(clk),
         .rst(rst)
     );
-    dff instruction_flop[15:0](
-        .d(id_instruction),
-        .q(ex_instruction),
-        .clk(clk),
-        .rst(rst)
-    );
-
+*/
 endmodule
