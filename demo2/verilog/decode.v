@@ -1,14 +1,14 @@
-module decode(instruction, mem_write_back, reg1_data, reg2_data,
-	      ALUSrc_a, ALUSrc_b, alu_op, sign_alu, set_select, alu_res_sel, memToReg,
-	      pc_dec, branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite, control_err,
-	      sign_ext_low_bits, invA, invB, Cin, halt, createdump, clk, rst);
+module decode(instruction, mem_write_back, alu_res_sel, branch, branch_eqz,
+        branch_gtz, branch_ltz, Cin, invA, invB, memRead, memWrite, sign_alu,
+        ALUSrc_a, ALUSrc_b, memToReg, pc_dec, set_select, alu_op, reg1_data,
+        reg2_data, sign_ext_low_bits, control_err, createdump, halt, clk, rst);
 
       input clk, rst;
       input [15:0] instruction, mem_write_back;
 
-      output branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite, invA, invB, Cin, sign_alu,
-	      alu_res_sel, control_err, halt, createdump;
-      output [1:0] ALUSrc_a, ALUSrc_b, set_select, memToReg, pc_dec;
+      output alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA,
+            invB, memRead, memWrite, sign_alu, control_err, halt, createdump;
+      output [1:0] ALUSrc_a, ALUSrc_b, memToReg, pc_dec, set_select;
       output [2:0] alu_op;
       output [15:0] reg1_data, reg2_data, sign_ext_low_bits;
 

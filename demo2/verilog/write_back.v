@@ -1,7 +1,8 @@
-module write_back(read_data, pc_plus, sign_ext_low_bits, alu_out, mem_write_back, memToReg);
+module write_back(memToReg, alu_out, pc_plus, read_data, sign_ext_low_bits,
+            mem_write_back);
 
    input [1:0] memToReg;
-   input [15:0] read_data, pc_plus, sign_ext_low_bits, alu_out;
+   input [15:0] alu_out, pc_plus, read_data, sign_ext_low_bits;
    output [15:0] mem_write_back;
 
    reg [15:0] mem_write_back_w;

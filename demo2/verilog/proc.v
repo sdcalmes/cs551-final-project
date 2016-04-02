@@ -30,8 +30,8 @@ module proc (/*AUTOARG*/
     wire [15:0] pc_plus, instruction;
     
     //decode - output
-    wire branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite, invA, invB, Cin, sign_alu,
-	      alu_res_sel, halt, createdump;
+    wire branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite, invA,
+         invB, Cin, sign_alu,  alu_res_sel, halt, createdump;
     wire [1:0] ALUSrc_a, ALUSrc_b, set_select, memToReg, pc_dec;
     wire [2:0] alu_op;
     wire [15:0] reg1_data, reg2_data, sign_ext_low_bits;
@@ -53,33 +53,38 @@ module proc (/*AUTOARG*/
     ////////////////////////////////
     /////    Instantiate     //////
     //////////////////////////////
-    //
-    //new instantiation
-    fetch	fetch0(.pc_decision(pc_decision), .instruction(instruction), .createdump(createdump),
-    			.clk(clk), .rst(rst), .err(fetch_err), .pc_plus(pc_plus));
 
-    decode	decode0(.instruction(instruction), .mem_write_back(mem_write_back), .reg1_data(reg1_data),
-    			.reg2_data(reg2_data), .ALUSrc_a(ALUSrc_a), .ALUSrc_b(ALUSrc_b),
-			.alu_op(alu_op), .sign_alu(sign_alu), .set_select(set_select), .alu_res_sel(alu_res_sel),
-			.memToReg(memToReg), .pc_dec(pc_dec), .branch(branch), .branch_eqz(branch_eqz),
-			.branch_gtz(branch_gtz), .branch_ltz(branch_ltz), .memRead(memRead), .memWrite(memWrite),
-			.control_err(control_err), .sign_ext_low_bits(sign_ext_low_bits), .invA(invA),
-			.invB(invB), .Cin(Cin), .halt(halt), .createdump(createdump), .clk(clk), .rst(rst));
+    fetch	fetch0(.createdump(createdump), .pc_decision(pc_decision),
+            .instruction(instruction), .pc_plus(pc_plus), 
+            .clk(clk), .rst(rst), .err(fetch_err));
 
-    execute	execute0(.Cin(Cin), .invA(invA), .invB(invB), .sign_alu(sign_alu), .branch_eqz(branch_eqz),
-    			 .branch_ltz(branch_ltz), .branch(branch), .alu_op(alu_op), .pc_plus(pc_plus),
-		 	 .instruction(instruction), .jump_address(jump_address), .branch_address(branch_address),
-		 	 .alu_res_sel(alu_res_sel), .alu_out(alu_out), .ALUSrc_a(ALUSrc_a), .reg1_data(reg1_data),
-		 	 .reg2_data(reg2_data), .sign_ext_low_bits(sign_ext_low_bits), .ALUSrc_b(ALUSrc_b),
-		 	 .set_select(set_select), .branch_gtz(branch_gtz));
+    decode	decode0(.instruction(instruction), .mem_write_back(mem_write_back),
+            .alu_res_sel(alu_res_sel), .branch(branch), .branch_eqz(branch_eqz),
+            .branch_gtz(branch_gtz), .branch_ltz(branch_ltz), .Cin(Cin),
+            .invA(invA), .invB(invB), .memRead(memRead), .memWrite(memWrite),
+            .sign_alu(sign_alu), .ALUSrc_a(ALUSrc_a), .ALUSrc_b(ALUSrc_b),
+            .memToReg(memToReg), .pc_dec(pc_dec), .set_select(set_select),
+            .alu_op(alu_op), .reg1_data(reg1_data), .reg2_data(reg2_data),
+            .sign_ext_low_bits(sign_ext_low_bits), .control_err(control_err),
+            .createdump(createdump), .halt(halt), .clk(clk), .rst(rst));
 
-    memory	memory0(.reg2_data(reg2_data), .alu_out(alu_out), .pc_plus(pc_plus),
-    			.branch_address(branch_address), .jump_address(jump_address), .memRead(memRead),
-			.memWrite(memWrite), .createdump(createdump), .clk(clk), .rst(rst), .pc_dec(pc_dec),
-			.pc_decision(pc_decision), .read_data(read_data));
+    execute	execute0(.alu_res_sel(alu_res_sel), .branch(branch),
+            .branch_eqz(branch_eqz), .branch_gtz(branch_gtz),
+            .branch_ltz(branch_ltz), .Cin(Cin), .invA(invA), .invB(invB),
+            .sign_alu(sign_alu), .ALUSrc_a(ALUSrc_a), .ALUSrc_b(ALUSrc_b),
+            .pc_dec(pc_dec), .set_select(set_select), .alu_op(alu_op),
+            .pc_plus(pc_plus), .instruction(instruction), .reg1_data(reg1_data),
+            .reg2_data(reg2_data), .sign_ext_low_bits(sign_ext_low_bits),
+            .alu_out(alu_out), .pc_decision(pc_decision));
 
-    write_back	write_back(.read_data(read_data), .pc_plus(pc_plus), .sign_ext_low_bits(sign_ext_low_bits),
-    			   .alu_out(alu_out), .mem_write_back(mem_write_back), .memToReg(memToReg));
+    memory	memory0(.memRead(memRead), .memWrite(memWrite), .alu_out(alu_out), 
+            .reg2_data(reg2_data), .read_data(read_data),
+            .createdump(createdump), .clk(clk), .rst(rst));
+
+    write_back	write_back(.memToReg(memToReg), .alu_out(alu_out),
+            .pc_plus(pc_plus), .read_data(read_data),
+            .sign_ext_low_bits(sign_ext_low_bits),
+            .mem_write_back(mem_write_back));
 
 
 endmodule
