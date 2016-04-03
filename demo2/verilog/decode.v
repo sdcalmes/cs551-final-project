@@ -1,34 +1,34 @@
-module decode(instruction, mem_write_back, alu_res_sel, branch, branch_eqz,
-        branch_gtz, branch_ltz, Cin, invA, invB, memRead, memWrite, sign_alu,
-        ALUSrc_a, ALUSrc_b, memToReg, pc_dec, set_select, alu_op, reg1_data,
+module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_sel, branch, branch_eqz,
+        branch_gtz, branch_ltz, Cin, invA, invB, memRead, memWrite, id_regWrite, sign_alu,
+        ALUSrc_a, ALUSrc_b, memToReg, pc_dec, set_select, alu_op, id_write_reg, reg1_data,
         reg2_data, sign_ext_low_bits, control_err, createdump, halt, clk, rst);
 
-      input clk, rst;
+      input wb_regWrite, clk, rst;
+      input [2:0] wb_write_reg;
       input [15:0] instruction, mem_write_back;
 
       output alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA,
-            invB, memRead, memWrite, sign_alu, control_err, halt, createdump;
+            invB, memRead, memWrite, id_regWrite, sign_alu, control_err, halt, createdump;
       output [1:0] ALUSrc_a, ALUSrc_b, memToReg, pc_dec, set_select;
-      output [2:0] alu_op;
+      output [2:0] alu_op, id_write_reg;
       output [15:0] reg1_data, reg2_data, sign_ext_low_bits;
 
 
       reg [2:0] write_reg_w;
       reg [15:0] sign_ext_low_bits_w;
       reg i_type_err_w;
+      wire [1:0] regDst;
 
-      wire [2:0] write_reg;
       wire [3:0] ALUOp;
       reg write_data_err;
-      wire [1:0] regDst, sign_extd;
-      wire regWrite;
+      wire [1:0] sign_extd;
       
 
     rf          register(.read1regsel(instruction[10:8]), .read2regsel(instruction[7:5]),
-                .writeregsel(write_reg), .writedata(mem_write_back), .write(regWrite),
+                .writeregsel(wb_write_reg), .writedata(mem_write_back), .write(wb_regWrite),
                 .read1data(reg1_data), .read2data(reg2_data), .clk(clk), .rst(rst));
 
-    control     control(.instr(instruction[15:11]), .regDst(regDst), .regWrite(regWrite),
+    control     control(.instr(instruction[15:11]), .regDst(regDst), .regWrite(id_regWrite),
                 .sign_extd(sign_extd), .ALUSrc_a(ALUSrc_a), .ALUSrc_b(ALUSrc_b), .ALUOp(ALUOp),
                 .sign_alu(sign_alu), .set_select(set_select), .alu_res_sel(alu_res_sel),
                 .memToReg(memToReg), .pc_dec(pc_dec), .branch(branch), .branch_eqz(branch_eqz),
@@ -62,6 +62,6 @@ module decode(instruction, mem_write_back, alu_res_sel, branch, branch_eqz,
             default : write_data_err = 1'b1;
         endcase
     end
-    assign write_reg = write_reg_w;
+    assign id_write_reg = write_reg_w;
 
 endmodule

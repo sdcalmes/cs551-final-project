@@ -1,14 +1,20 @@
-module mem_wb(mem_memToReg, mem_alu_out, mem_pc_plus, mem_read_data,
-    mem_sign_ext_low_bits, wb_memToReg, wb_alu_out, wb_pc_plus, wb_read_data,
+module mem_wb(mem_regWrite, mem_memToReg, mem_write_reg, mem_alu_out, mem_pc_plus, mem_read_data,
+    mem_sign_ext_low_bits, wb_regWrite, wb_memToReg, wb_write_reg, wb_alu_out, wb_pc_plus, wb_read_data,
     wb_sign_ext_low_bits);
 
+    input mem_regWrite;
     input [1:0] mem_memToReg;
+    input [2:0] mem_write_reg;
     input [15:0] mem_alu_out, mem_pc_plus, mem_read_data, mem_sign_ext_low_bits;
 
+    output wb_regWrite;
     output [1:0] wb_memToReg;
+    output [2:0] wb_write_reg;
     output [15:0] wb_alu_out, wb_pc_plus, wb_read_data, wb_sign_ext_low_bits;
 
+    assign wb_regWrite = mem_regWrite;
     assign wb_memToReg = mem_memToReg;
+    assign wb_write_reg = mem_write_reg;
     assign wb_alu_out = mem_alu_out;
     assign wb_pc_plus = mem_pc_plus;
     assign wb_read_data = mem_read_data;
