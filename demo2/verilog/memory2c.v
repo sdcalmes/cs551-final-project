@@ -68,7 +68,6 @@ module memory2c (data_out, data_in, addr, enable, wr, createdump, clk, rst);
       if (rst) begin
          // first init to 0, then load loadfile_all.img
          if (!loaded) begin
-            $display("Hello world...READING IN MEMORY");
             $readmemh("loadfile_all.img", mem);
             loaded = 1;
          end
@@ -80,7 +79,6 @@ module memory2c (data_out, data_in, addr, enable, wr, createdump, clk, rst);
             if ({1'b0, addr} > largest) largest = addr;  // avoid negative numbers
          end
          if (createdump) begin
-            $display("Hello world...we are creating a dump");
             mcd = $fopen("dumpfile", "w");
             for (i=0; i<=largest+1; i=i+1) begin
                $fdisplay(mcd,"%4h %2h", i, mem[i]);

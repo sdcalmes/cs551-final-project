@@ -27,20 +27,22 @@ module proc (/*AUTOARG*/
 
 
     //flop 1
+    wire if_valid, id_valid;
     wire [15:0] if_pc_plus, if_instruction;
     wire [15:0] id_pc_plus, id_instruction;
 
     //flop 2
     wire id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz,
-         id_Cin, id_invA, id_invB, id_memRead, id_memWrite, id_regWrite, id_sign_alu,
-         id_createdump, clk, rst;
+         id_Cin, id_invA, id_invB, id_memRead, id_memWrite, id_regWrite,
+         id_sign_alu, id_createdump, clk, rst;
     wire [1:0] id_ALUSrc_a, id_ALUSrc_b, id_memToReg, id_pc_dec, id_set_select;
     wire [2:0] id_alu_op, id_write_reg;
-    wire [15:0] id_reg1_data, id_reg2_data, id_sign_ext_low_bits;
+    wire [15:0] id_reg1_data, id_reg2_data, id_sign_ext_low_bits, 
+         id_instruction_w;
     
     wire ex_alu_res_sel, ex_branch, ex_branch_eqz, ex_branch_gtz, ex_branch_ltz,
-          ex_Cin, ex_invA, ex_invB, ex_memRead, ex_memWrite, ex_regWrite, ex_sign_alu,
-          ex_createdump;
+          ex_Cin, ex_invA, ex_invB, ex_memRead, ex_memWrite, ex_regWrite,
+          ex_sign_alu, ex_createdump;
     wire [1:0] ex_ALUSrc_a, ex_ALUSrc_b, ex_memToReg, ex_pc_dec, ex_set_select;
     wire [2:0] ex_alu_op, ex_write_reg;
     wire [15:0] ex_instruction, ex_pc_plus, ex_reg1_data, ex_reg2_data,
@@ -63,7 +65,7 @@ module proc (/*AUTOARG*/
     wire [15:0] wb_alu_out, wb_pc_plus, wb_read_data, wb_sign_ext_low_bits;
 
     //write back - output
-    wire [15:0] mem_write_back;
+    wire [15:0] wb_mem_write_back;
 
     //errors
     wire fetch_err;
@@ -75,82 +77,97 @@ module proc (/*AUTOARG*/
 
     fetch	fetch0(.createdump(mem_createdump), .pc_decision(pc_decision),
             .instruction(if_instruction), .pc_plus(if_pc_plus), 
-            .clk(clk), .rst(rst), .err(fetch_err));
+            .valid(if_valid), .clk(clk), .rst(rst), .err(fetch_err));
 
     if_id   pipe0(.if_pc_plus(if_pc_plus), .if_instruction(if_instruction),
-            .id_pc_plus(id_pc_plus), .id_instruction(id_instruction), .clk(clk),
-            .rst(rst));
+            .if_valid(if_valid), .id_pc_plus(id_pc_plus), 
+            .id_instruction(id_instruction), .id_valid(id_valid), 
+            .clk(clk), .rst(rst));
 
     decode	decode0(.wb_regWrite(wb_regWrite), .wb_write_reg(wb_write_reg), 
-            .instruction(id_instruction), .mem_write_back(mem_write_back),
-            .alu_res_sel(id_alu_res_sel), .branch(id_branch), .branch_eqz(id_branch_eqz),
-            .branch_gtz(id_branch_gtz), .branch_ltz(id_branch_ltz), .Cin(id_Cin),
-            .invA(id_invA), .invB(id_invB), .memRead(id_memRead), .memWrite(id_memWrite),
-            .id_regWrite(id_regWrite), .sign_alu(id_sign_alu), .ALUSrc_a(id_ALUSrc_a), .ALUSrc_b(id_ALUSrc_b),
-            .memToReg(id_memToReg), .pc_dec(id_pc_dec), .set_select(id_set_select),
-            .alu_op(id_alu_op), .id_write_reg(id_write_reg), .reg1_data(id_reg1_data), .reg2_data(id_reg2_data),
-            .sign_ext_low_bits(id_sign_ext_low_bits), .control_err(control_err),
-            .createdump(createdump), .halt(halt), .clk(clk), .rst(rst));
+            .instruction(id_instruction_w), .mem_write_back(wb_mem_write_back),
+            .alu_res_sel(id_alu_res_sel), .branch(id_branch), 
+            .branch_eqz(id_branch_eqz), .branch_gtz(id_branch_gtz),
+            .branch_ltz(id_branch_ltz), .Cin(id_Cin), .invA(id_invA),
+            .invB(id_invB), .memRead(id_memRead), .memWrite(id_memWrite), 
+            .id_regWrite(id_regWrite), .sign_alu(id_sign_alu),
+            .ALUSrc_a(id_ALUSrc_a), .ALUSrc_b(id_ALUSrc_b),
+            .memToReg(id_memToReg), .pc_dec(id_pc_dec),
+            .set_select(id_set_select), .alu_op(id_alu_op),
+            .id_write_reg(id_write_reg), .reg1_data(id_reg1_data),
+            .reg2_data(id_reg2_data), .sign_ext_low_bits(id_sign_ext_low_bits),
+            .control_err(control_err), .createdump(id_createdump),
+            .halt(halt), .clk(clk), .rst(rst));
 
     id_ex pipe1(.id_alu_res_sel(id_alu_res_sel), .id_branch(id_branch),
             .id_branch_eqz(id_branch_eqz), .id_branch_gtz(id_branch_gtz),
             .id_branch_ltz(id_branch_ltz), .id_Cin(id_Cin), .id_invA(id_invA),
             .id_invB(id_invB), .id_memRead(id_memRead), .id_memWrite(id_memWrite),
-            .id_regWrite(id_regWrite), .id_sign_alu(id_sign_alu), .id_createdump(id_createdump),
-            .id_ALUSrc_a(id_ALUSrc_a), .id_ALUSrc_b(id_ALUSrc_b),
-            .id_memToReg(id_memToReg), .id_pc_dec(id_pc_dec),
-            .id_set_select(id_set_select), .id_alu_op(id_alu_op),
-            .id_write_reg(id_write_reg), .id_reg1_data(id_reg1_data), .id_reg2_data(id_reg2_data),
+            .id_regWrite(id_regWrite), .id_sign_alu(id_sign_alu),
+            .id_createdump(id_createdump), .id_ALUSrc_a(id_ALUSrc_a),
+            .id_ALUSrc_b(id_ALUSrc_b), .id_memToReg(id_memToReg),
+            .id_pc_dec(id_pc_dec), .id_set_select(id_set_select),
+            .id_alu_op(id_alu_op), .id_write_reg(id_write_reg),
+            .id_reg1_data(id_reg1_data), .id_reg2_data(id_reg2_data),
             .id_sign_ext_low_bits(id_sign_ext_low_bits),
-            .id_instruction(id_instruction), .id_pc_plus(id_pc_plus),
+            .id_instruction(id_instruction_w), .id_pc_plus(id_pc_plus),
             .ex_alu_res_sel(ex_alu_res_sel), .ex_branch(ex_branch),
             .ex_branch_eqz(ex_branch_eqz), .ex_branch_gtz(ex_branch_gtz),
             .ex_branch_ltz(ex_branch_ltz), .ex_Cin(ex_Cin), .ex_invA(ex_invA),
             .ex_invB(ex_invB), .ex_memRead(ex_memRead), .ex_memWrite(ex_memWrite),
-            .ex_regWrite(ex_regWrite), .ex_sign_alu(ex_sign_alu), .ex_createdump(ex_createdump),
-            .ex_ALUSrc_a(ex_ALUSrc_a), .ex_ALUSrc_b(ex_ALUSrc_b),
-            .ex_memToReg(ex_memToReg), .ex_pc_dec(ex_pc_dec),
-            .ex_set_select(ex_set_select), .ex_alu_op(ex_alu_op), 
-            .ex_instruction(ex_instruction), .ex_pc_plus(ex_pc_plus),
-            .ex_write_reg(ex_write_reg), .ex_reg1_data(ex_reg1_data), .ex_reg2_data(ex_reg2_data),
+            .ex_regWrite(ex_regWrite), .ex_sign_alu(ex_sign_alu),
+            .ex_createdump(ex_createdump), .ex_ALUSrc_a(ex_ALUSrc_a),
+            .ex_ALUSrc_b(ex_ALUSrc_b), .ex_memToReg(ex_memToReg),
+            .ex_pc_dec(ex_pc_dec), .ex_set_select(ex_set_select),
+            .ex_alu_op(ex_alu_op), .ex_instruction(ex_instruction),
+            .ex_pc_plus(ex_pc_plus), .ex_write_reg(ex_write_reg),
+            .ex_reg1_data(ex_reg1_data), .ex_reg2_data(ex_reg2_data),
             .ex_sign_ext_low_bits(ex_sign_ext_low_bits), .clk(clk), .rst(rst));
 
     execute	execute0(.alu_res_sel(ex_alu_res_sel), .branch(ex_branch),
             .branch_eqz(ex_branch_eqz), .branch_gtz(ex_branch_gtz),
-            .branch_ltz(ex_branch_ltz), .Cin(ex_Cin), .invA(ex_invA), .invB(ex_invB),
-            .sign_alu(ex_sign_alu), .ALUSrc_a(ex_ALUSrc_a), .ALUSrc_b(ex_ALUSrc_b),
-            .pc_dec(ex_pc_dec), .set_select(ex_set_select), .alu_op(ex_alu_op),
-            .pc_plus(ex_pc_plus), .instruction(ex_instruction), .reg1_data(ex_reg1_data),
-            .reg2_data(ex_reg2_data), .sign_ext_low_bits(ex_sign_ext_low_bits),
-            .alu_out(ex_alu_out), .pc_decision(pc_decision));
+            .branch_ltz(ex_branch_ltz), .Cin(ex_Cin), .invA(ex_invA),
+            .invB(ex_invB), .sign_alu(ex_sign_alu), .ALUSrc_a(ex_ALUSrc_a),
+            .ALUSrc_b(ex_ALUSrc_b), .pc_dec(ex_pc_dec), .set_select(ex_set_select),
+            .alu_op(ex_alu_op), .pc_plus(ex_pc_plus), .instruction(ex_instruction),
+            .reg1_data(ex_reg1_data), .reg2_data(ex_reg2_data),
+            .sign_ext_low_bits(ex_sign_ext_low_bits), .alu_out(ex_alu_out),
+            .pc_decision(pc_decision));
 
-    ex_mem  pipe2(.ex_memRead(ex_memRead), .ex_memWrite(ex_memWrite), .ex_regWrite(ex_regWrite),
-            .ex_memToReg(ex_memToReg), .ex_write_reg(ex_write_reg), .ex_createdump(ex_createdump),
-            .ex_alu_out(ex_alu_out),
-            .ex_pc_plus(ex_pc_plus), .ex_reg2_data(ex_reg2_data),
-            .ex_sign_ext_low_bits(ex_sign_ext_low_bits),
-            .mem_memRead(mem_memRead), .mem_memWrite(mem_memWrite), .mem_regWrite(mem_regWrite),
-            .mem_memToReg(mem_memToReg), .mem_write_reg(mem_write_reg), .mem_createdump(mem_createdump),
+    ex_mem  pipe2(.ex_memRead(ex_memRead), .ex_memWrite(ex_memWrite),
+            .ex_regWrite(ex_regWrite), .ex_memToReg(ex_memToReg),
+            .ex_write_reg(ex_write_reg), .ex_createdump(ex_createdump),
+            .ex_alu_out(ex_alu_out), .ex_pc_plus(ex_pc_plus),
+            .ex_reg2_data(ex_reg2_data), .ex_sign_ext_low_bits(ex_sign_ext_low_bits),
+            .mem_memRead(mem_memRead), .mem_memWrite(mem_memWrite),
+            .mem_regWrite(mem_regWrite), .mem_memToReg(mem_memToReg),
+            .mem_write_reg(mem_write_reg), .mem_createdump(mem_createdump),
             .mem_alu_out(mem_alu_out), .mem_pc_plus(mem_pc_plus),
             .mem_reg2_data(mem_reg2_data),
             .mem_sign_ext_low_bits(mem_sign_ext_low_bits), .clk(clk), .rst(rst));
 
-    memory	memory0(.memRead(mem_memRead), .memWrite(mem_memWrite), .alu_out(mem_alu_out), 
-            .reg2_data(mem_reg2_data), .read_data(mem_read_data),
-            .createdump(createdump), .clk(clk), .rst(rst));
+    memory	memory0(.memRead(mem_memRead), .memWrite(mem_memWrite),
+            .alu_out(mem_alu_out), .reg2_data(mem_reg2_data),
+            .read_data(mem_read_data), .createdump(mem_createdump),
+            .clk(clk), .rst(rst));
 
-    mem_wb  pipe3(.mem_regWrite(mem_regWrite), .mem_memToReg(mem_memToReg), .mem_write_reg(mem_write_reg), .mem_alu_out(mem_alu_out),
+    mem_wb  pipe3(.mem_regWrite(mem_regWrite), .mem_memToReg(mem_memToReg),
+            .mem_write_reg(mem_write_reg), .mem_alu_out(mem_alu_out),
             .mem_pc_plus(mem_pc_plus), .mem_read_data(mem_read_data), 
-            .mem_sign_ext_low_bits(mem_sign_ext_low_bits), .wb_regWrite(wb_regWrite), 
-            .wb_memToReg(wb_memToReg), .wb_write_reg(wb_write_reg), .wb_alu_out(wb_alu_out),
+            .mem_sign_ext_low_bits(mem_sign_ext_low_bits),
+            .wb_regWrite(wb_regWrite), .wb_memToReg(wb_memToReg),
+            .wb_write_reg(wb_write_reg), .wb_alu_out(wb_alu_out),
             .wb_pc_plus(wb_pc_plus), .wb_read_data(wb_read_data),
-            .wb_sign_ext_low_bits(wb_sign_ext_low_bits));
+            .wb_sign_ext_low_bits(wb_sign_ext_low_bits),
+            .clk(clk), .rst(rst));
 
     write_back	write_back(.memToReg(wb_memToReg), .alu_out(wb_alu_out),
             .pc_plus(wb_pc_plus), .read_data(wb_read_data),
             .sign_ext_low_bits(wb_sign_ext_low_bits),
-            .mem_write_back(mem_write_back));
+            .mem_write_back(wb_mem_write_back));
 
+
+    assign id_instruction_w = id_valid ? id_instruction : 16'h0800;
 
 endmodule
 

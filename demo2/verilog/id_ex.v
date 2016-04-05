@@ -1,30 +1,32 @@
 module id_ex(id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz,
         id_branch_ltz, id_Cin, id_invA, id_invB, id_memRead, id_memWrite,
-        id_regWrite, id_sign_alu, id_createdump, id_ALUSrc_a, id_ALUSrc_b, id_memToReg,
-        id_pc_dec, id_set_select, id_alu_op, id_write_reg, id_reg1_data, id_reg2_data,
-        id_sign_ext_low_bits, id_instruction, id_pc_plus, ex_alu_res_sel,
-        ex_branch, ex_branch_eqz, ex_branch_gtz, ex_branch_ltz, ex_Cin, ex_invA,
-        ex_invB, ex_memRead, ex_memWrite, ex_regWrite, ex_sign_alu,ex_createdump, ex_ALUSrc_a,
-        ex_ALUSrc_b, ex_memToReg, ex_pc_dec, ex_set_select, ex_alu_op, ex_write_reg,
+        id_regWrite, id_sign_alu, id_createdump, id_ALUSrc_a, id_ALUSrc_b,
+        id_memToReg, id_pc_dec, id_set_select, id_alu_op, id_write_reg,
+        id_reg1_data, id_reg2_data, id_sign_ext_low_bits, id_instruction,
+        id_pc_plus, ex_alu_res_sel, ex_branch, ex_branch_eqz, ex_branch_gtz,
+        ex_branch_ltz, ex_Cin, ex_invA, ex_invB, ex_memRead, ex_memWrite,
+        ex_regWrite, ex_sign_alu,ex_createdump, ex_ALUSrc_a, ex_ALUSrc_b,
+        ex_memToReg, ex_pc_dec, ex_set_select, ex_alu_op, ex_write_reg,
         ex_instruction, ex_pc_plus, ex_reg1_data, ex_reg2_data,
         ex_sign_ext_low_bits, clk, rst);
 
     input id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz,
-          id_Cin, id_invA, id_invB, id_memRead, id_memWrite, id_regWrite, id_sign_alu,
+          id_Cin, id_invA, id_invB, id_memRead, id_memWrite, id_regWrite,
+          id_sign_alu,
           id_createdump, clk, rst;
     input [1:0] id_ALUSrc_a, id_ALUSrc_b, id_memToReg, id_pc_dec, id_set_select;
     input [2:0] id_alu_op, id_write_reg;
     input [15:0] id_instruction, id_pc_plus, id_reg1_data, id_reg2_data,
           id_sign_ext_low_bits;
     
-    output ex_alu_res_sel, ex_branch, ex_branch_eqz, ex_branch_gtz, ex_branch_ltz,
-          ex_Cin, ex_invA, ex_invB, ex_memRead, ex_memWrite, ex_regWrite, ex_sign_alu,
-          ex_createdump;
+    output ex_alu_res_sel, ex_branch, ex_branch_eqz, ex_branch_gtz,
+           ex_branch_ltz, ex_Cin, ex_invA, ex_invB, ex_memRead, ex_memWrite,
+           ex_regWrite, ex_sign_alu, ex_createdump;
     output [1:0] ex_ALUSrc_a, ex_ALUSrc_b, ex_memToReg, ex_pc_dec, ex_set_select;
     output [2:0] ex_alu_op, ex_write_reg;
     output [15:0] ex_instruction, ex_pc_plus, ex_reg1_data, ex_reg2_data,
             ex_sign_ext_low_bits;
-//assign statements
+/*assign statements
     assign ex_alu_res_sel = id_alu_res_sel;   
     assign ex_branch = id_branch;
     assign ex_branch_eqz = id_branch_eqz; 
@@ -51,7 +53,7 @@ module id_ex(id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz,
     assign ex_reg2_data = id_reg2_data;
     assign ex_sign_ext_low_bits = id_sign_ext_low_bits; 
 
-    /*
+    */
     dff alu_res_sel_flop(
         .d(id_alu_res_sel),
         .q(ex_alu_res_sel),
@@ -112,6 +114,12 @@ module id_ex(id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz,
         .clk(clk),
         .rst(rst)
     );
+    dff regWrite_flop(
+        .d(id_regWrite),
+        .q(ex_regWrite),
+        .clk(clk),
+        .rst(rst)
+    );
     dff sign_alu_flop(
         .d(id_sign_alu),
         .q(ex_sign_alu),
@@ -160,6 +168,12 @@ module id_ex(id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz,
         .clk(clk),
         .rst(rst)
     );
+    dff write_reg_flop[2:0](
+        .d(id_write_reg),
+        .q(ex_write_reg),
+        .clk(clk),
+        .rst(rst)
+    );
     dff instruction_flop[15:0](
         .d(id_instruction),
         .q(ex_instruction),
@@ -190,5 +204,5 @@ module id_ex(id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz,
         .clk(clk),
         .rst(rst)
     );
-*/
+
 endmodule

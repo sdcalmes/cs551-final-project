@@ -1,16 +1,14 @@
-module fetch(createdump, pc_decision, instruction, pc_plus, clk, rst, err);
+module fetch(createdump, pc_decision, instruction, pc_plus, valid, clk, rst, err);
 
    input clk, rst, createdump;
    input [15:0] pc_decision;
    
-   output err;
+   output err, valid;
    output [15:0] instruction, pc_plus;
-
 
    wire [15:0] PC;
 
-
-
+   assign valid = rst ? 1'b0 : 1'b1;
 
    reg_16	pc_reg(.WriteData(pc_decision), .WriteSel(1'b1), .ReadData(PC),
             .clk(clk), .rst(rst));

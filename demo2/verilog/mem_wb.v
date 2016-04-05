@@ -1,8 +1,8 @@
-module mem_wb(mem_regWrite, mem_memToReg, mem_write_reg, mem_alu_out, mem_pc_plus, mem_read_data,
-    mem_sign_ext_low_bits, wb_regWrite, wb_memToReg, wb_write_reg, wb_alu_out, wb_pc_plus, wb_read_data,
-    wb_sign_ext_low_bits);
+module mem_wb(mem_regWrite, mem_memToReg, mem_write_reg, mem_alu_out, mem_pc_plus,
+    mem_read_data, mem_sign_ext_low_bits, wb_regWrite, wb_memToReg, wb_write_reg,
+    wb_alu_out, wb_pc_plus, wb_read_data, wb_sign_ext_low_bits, clk, rst);
 
-    input mem_regWrite;
+    input mem_regWrite, clk, rst;
     input [1:0] mem_memToReg;
     input [2:0] mem_write_reg;
     input [15:0] mem_alu_out, mem_pc_plus, mem_read_data, mem_sign_ext_low_bits;
@@ -12,6 +12,7 @@ module mem_wb(mem_regWrite, mem_memToReg, mem_write_reg, mem_alu_out, mem_pc_plu
     output [2:0] wb_write_reg;
     output [15:0] wb_alu_out, wb_pc_plus, wb_read_data, wb_sign_ext_low_bits;
 
+    /* wires for testing
     assign wb_regWrite = mem_regWrite;
     assign wb_memToReg = mem_memToReg;
     assign wb_write_reg = mem_write_reg;
@@ -19,10 +20,22 @@ module mem_wb(mem_regWrite, mem_memToReg, mem_write_reg, mem_alu_out, mem_pc_plu
     assign wb_pc_plus = mem_pc_plus;
     assign wb_read_data = mem_read_data;
     assign wb_sign_ext_low_bits = mem_sign_ext_low_bits;
-/*
+*/
+    dff regWrite_flop (
+        .d(mem_regWrite),
+        .q(wb_regWrite),
+        .clk(clk),
+        .rst(rst)
+    );
     dff memToReg_flop[1:0](
         .d(mem_memToReg),       //input
         .q(wb_memToReg),       //output
+        .clk(clk),
+        .rst(rst)
+    );
+    dff write_reg_flop[2:0](
+        .d(mem_write_reg),
+        .q(wb_write_reg),
         .clk(clk),
         .rst(rst)
     );
@@ -50,5 +63,5 @@ module mem_wb(mem_regWrite, mem_memToReg, mem_write_reg, mem_alu_out, mem_pc_plu
         .clk(clk),
         .rst(rst)
     );
-*/
+
 endmodule
