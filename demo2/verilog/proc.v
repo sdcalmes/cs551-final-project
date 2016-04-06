@@ -70,6 +70,7 @@ module proc (/*AUTOARG*/
     //errors
     wire fetch_err;
     wire control_err;
+    wire id_halt, ex_halt, mem_halt, wb_halt;
 
     ////////////////////////////////
     /////    Instantiate     //////
@@ -97,7 +98,7 @@ module proc (/*AUTOARG*/
             .id_write_reg(id_write_reg), .reg1_data(id_reg1_data),
             .reg2_data(id_reg2_data), .sign_ext_low_bits(id_sign_ext_low_bits),
             .control_err(control_err), .createdump(id_createdump),
-            .halt(halt), .clk(clk), .rst(rst));
+            .halt(id_halt), .clk(clk), .rst(rst));
 
     id_ex pipe1(.id_alu_res_sel(id_alu_res_sel), .id_branch(id_branch),
             .id_branch_eqz(id_branch_eqz), .id_branch_gtz(id_branch_gtz),
@@ -110,7 +111,7 @@ module proc (/*AUTOARG*/
             .id_alu_op(id_alu_op), .id_write_reg(id_write_reg),
             .id_reg1_data(id_reg1_data), .id_reg2_data(id_reg2_data),
             .id_sign_ext_low_bits(id_sign_ext_low_bits),
-            .id_instruction(id_instruction_w), .id_pc_plus(id_pc_plus),
+            .id_instruction(id_instruction_w), .id_pc_plus(id_pc_plus), .id_halt(id_halt),
             .ex_alu_res_sel(ex_alu_res_sel), .ex_branch(ex_branch),
             .ex_branch_eqz(ex_branch_eqz), .ex_branch_gtz(ex_branch_gtz),
             .ex_branch_ltz(ex_branch_ltz), .ex_Cin(ex_Cin), .ex_invA(ex_invA),
@@ -122,7 +123,8 @@ module proc (/*AUTOARG*/
             .ex_alu_op(ex_alu_op), .ex_instruction(ex_instruction),
             .ex_pc_plus(ex_pc_plus), .ex_write_reg(ex_write_reg),
             .ex_reg1_data(ex_reg1_data), .ex_reg2_data(ex_reg2_data),
-            .ex_sign_ext_low_bits(ex_sign_ext_low_bits), .clk(clk), .rst(rst));
+            .ex_sign_ext_low_bits(ex_sign_ext_low_bits),
+            .ex_halt(ex_halt), .clk(clk), .rst(rst));
 
     execute	execute0(.alu_res_sel(ex_alu_res_sel), .branch(ex_branch),
             .branch_eqz(ex_branch_eqz), .branch_gtz(ex_branch_gtz),
@@ -139,12 +141,13 @@ module proc (/*AUTOARG*/
             .ex_write_reg(ex_write_reg), .ex_createdump(ex_createdump),
             .ex_alu_out(ex_alu_out), .ex_pc_plus(ex_pc_plus),
             .ex_reg2_data(ex_reg2_data), .ex_sign_ext_low_bits(ex_sign_ext_low_bits),
-            .mem_memRead(mem_memRead), .mem_memWrite(mem_memWrite),
+            .ex_halt(ex_halt), .mem_memRead(mem_memRead), .mem_memWrite(mem_memWrite),
             .mem_regWrite(mem_regWrite), .mem_memToReg(mem_memToReg),
             .mem_write_reg(mem_write_reg), .mem_createdump(mem_createdump),
             .mem_alu_out(mem_alu_out), .mem_pc_plus(mem_pc_plus),
             .mem_reg2_data(mem_reg2_data),
-            .mem_sign_ext_low_bits(mem_sign_ext_low_bits), .clk(clk), .rst(rst));
+            .mem_sign_ext_low_bits(mem_sign_ext_low_bits),
+            .mem_halt(mem_halt), .clk(clk), .rst(rst));
 
     memory	memory0(.memRead(mem_memRead), .memWrite(mem_memWrite),
             .alu_out(mem_alu_out), .reg2_data(mem_reg2_data),
@@ -154,12 +157,12 @@ module proc (/*AUTOARG*/
     mem_wb  pipe3(.mem_regWrite(mem_regWrite), .mem_memToReg(mem_memToReg),
             .mem_write_reg(mem_write_reg), .mem_alu_out(mem_alu_out),
             .mem_pc_plus(mem_pc_plus), .mem_read_data(mem_read_data), 
-            .mem_sign_ext_low_bits(mem_sign_ext_low_bits),
+            .mem_sign_ext_low_bits(mem_sign_ext_low_bits), .mem_halt(mem_halt),
             .wb_regWrite(wb_regWrite), .wb_memToReg(wb_memToReg),
             .wb_write_reg(wb_write_reg), .wb_alu_out(wb_alu_out),
             .wb_pc_plus(wb_pc_plus), .wb_read_data(wb_read_data),
             .wb_sign_ext_low_bits(wb_sign_ext_low_bits),
-            .clk(clk), .rst(rst));
+            .wb_halt(wb_halt), .clk(clk), .rst(rst));
 
     write_back	write_back(.memToReg(wb_memToReg), .alu_out(wb_alu_out),
             .pc_plus(wb_pc_plus), .read_data(wb_read_data),

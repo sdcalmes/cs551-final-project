@@ -15,6 +15,11 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
       output [2:0] alu_op, id_write_reg;
       output [15:0] reg1_data, reg2_data, sign_ext_low_bits;
 
+      // state machine logic
+      reg regWrite_w;
+      wire regWrite, regWrite_1, regWrite_2, regWrite_3;
+      reg [1:0] nxtState;
+      wire [1:0] state;
 
       reg [2:0] write_reg_w;
       reg [15:0] sign_ext_low_bits_w;
@@ -33,7 +38,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
                 .rst(rst), .err());
 
     control     control(.instr(instruction[15:11]), .regDst(regDst),
-                .regWrite(id_regWrite), .sign_extd(sign_extd),
+                .regWrite(regWrite), .sign_extd(sign_extd),
                 .ALUSrc_a(ALUSrc_a), .ALUSrc_b(ALUSrc_b), .ALUOp(ALUOp),
                 .sign_alu(sign_alu), .set_select(set_select),
                 .alu_res_sel(alu_res_sel), .memToReg(memToReg), .pc_dec(pc_dec),
@@ -47,7 +52,62 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
 
     //assign alu_res_sel = flush ? 1'b0 : alu_res_sel_w;
 
+    /* State Machine for regWrite */
+    dff state_flop[1:0] (
+        .d(nxtState),
+        .q(state),
+        .clk(clk),
+        .rst(rst)
+    );
 
+    dff regWrite1_flop (
+        .d(regWrite_w ),
+        .q(regWrite_1),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff regWrite2_flop (
+        .d(regWrite_1),
+        .q(regWrite_2),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff regWrite3_flop (
+        .d(regWrite_2),
+        .q(regWrite_3),
+        .clk(clk),
+        .rst(rst)
+    );
+
+    assign id_regWrite = regWrite_w;
+
+    always @(*) begin
+        regWrite_w = 1'b0;
+        nxtState = 2'b00;
+        case(state)
+            2'b00 : begin
+                regWrite_w = regWrite;
+                if(regWrite & ~regWrite_1 & ~regWrite_2)
+                    nxtState = 2'b01;
+            end
+            2'b01 : begin
+                regWrite_w = regWrite;
+                if(regWrite & regWrite_1 & ~regWrite_2) begin
+                    nxtState = 2'b10;
+                    regWrite_w = 1'b0;
+                end
+            end
+            2'b10 : begin
+                regWrite_w = regWrite;
+                if(regWrite & ~regWrite_1 & regWrite_2)
+                    regWrite_w = 1'b0;
+                nxtState = 2'b00;
+            end
+            default : begin
+            end
+        endcase
+    end
+    
     always@(*) begin
 	sign_ext_low_bits_w = 16'h0000;
         case(sign_extd)

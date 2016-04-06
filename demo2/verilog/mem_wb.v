@@ -1,13 +1,13 @@
 module mem_wb(mem_regWrite, mem_memToReg, mem_write_reg, mem_alu_out, mem_pc_plus,
-    mem_read_data, mem_sign_ext_low_bits, wb_regWrite, wb_memToReg, wb_write_reg,
-    wb_alu_out, wb_pc_plus, wb_read_data, wb_sign_ext_low_bits, clk, rst);
+    mem_read_data, mem_sign_ext_low_bits, mem_halt, wb_regWrite, wb_memToReg, wb_write_reg,
+    wb_alu_out, wb_pc_plus, wb_read_data, wb_sign_ext_low_bits, wb_halt, clk, rst);
 
-    input mem_regWrite, clk, rst;
+    input mem_regWrite, mem_halt, clk, rst;
     input [1:0] mem_memToReg;
     input [2:0] mem_write_reg;
     input [15:0] mem_alu_out, mem_pc_plus, mem_read_data, mem_sign_ext_low_bits;
 
-    output wb_regWrite;
+    output wb_regWrite, wb_halt;
     output [1:0] wb_memToReg;
     output [2:0] wb_write_reg;
     output [15:0] wb_alu_out, wb_pc_plus, wb_read_data, wb_sign_ext_low_bits;
@@ -24,6 +24,12 @@ module mem_wb(mem_regWrite, mem_memToReg, mem_write_reg, mem_alu_out, mem_pc_plu
     dff regWrite_flop (
         .d(mem_regWrite),
         .q(wb_regWrite),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff halt_flop(
+        .d(mem_halt),
+        .q(wb_halt),
         .clk(clk),
         .rst(rst)
     );

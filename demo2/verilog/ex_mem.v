@@ -1,15 +1,16 @@
 module ex_mem(ex_memRead, ex_memWrite, ex_regWrite, ex_memToReg, ex_createdump,
     ex_write_reg, ex_alu_out, ex_pc_plus, ex_reg2_data, ex_sign_ext_low_bits,
+    ex_halt,
     mem_memRead, mem_memWrite, mem_regWrite, mem_memToReg, mem_createdump,
     mem_write_reg, mem_alu_out, mem_pc_plus, mem_reg2_data,
-    mem_sign_ext_low_bits, clk, rst);
+    mem_sign_ext_low_bits, mem_halt, clk, rst);
     
-    input ex_memRead, ex_memWrite, ex_regWrite, ex_createdump, clk, rst;
+    input ex_memRead, ex_memWrite, ex_regWrite, ex_createdump, ex_halt, clk, rst;
     input [1:0] ex_memToReg;
     input [2:0] ex_write_reg;
     input [15:0] ex_alu_out, ex_pc_plus, ex_reg2_data, ex_sign_ext_low_bits;
 
-    output mem_memRead, mem_memWrite, mem_regWrite, mem_createdump;
+    output mem_memRead, mem_memWrite, mem_regWrite, mem_createdump, mem_halt;
     output [1:0] mem_memToReg;
     output [2:0] mem_write_reg;
     output [15:0] mem_alu_out, mem_pc_plus, mem_reg2_data, mem_sign_ext_low_bits;
@@ -48,6 +49,12 @@ module ex_mem(ex_memRead, ex_memWrite, ex_regWrite, ex_memToReg, ex_createdump,
     dff createdump_flop(
         .d(ex_createdump),   //input
         .q(mem_createdump),   //output
+        .clk(clk),
+        .rst(rst)
+    );
+    dff halt_flop(
+        .d(ex_halt),
+        .q(mem_halt),
         .clk(clk),
         .rst(rst)
     );

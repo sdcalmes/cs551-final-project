@@ -15,6 +15,8 @@ module proc_hier_pbench();
                                   stores instructions fetched from instruction memory
                                */
    wire        RegWrite;       /* Whether register file is being written to */
+   wire        regWrite_out; 
+   wire [1:0]  state;
    wire [2:0]  WriteRegister;  /* What register is written */
    wire [15:0] WriteData;      /* Data */
    wire        MemWrite;       /* Similar as above but for memory */
@@ -75,6 +77,7 @@ module proc_hier_pbench();
             ICacheReq_count = ICacheReq_count + 1;	 	
 	     end    
 
+         //$display("regWrite wire is equal to = %d at state = %d", regWrite_out, state);
          $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
                   DUT.c0.cycle_count,
                   PC,
@@ -131,6 +134,8 @@ module proc_hier_pbench();
    assign Inst = DUT.p0.ex_instruction;
    
    assign RegWrite = DUT.p0.wb_regWrite;
+   assign regWrite_out = DUT.p0.decode0.regWrite_1;
+   assign state = DUT.p0.decode0.state;
    // Is register file being written to, one bit signal (1 means yes, 0 means no)
    //    
    assign WriteRegister = DUT.p0.wb_write_reg;
@@ -171,7 +176,7 @@ module proc_hier_pbench();
    // Signal indicating a valid data cache hit
    // Above assignment is a dummy example
    
-   assign Halt = DUT.p0.halt;
+   assign Halt = DUT.p0.wb_halt;
    // Processor halted
    
    
