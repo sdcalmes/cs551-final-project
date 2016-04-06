@@ -33,7 +33,7 @@ module proc (/*AUTOARG*/
 
     //flop 2
     wire id_alu_res_sel, id_branch, id_branch_eqz, id_branch_gtz, id_branch_ltz,
-         id_Cin, id_invA, id_invB, id_memRead, id_memWrite, id_regWrite,
+         id_Cin, id_invA, id_invB, id_memEn, id_memWrite, id_regWrite,
          id_sign_alu, id_createdump, clk, rst;
     wire [1:0] id_ALUSrc_a, id_ALUSrc_b, id_memToReg, id_pc_dec, id_set_select;
     wire [2:0] id_alu_op, id_write_reg;
@@ -41,7 +41,7 @@ module proc (/*AUTOARG*/
          id_instruction_w;
     
     wire ex_alu_res_sel, ex_branch, ex_branch_eqz, ex_branch_gtz, ex_branch_ltz,
-          ex_Cin, ex_invA, ex_invB, ex_memRead, ex_memWrite, ex_regWrite,
+          ex_Cin, ex_invA, ex_invB, ex_memEn, ex_memWrite, ex_regWrite,
           ex_sign_alu, ex_createdump;
     wire [1:0] ex_ALUSrc_a, ex_ALUSrc_b, ex_memToReg, ex_pc_dec, ex_set_select;
     wire [2:0] ex_alu_op, ex_write_reg;
@@ -51,7 +51,7 @@ module proc (/*AUTOARG*/
     //flop 3
     wire [15:0] ex_alu_out;
 
-    wire mem_memRead, mem_memWrite, mem_regWrite, mem_createdump;
+    wire mem_memEn, mem_memWrite, mem_regWrite, mem_createdump;
     wire [1:0] mem_memToReg;
     wire [2:0] mem_write_reg;
     wire [15:0] mem_alu_out, mem_pc_plus, mem_reg2_data, mem_sign_ext_low_bits;
@@ -90,7 +90,7 @@ module proc (/*AUTOARG*/
             .alu_res_sel(id_alu_res_sel), .branch(id_branch), 
             .branch_eqz(id_branch_eqz), .branch_gtz(id_branch_gtz),
             .branch_ltz(id_branch_ltz), .Cin(id_Cin), .invA(id_invA),
-            .invB(id_invB), .memRead(id_memRead), .memWrite(id_memWrite), 
+            .invB(id_invB), .id_memEn(id_memEn), .memWrite(id_memWrite), 
             .id_regWrite(id_regWrite), .sign_alu(id_sign_alu),
             .ALUSrc_a(id_ALUSrc_a), .ALUSrc_b(id_ALUSrc_b),
             .memToReg(id_memToReg), .pc_dec(id_pc_dec),
@@ -103,7 +103,7 @@ module proc (/*AUTOARG*/
     id_ex pipe1(.id_alu_res_sel(id_alu_res_sel), .id_branch(id_branch),
             .id_branch_eqz(id_branch_eqz), .id_branch_gtz(id_branch_gtz),
             .id_branch_ltz(id_branch_ltz), .id_Cin(id_Cin), .id_invA(id_invA),
-            .id_invB(id_invB), .id_memRead(id_memRead), .id_memWrite(id_memWrite),
+            .id_invB(id_invB), .id_memEn(id_memEn), .id_memWrite(id_memWrite),
             .id_regWrite(id_regWrite), .id_sign_alu(id_sign_alu),
             .id_createdump(id_createdump), .id_ALUSrc_a(id_ALUSrc_a),
             .id_ALUSrc_b(id_ALUSrc_b), .id_memToReg(id_memToReg),
@@ -115,7 +115,7 @@ module proc (/*AUTOARG*/
             .ex_alu_res_sel(ex_alu_res_sel), .ex_branch(ex_branch),
             .ex_branch_eqz(ex_branch_eqz), .ex_branch_gtz(ex_branch_gtz),
             .ex_branch_ltz(ex_branch_ltz), .ex_Cin(ex_Cin), .ex_invA(ex_invA),
-            .ex_invB(ex_invB), .ex_memRead(ex_memRead), .ex_memWrite(ex_memWrite),
+            .ex_invB(ex_invB), .ex_memEn(ex_memEn), .ex_memWrite(ex_memWrite),
             .ex_regWrite(ex_regWrite), .ex_sign_alu(ex_sign_alu),
             .ex_createdump(ex_createdump), .ex_ALUSrc_a(ex_ALUSrc_a),
             .ex_ALUSrc_b(ex_ALUSrc_b), .ex_memToReg(ex_memToReg),
@@ -136,12 +136,12 @@ module proc (/*AUTOARG*/
             .sign_ext_low_bits(ex_sign_ext_low_bits), .alu_out(ex_alu_out),
             .pc_decision(pc_decision));
 
-    ex_mem  pipe2(.ex_memRead(ex_memRead), .ex_memWrite(ex_memWrite),
+    ex_mem  pipe2(.ex_memEn(ex_memEn), .ex_memWrite(ex_memWrite),
             .ex_regWrite(ex_regWrite), .ex_memToReg(ex_memToReg),
             .ex_write_reg(ex_write_reg), .ex_createdump(ex_createdump),
             .ex_alu_out(ex_alu_out), .ex_pc_plus(ex_pc_plus),
             .ex_reg2_data(ex_reg2_data), .ex_sign_ext_low_bits(ex_sign_ext_low_bits),
-            .ex_halt(ex_halt), .mem_memRead(mem_memRead), .mem_memWrite(mem_memWrite),
+            .ex_halt(ex_halt), .mem_memEn(mem_memEn), .mem_memWrite(mem_memWrite),
             .mem_regWrite(mem_regWrite), .mem_memToReg(mem_memToReg),
             .mem_write_reg(mem_write_reg), .mem_createdump(mem_createdump),
             .mem_alu_out(mem_alu_out), .mem_pc_plus(mem_pc_plus),
@@ -149,7 +149,7 @@ module proc (/*AUTOARG*/
             .mem_sign_ext_low_bits(mem_sign_ext_low_bits),
             .mem_halt(mem_halt), .clk(clk), .rst(rst));
 
-    memory	memory0(.memRead(mem_memRead), .memWrite(mem_memWrite),
+    memory	memory0(.memEn(mem_memEn), .memWrite(mem_memWrite),
             .alu_out(mem_alu_out), .reg2_data(mem_reg2_data),
             .read_data(mem_read_data), .createdump(mem_createdump),
             .clk(clk), .rst(rst));

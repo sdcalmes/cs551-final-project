@@ -1,5 +1,5 @@
 module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_sel,
-        branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA, invB, memRead,
+        branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA, invB, id_memEn,
         memWrite, id_regWrite, sign_alu, ALUSrc_a, ALUSrc_b, memToReg, pc_dec,
         set_select, alu_op, id_write_reg, reg1_data, reg2_data, sign_ext_low_bits,
         control_err, createdump, halt, clk, rst);
@@ -9,17 +9,18 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
       input [15:0] instruction, mem_write_back;
 
       output alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA,
-            invB, memRead, memWrite, id_regWrite, sign_alu, control_err, halt,
+            invB, id_memEn, memWrite, id_regWrite, sign_alu, control_err, halt,
             createdump;
       output [1:0] ALUSrc_a, ALUSrc_b, memToReg, pc_dec, set_select;
       output [2:0] alu_op, id_write_reg;
       output [15:0] reg1_data, reg2_data, sign_ext_low_bits;
 
       // state machine logic
-      reg regWrite_w;
+      reg regWrite_w, memEn_w;
       wire regWrite, regWrite_1, regWrite_2, regWrite_3;
-      reg [1:0] nxtState;
-      wire [1:0] state;
+      wire memEn, memEn_1, memEn_2, memEn_3;
+      reg [1:0] regWrite_nxtState, memEn_nxtState;
+      wire [1:0] regWrite_state, memEn_state;
 
       reg [2:0] write_reg_w;
       reg [15:0] sign_ext_low_bits_w;
@@ -43,7 +44,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
                 .sign_alu(sign_alu), .set_select(set_select),
                 .alu_res_sel(alu_res_sel), .memToReg(memToReg), .pc_dec(pc_dec),
                 .branch(branch), .branch_eqz(branch_eqz), .branch_gtz(branch_gtz),
-                .branch_ltz(branch_ltz), .memRead(memRead), .memWrite(memWrite),
+                .branch_ltz(branch_ltz), .memEn(memEn), .memWrite(memWrite),
                 .err(control_err), .halt(halt), .createdump(createdump),
                 .rst(rst));
     
@@ -53,9 +54,9 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
     //assign alu_res_sel = flush ? 1'b0 : alu_res_sel_w;
 
     /* State Machine for regWrite */
-    dff state_flop[1:0] (
-        .d(nxtState),
-        .q(state),
+    dff regWrite_state_flop[1:0] (
+        .d(regWrite_nxtState),
+        .q(regWrite_state),
         .clk(clk),
         .rst(rst)
     );
@@ -83,17 +84,17 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
 
     always @(*) begin
         regWrite_w = 1'b0;
-        nxtState = 2'b00;
-        case(state)
+        regWrite_nxtState = 2'b00;
+        case(regWrite_state)
             2'b00 : begin
                 regWrite_w = regWrite;
                 if(regWrite & ~regWrite_1 & ~regWrite_2)
-                    nxtState = 2'b01;
+                    regWrite_nxtState = 2'b01;
             end
             2'b01 : begin
                 regWrite_w = regWrite;
                 if(regWrite & regWrite_1 & ~regWrite_2) begin
-                    nxtState = 2'b10;
+                    regWrite_nxtState = 2'b10;
                     regWrite_w = 1'b0;
                 end
             end
@@ -101,7 +102,63 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
                 regWrite_w = regWrite;
                 if(regWrite & ~regWrite_1 & regWrite_2)
                     regWrite_w = 1'b0;
-                nxtState = 2'b00;
+                regWrite_nxtState = 2'b00;
+            end
+            default : begin
+            end
+        endcase
+    end
+
+    /* State Machine for memEn */
+    dff memEn_state_flop[1:0] (
+        .d(memEn_nxtState),
+        .q(memEn_state),
+        .clk(clk),
+        .rst(rst)
+    );
+
+    dff memEn1_flop (
+        .d(memEn_w ),
+        .q(memEn_1),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff memEn2_flop (
+        .d(memEn_1),
+        .q(memEn_2),
+        .clk(clk),
+        .rst(rst)
+    );
+    dff memEn3_flop (
+        .d(memEn_2),
+        .q(memEn_3),
+        .clk(clk),
+        .rst(rst)
+    );
+
+    assign id_memEn = memEn_w;
+
+    always @(*) begin
+        memEn_w = 1'b0;
+        memEn_nxtState = 2'b00;
+        case(memEn_state)
+            2'b00 : begin
+                memEn_w = memEn;
+                if(memEn & ~memEn_1 & ~memEn_2)
+                    memEn_nxtState = 2'b01;
+            end
+            2'b01 : begin
+                memEn_w = memEn;
+                if(memEn & memEn_1 & ~memEn_2) begin
+                    memEn_nxtState = 2'b10;
+                    memEn_w = 1'b0;
+                end
+            end
+            2'b10 : begin
+                memEn_w = memEn;
+                if(memEn & ~memEn_1 & memEn_2)
+                    memEn_w = 1'b0;
+                memEn_nxtState = 2'b00;
             end
             default : begin
             end

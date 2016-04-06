@@ -1,22 +1,22 @@
-module ex_mem(ex_memRead, ex_memWrite, ex_regWrite, ex_memToReg, ex_createdump,
+module ex_mem(ex_memEn, ex_memWrite, ex_regWrite, ex_memToReg, ex_createdump,
     ex_write_reg, ex_alu_out, ex_pc_plus, ex_reg2_data, ex_sign_ext_low_bits,
     ex_halt,
-    mem_memRead, mem_memWrite, mem_regWrite, mem_memToReg, mem_createdump,
+    mem_memEn, mem_memWrite, mem_regWrite, mem_memToReg, mem_createdump,
     mem_write_reg, mem_alu_out, mem_pc_plus, mem_reg2_data,
     mem_sign_ext_low_bits, mem_halt, clk, rst);
     
-    input ex_memRead, ex_memWrite, ex_regWrite, ex_createdump, ex_halt, clk, rst;
+    input ex_memEn, ex_memWrite, ex_regWrite, ex_createdump, ex_halt, clk, rst;
     input [1:0] ex_memToReg;
     input [2:0] ex_write_reg;
     input [15:0] ex_alu_out, ex_pc_plus, ex_reg2_data, ex_sign_ext_low_bits;
 
-    output mem_memRead, mem_memWrite, mem_regWrite, mem_createdump, mem_halt;
+    output mem_memEn, mem_memWrite, mem_regWrite, mem_createdump, mem_halt;
     output [1:0] mem_memToReg;
     output [2:0] mem_write_reg;
     output [15:0] mem_alu_out, mem_pc_plus, mem_reg2_data, mem_sign_ext_low_bits;
 
     /* wires for normal testing
-    assign mem_memRead = ex_memRead;
+    assign mem_memEn = ex_memEn;
     assign mem_memWrite = ex_memWrite;
     assign mem_regWrite = ex_regWrite;
     assign mem_memToReg = ex_memToReg;
@@ -28,9 +28,9 @@ module ex_mem(ex_memRead, ex_memWrite, ex_regWrite, ex_memToReg, ex_createdump,
     assign mem_sign_ext_low_bits = ex_sign_ext_low_bits;
 
 */
-    dff memRead_flop(
-        .d(ex_memRead),   //input
-        .q(mem_memRead),   //output
+    dff memEn_flop(
+        .d(ex_memEn),   //input
+        .q(mem_memEn),   //output
         .clk(clk),
         .rst(rst)
     );
