@@ -1,6 +1,7 @@
 module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, sign_alu, set_select, alu_res_sel, 
-            memToReg, pc_dec, branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite, err, halt, createdump);
+            memToReg, pc_dec, branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite, err, halt, createdump, rst);
 
+    input rst;
     input [4:0] instr;
 
     output regWrite, sign_alu, alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, memRead, memWrite;
@@ -16,37 +17,37 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
 
 
 
-    localparam HALT  = 5'b0_0000;
-    localparam NOP   = 5'b0_0001;
+    localparam HALT  = 6'b00_0000;
+    localparam NOP   = 6'b00_0001;
 
-    localparam IMM_ARITH  = 5'b0_100x;
-    localparam IMM_LOGIC  = 5'b0_101x;
-    localparam IMM_SHIFT  = 5'b1_01xx;
-    localparam ST    = 5'b1_0000;
-    localparam LD    = 5'b1_0001;
-    localparam STU   = 5'b1_0011;
+    localparam IMM_ARITH  = 6'b00_100x;
+    localparam IMM_LOGIC  = 6'b00_101x;
+    localparam IMM_SHIFT  = 6'b01_01xx;
+    localparam ST    = 6'b01_0000;
+    localparam LD    = 6'b01_0001;
+    localparam STU   = 6'b01_0011;
 
-    localparam BTR   = 5'b1_1001;
-    localparam ALU   = 5'b1_101x;
-    localparam SEQ   = 5'b1_1100;
-    localparam SLT   = 5'b1_1101;
-    localparam SLE   = 5'b1_1110;
-    localparam SCO   = 5'b1_1111;
+    localparam BTR   = 6'b01_1001;
+    localparam ALU   = 6'b01_101x;
+    localparam SEQ   = 6'b01_1100;
+    localparam SLT   = 6'b01_1101;
+    localparam SLE   = 6'b01_1110;
+    localparam SCO   = 6'b01_1111;
 
-    localparam BEQZ  = 5'b0_1100;
-    localparam BNEZ  = 5'b0_1101;
-    localparam BLTZ  = 5'b0_1110;
-    localparam BGEZ  = 5'b0_1111;
-    localparam LBI   = 5'b1_1000;
-    localparam SLBI  = 5'b1_0010;
+    localparam BEQZ  = 6'b00_1100;
+    localparam BNEZ  = 6'b00_1101;
+    localparam BLTZ  = 6'b00_1110;
+    localparam BGEZ  = 6'b00_1111;
+    localparam LBI   = 6'b01_1000;
+    localparam SLBI  = 6'b01_0010;
     
-    localparam J     = 5'b0_0100;
-    localparam JR    = 5'b0_0101;
-    localparam JAL   = 5'b0_0110;
-    localparam JALR  = 5'b0_0111;
+    localparam J     = 6'b00_0100;
+    localparam JR    = 6'b00_0101;
+    localparam JAL   = 6'b00_0110;
+    localparam JALR  = 6'b00_0111;
     
-    localparam SIIC  = 5'b0_0010;
-    localparam RTI   = 5'b0_0011;
+    localparam SIIC  = 6'b00_0010;
+    localparam RTI   = 6'b00_0011;
 
     assign regDst = regDst_w;               //2
     assign regWrite = regWrite_w;           //1
@@ -90,7 +91,30 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
         createdump = 1'b0;
         err = 1'b0;
 
-        casex(instr)
+        casex({rst, instr})
+            6'b1xxxxx : begin
+                regDst_w = 2'b00;           //write_reg_dst
+                regWrite_w = 1'b0;
+                sign_extd_w = 2'b00;        //sign_extd
+                ALUSrc_a_w = 2'b00;         //ALUSrc_a
+                ALUSrc_b_w = 2'b0;          //ALUSrc_b
+                sign_alu_w = 1'b0;
+                ALUOp_w  = 4'h0;
+                set_select_w = 2'b00;
+                alu_res_sel_w = 1'b0;       //alu_res_sel
+                memToReg_w = 2'b11;
+                pc_dec_w = 2'b00;           // branch == 2'b01 | jump == 2'b10 | jumpR == 2'b11
+                branch_w = 1'b0;
+                branch_eqz_w = 1'b0;
+                branch_gtz_w = 1'b0;
+                branch_ltz_w = 1'b0;
+                memRead_w = 1'b0;
+                memWrite_w = 1'b0;
+                halt = 1'b0;
+                createdump = 1'b0;
+                err = 1'b0;
+            end
+
             HALT: begin
                 createdump = 1'b1;
                 halt = 1'b1;

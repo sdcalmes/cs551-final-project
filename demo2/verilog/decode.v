@@ -26,11 +26,11 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
       wire [1:0] sign_extd;
       
 
-    rf          register(.read1regsel(instruction[10:8]),
+    rf_bypass   register(.read1regsel(instruction[10:8]),
                 .read2regsel(instruction[7:5]), .writeregsel(wb_write_reg),
                 .writedata(mem_write_back), .write(wb_regWrite), 
                 .read1data(reg1_data), .read2data(reg2_data), .clk(clk),
-                .rst(rst));
+                .rst(rst), .err());
 
     control     control(.instr(instruction[15:11]), .regDst(regDst),
                 .regWrite(id_regWrite), .sign_extd(sign_extd),
@@ -39,7 +39,8 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
                 .alu_res_sel(alu_res_sel), .memToReg(memToReg), .pc_dec(pc_dec),
                 .branch(branch), .branch_eqz(branch_eqz), .branch_gtz(branch_gtz),
                 .branch_ltz(branch_ltz), .memRead(memRead), .memWrite(memWrite),
-                .err(control_err), .halt(halt), .createdump(createdump) );
+                .err(control_err), .halt(halt), .createdump(createdump),
+                .rst(rst));
     
     alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op),
                 .lowerBits(instruction[1:0]), .invB(invB), .invA(invA), .Cin(Cin));
