@@ -25,10 +25,10 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
       reg [2:0] write_reg_w;
       reg [15:0] sign_ext_low_bits_w;
       reg i_type_err_w;
+      wire i_type_err;
       wire [1:0] regDst;
 
       wire [3:0] ALUOp;
-      reg write_data_err;
       wire [1:0] sign_extd;
       
 
@@ -73,12 +73,6 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         .clk(clk),
         .rst(rst)
     );
-    dff regWrite3_flop (
-        .d(regWrite_2),
-        .q(regWrite_3),
-        .clk(clk),
-        .rst(rst)
-    );
 
     assign id_regWrite = regWrite_w;
 
@@ -88,21 +82,14 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         case(regWrite_state)
             2'b00 : begin
                 regWrite_w = regWrite;
-                if(regWrite & ~regWrite_1 & ~regWrite_2)
-                    regWrite_nxtState = 2'b01;
+                regWrite_nxtState = (regWrite & ~regWrite_1 & ~regWrite_2) ? 2'b01 : 2'b00;
             end
             2'b01 : begin
-                regWrite_w = regWrite;
-                if(regWrite & regWrite_1 & ~regWrite_2) begin
-                    regWrite_nxtState = 2'b10;
-                    regWrite_w = 1'b0;
-                end
+                regWrite_nxtState = (regWrite & regWrite_1 & ~regWrite_2) ? 2'b10 : 2'b00;
+                regWrite_w = (regWrite & regWrite_1 & ~regWrite_2) ? 1'b0 : regWrite;
             end
             2'b10 : begin
-                regWrite_w = regWrite;
-                if(regWrite & ~regWrite_1 & regWrite_2)
-                    regWrite_w = 1'b0;
-                regWrite_nxtState = 2'b00;
+                regWrite_w = (regWrite & ~regWrite_1 & regWrite_2) ? 1'b0 : regWrite;
             end
             default : begin
             end
@@ -129,12 +116,6 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         .clk(clk),
         .rst(rst)
     );
-    dff memEn3_flop (
-        .d(memEn_2),
-        .q(memEn_3),
-        .clk(clk),
-        .rst(rst)
-    );
 
     assign id_memEn = memEn_w;
 
@@ -144,21 +125,14 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         case(memEn_state)
             2'b00 : begin
                 memEn_w = memEn;
-                if(memEn & ~memEn_1 & ~memEn_2)
-                    memEn_nxtState = 2'b01;
+                memEn_nxtState = (memEn & ~memEn_1 & ~memEn_2) ? 2'b01 : 2'b00;
             end
             2'b01 : begin
-                memEn_w = memEn;
-                if(memEn & memEn_1 & ~memEn_2) begin
-                    memEn_nxtState = 2'b10;
-                    memEn_w = 1'b0;
-                end
+                memEn_nxtState = (memEn & memEn_1 & ~memEn_2) ? 2'b10 : 2'b00;
+                memEn_w = (memEn & memEn_1 & ~memEn_2) ? 1'b0 : memEn;
             end
             2'b10 : begin
-                memEn_w = memEn;
-                if(memEn & ~memEn_1 & memEn_2)
-                    memEn_w = 1'b0;
-                memEn_nxtState = 2'b00;
+                memEn_w = (memEn & ~memEn_1 & memEn_2) ? 1'b0 : memEn;
             end
             default : begin
             end
@@ -167,6 +141,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
     
     always@(*) begin
 	sign_ext_low_bits_w = 16'h0000;
+    i_type_err_w = 1'b0;
         case(sign_extd)
             2'b00 : sign_ext_low_bits_w = { {11{instruction[4]}}, instruction[4:0]};
             2'b01 : sign_ext_low_bits_w = { {8{instruction[7]}}, instruction[7:0]};
@@ -184,7 +159,6 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
             2'b01 : write_reg_w = instruction[4:2];
             2'b10 : write_reg_w = 3'b111;
             2'b11 : write_reg_w = instruction[7:5];
-            default : write_data_err = 1'b1;
         endcase
     end
     assign id_write_reg = write_reg_w;
