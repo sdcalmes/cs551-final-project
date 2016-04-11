@@ -13,7 +13,7 @@ module execute(alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin,
     reg shifted_data_err_w, alu_src_err_w;
     reg [15:0] alu_a_input_w, alu_b_input_w, set_out, pc_decision_w;
 
-    wire alu_z, alu_ltz, alu_Cout, sle_lt_zero, shifted_data_err;
+    wire alu_z, alu_ltz, alu_Cout, sle_lt_zero, shifted_data_err, alu_src_err;
     wire [15:0] alu_a_input, alu_b_input, alu_result, branch_address, jump_address;
 
 
@@ -44,6 +44,7 @@ module execute(alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin,
 
     always @(*) begin
         alu_a_input_w = 2'b00;
+        shifted_data_err_w = 1'b0;
         case(ALUSrc_a)
             2'b00 : alu_a_input_w = reg1_data;
             2'b01 : alu_a_input_w = ({reg1_data[7:0], 8'b0} | 
@@ -53,7 +54,6 @@ module execute(alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin,
                     reg1_data[7], reg1_data[8], reg1_data[9], reg1_data[10],
                     reg1_data[11], reg1_data[12], reg1_data[13], reg1_data[14],
                     reg1_data[15]};
-            2'b11 : alu_a_input_w = reg2_data;
             default : shifted_data_err_w = 1'b1;
         endcase
     end
@@ -62,11 +62,11 @@ module execute(alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin,
 
     always@(*) begin
         alu_b_input_w = 2'b00;
+        alu_src_err_w = 1'b0;
         case(ALUSrc_b)
             2'b00 : alu_b_input_w = reg2_data;
             2'b01 : alu_b_input_w = sign_ext_low_bits;
             2'b10 : alu_b_input_w = 16'b0;
-            2'b11 : alu_b_input_w = reg1_data;
             default : alu_src_err_w = 1'b1;
         endcase
     end

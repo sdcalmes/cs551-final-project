@@ -9,6 +9,7 @@ module fetch(createdump, pc_decision, instruction, pc_plus, valid, clk, rst, err
    wire [15:0] PC;
 
    assign valid = rst ? 1'b0 : 1'b1;
+   assign err = 1'b0;
 
    reg_16	pc_reg(.WriteData(pc_decision), .WriteSel(1'b1), .ReadData(PC),
             .clk(clk), .rst(rst));

@@ -172,5 +172,7 @@ module proc (/*AUTOARG*/
 
     assign id_instruction_w = id_valid ? id_instruction : 16'h0800;
 
+    assign err = (fetch_err | control_err);
+
 endmodule
 
