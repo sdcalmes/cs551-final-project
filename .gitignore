@@ -15,7 +15,6 @@ transcript
 *.trace
 *.vcd
 *.img
-*.log
 *.lst
 *.dmem
 *.reg
