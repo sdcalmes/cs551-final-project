@@ -86,7 +86,7 @@ module mem_system(/*AUTOARG*/
     ///////////////////////////////////////////
     assign offset = Addr[2:0];
     assign tag_in = Addr[15:11];
-    assign index = Addr[10:Z];
+    assign index = Addr[10:3];
     assign comp = comp_w;
     assign write = write_w;
     assign en = Wr ^ Rd;
