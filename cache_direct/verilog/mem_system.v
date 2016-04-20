@@ -197,18 +197,19 @@ module mem_system(/*AUTOARG*/
             
             COMPWR : begin
                 casex({hit, valid_out, dirty})
-                    2'b0x0 : begin
+                    3'b0x0 : begin
                         stall_w = 1'b1;
                         nxtState = ACESRD;
                     end
-                    2'b0x1 : begin
+                    3'b0x1 : begin
                         stall_w = 1'b1;
                         nxtState = WB_MEM;
                     end
-                    2'b10x : begin
+                    3'b10x : begin
+                        stall_w = 1'b1;
                         nxtState = WB_MEM;
                     end
-                    2'b11x : begin
+                    3'b11x : begin
                         nxtState = DONE;
                     end
                 endcase
