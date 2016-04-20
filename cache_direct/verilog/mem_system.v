@@ -76,6 +76,7 @@ module mem_system(/*AUTOARG*/
     reg [3:0] nxtState;
     wire [3:0] state;
     reg [1:0] count;
+    reg stall_w;
 
     wire cache_err, mem_err;
     reg state_err_w;
@@ -92,7 +93,6 @@ module mem_system(/*AUTOARG*/
     assign en = Wr ^ Rd;
     assign cont = &count;
 
-    assign  state_err = state_err_w;
     assign  comp = comp_w;
     assign  write = write_w;
     assign  valid_in = valid_in_w;
@@ -105,7 +105,7 @@ module mem_system(/*AUTOARG*/
     //outputs
     assign DataOut = dataout_w;
     assign Done = done_w;
-    assign Stall = four_stall;
+    assign Stall = four_stall | stall_w;
     assign CacheHit = hit;
     assign err = cache_err | mem_err | state_err_w | offset[0];
 
@@ -163,6 +163,7 @@ module mem_system(/*AUTOARG*/
         write_w = 1'b0;
         valid_in_w = 1'b0;
         cache_data_in_w = 16'h0000;
+        stall_w = 1'b0;
         four_wr_w = 1'b0;
         four_rd_w = 1'b0;
         four_addr_w = 16'h0000;
@@ -195,14 +196,19 @@ module mem_system(/*AUTOARG*/
             end    
             
             COMPWR : begin
-                casex({hit, dirty})
-                    2'b00 : begin
+                casex({hit, valid_out, dirty})
+                    2'b0x0 : begin
+                        stall_w = 1'b1;
                         nxtState = ACESRD;
                     end
-                    2'b01 : begin
+                    2'b0x1 : begin
+                        stall_w = 1'b1;
                         nxtState = WB_MEM;
                     end
-                    2'b1x : begin
+                    2'b10x : begin
+                        nxtState = WB_MEM;
+                    end
+                    2'b11x : begin
                         nxtState = DONE;
                     end
                 endcase
@@ -227,6 +233,7 @@ module mem_system(/*AUTOARG*/
             end
             
             ACESRD : begin
+                stall_w = 1'b1;
                 four_rd_w = 1'b1;
                 four_addr_w = Addr;
                 case(four_stall)
@@ -236,10 +243,12 @@ module mem_system(/*AUTOARG*/
             end
             
             WAIT : begin
+                stall_w = 1'b1;
                 nxtState = WRtoCACHE;
             end
             
             WRtoCACHE : begin
+                stall_w = 1'b1;
                 case({cont, Wr, Rd})
                     3'b0xx : begin
                         count = count + 1;
@@ -253,6 +262,7 @@ module mem_system(/*AUTOARG*/
             end
             
             PRE_WB_MEM : begin
+                stall_w = 1'b1;
                 nxtState = PRE_WB_MEM;
                 if(~(|count))
                     nxtState = WB_MEM;
@@ -260,6 +270,7 @@ module mem_system(/*AUTOARG*/
             
             WB_MEM : begin
                 nxtState = ACESRD;
+                stall_w = 1'b1;
                 if(four_stall || ~cont) begin
                     four_data_in_w = cache_data_out;
                     four_addr_w = Addr; 
