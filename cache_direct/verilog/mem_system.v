@@ -36,11 +36,13 @@ module mem_system(/*AUTOARG*/
     localparam COMPRD           = 4'b0010;
     localparam DONE             = 4'b0011;
     localparam ACESRD           = 4'b0100;
-    localparam WAIT             = 4'b0101;
-    localparam WRtoCACHE        = 4'b0110;
-    localparam PRE_WB_MEM       = 4'b0111;
-    localparam WB_MEM           = 4'b1000;
-    localparam WR_MISS_DONE     = 4'b1001;
+    localparam WRtoCACHE        = 4'b0101;
+    localparam PRE_ACESWR       = 4'b0110;
+    localparam ACESWR           = 4'b0111;
+    localparam WR_MISS_DONE     = 4'b1000;
+    localparam WAIT_1           = 4'b1001;
+    localparam WAIT_2           = 4'b1010;
+    localparam WAIT_3           = 4'b1011;
     localparam ERR              = 4'b1111;
 
     //Outputs
@@ -75,7 +77,6 @@ module mem_system(/*AUTOARG*/
     //state logic
     reg [3:0] nxtState;
     wire [3:0] state;
-    reg [1:0] count;
     reg stall_w;
 
     wire cache_err, mem_err;
@@ -91,7 +92,6 @@ module mem_system(/*AUTOARG*/
     assign comp = comp_w;
     assign write = write_w;
     assign en = Wr ^ Rd;
-    assign cont = &count;
 
     assign  comp = comp_w;
     assign  write = write_w;
@@ -106,7 +106,7 @@ module mem_system(/*AUTOARG*/
     assign DataOut = dataout_w;
     assign Done = done_w;
     assign Stall = four_stall | stall_w;
-    assign CacheHit = hit;
+    assign CacheHit = hit & valid_out;
     assign err = cache_err | mem_err | state_err_w | offset[0];
 
     /////////////////////////////////////////////
@@ -161,7 +161,7 @@ module mem_system(/*AUTOARG*/
         state_err_w = 1'b0;
         comp_w = 1'b0;
         write_w = 1'b0;
-        valid_in_w = 1'b0;
+        valid_in_w = 1'b1;
         cache_data_in_w = 16'h0000;
         stall_w = 1'b0;
         four_wr_w = 1'b0;
@@ -172,57 +172,35 @@ module mem_system(/*AUTOARG*/
         
         case(state)
             IDLE : begin
-                count = 2'b00;
                 case({Wr,Rd})
-                    2'b00 : begin
-                        nxtState = IDLE;
-                    end
-
-                    2'b01 : begin
-                        comp_w = 1'b1;
-                        nxtState = COMPRD;
-                    end
-
-                    2'b10 : begin
-                        comp_w = 1'b1;
-                        write_w = 1'b1;
-                        nxtState = COMPWR;
-                    end
-
-                    2'b11 : begin
-                        nxtState = ERR;
-                    end
+                    2'b00 : nxtState = IDLE;
+                    2'b01 : nxtState = COMPRD;
+                    2'b10 : nxtState = COMPWR;
+                    2'b11 : nxtState = ERR;
                 endcase
             end    
             
-            COMPWR : begin
-                casex({hit, valid_out, dirty})
-                    3'b0x0 : begin
-                        stall_w = 1'b1;
-                        nxtState = ACESRD;
-                    end
-                    3'b0x1 : begin
-                        stall_w = 1'b1;
-                        nxtState = WB_MEM;
-                    end
-                    3'b10x : begin
-                        stall_w = 1'b1;
-                        nxtState = WB_MEM;
-                    end
-                    3'b11x : begin
-                        nxtState = DONE;
-                    end
-                endcase
-            end
-            
             COMPRD : begin
+                comp_w = 1'b1;
                 comp_w = 1'b1;
                 case({hit,valid_out,dirty})
                     3'b0x0 : nxtState = ACESRD;
                     3'b001 : nxtState = COMPRD;
-                    3'b011 : nxtState = PRE_WB_MEM;
+                    3'b011 : nxtState = PRE_ACESWR;
                     3'b100 : nxtState = COMPRD; 
                     3'b101 : nxtState = COMPRD; 
+                    3'b11x : nxtState = DONE;
+                endcase
+            end
+            
+            COMPWR : begin
+                comp_w = 1'b1;
+                write_w = 1'b1;
+                stall_w = 1'b1;
+                casex({hit, valid_out, dirty})
+                    3'b0x0 : nxtState = ACESRD;
+                    3'b0x1 : nxtState = ACESWR;
+                    3'b10x : nxtState = ACESWR;
                     3'b11x : nxtState = DONE;
                 endcase
             end
@@ -238,55 +216,71 @@ module mem_system(/*AUTOARG*/
                 four_rd_w = 1'b1;
                 four_addr_w = Addr;
                 case(four_stall)
-                    1'b0 : nxtState = WAIT;
+                    1'b0 : nxtState = WAIT_1;
                     1'b1 : nxtState = ACESRD;
                 endcase
             end
             
-            WAIT : begin
+            WAIT_1 : begin
                 stall_w = 1'b1;
-                nxtState = WRtoCACHE;
+                nxtState = WAIT_1;
+                case(four_stall)
+                    1'b0 : nxtState = WAIT_2;
+                    1'b1 : nxtState = WAIT_1;
+                endcase
+            end
+            
+            WAIT_2 : begin
+                stall_w = 1'b1;
+                nxtState = WAIT_2;
+                case(four_stall)
+                    1'b0 : nxtState = WAIT_3;
+                    1'b1 : nxtState = WAIT_2;
+                endcase
+            end
+            
+            WAIT_3 : begin
+                stall_w = 1'b1;
+                nxtState = WAIT_3;
+                case(four_stall)
+                    1'b0 : nxtState = WRtoCACHE;
+                    1'b1 : nxtState = WAIT_3;
+                endcase
             end
             
             WRtoCACHE : begin
                 stall_w = 1'b1;
-                case({cont, Wr, Rd})
-                    3'b0xx : begin
-                        count = count + 1;
-                        nxtState = ACESRD;
-                    end
-                    3'b100 : nxtState = ERR;
-                    3'b101 : nxtState = DONE; 
-                    3'b110 : nxtState = WR_MISS_DONE;
-                    3'b111 : nxtState = ERR;
+                case({Wr, Rd})
+                    2'b00 : nxtState = ERR;
+                    2'b01 : nxtState = DONE; 
+                    2'b10 : nxtState = WR_MISS_DONE;
+                    2'b11 : nxtState = ERR;
                 endcase
             end
             
-            PRE_WB_MEM : begin
+            PRE_ACESWR : begin
                 stall_w = 1'b1;
-                nxtState = PRE_WB_MEM;
-                if(~(|count))
-                    nxtState = WB_MEM;
+                nxtState = ACESWR;
             end
             
-            WB_MEM : begin
+            ACESWR : begin
                 nxtState = ACESRD;
                 stall_w = 1'b1;
-                if(four_stall || ~cont) begin
+                if(four_stall) begin
                     four_data_in_w = cache_data_out;
                     four_addr_w = Addr; 
                     four_wr_w = 1'b1;
-                    count = count + 1;
-                    nxtState = WB_MEM;
+                    nxtState = ACESWR;
                 end
             end
             
             WR_MISS_DONE : begin
                 done_w = 1'b1;
-                nxtState = DONE;
+                nxtState = IDLE;
             end
             
             ERR : begin
+                valid_in_w = 1'b0;
                 state_err_w = 1'b1;
             end
         endcase
