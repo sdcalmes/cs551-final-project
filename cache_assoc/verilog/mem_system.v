@@ -47,6 +47,14 @@ module mem_system(/*AUTOARG*/
     reg done_w;
     reg [15:0] dataout_w;
 
+    //Cache select
+    wire victimWay;
+    reg victim_w;
+    wire cache_1_sel, cache_1_hit, cache_1_dirty, cache_1_valid, cache_1_valid_flop;
+    wire [4:0] cache_1_tag_out;
+    wire cache_2_sel, cache_2_hit, cache_2_dirty, cache_2_valid, cache_2_valid_flop;
+    wire [4:0] cache_2_tag_out;
+
     //Cache input
     wire comp, write, en, valid_in;
     reg comp_w, write_w, valid_in_w;
@@ -57,9 +65,6 @@ module mem_system(/*AUTOARG*/
     reg [15:0] cache_data_in_w;
 
     //Cache output
-    wire hit, dirty, valid_out;
-    wire [4:0] tag_out;
-    wire [15:0] cache_data_out;
 
     //Four-bank input
     wire four_wr, four_rd;
@@ -79,7 +84,7 @@ module mem_system(/*AUTOARG*/
 
     //other connections
     wire cache_cycle_complete, cache_writing;
-    reg  cache_cycle_complete_w, cache_writing_w, cache_hit_w;
+    reg  cache_cycle_complete_w, cache_writing_w;
     reg [1:0] mem_count_w, cache_count_w;
     wire [1:0] mem_count, cache_count;
 
@@ -96,6 +101,15 @@ module mem_system(/*AUTOARG*/
     assign write = write_w;
     assign en = Wr ^ Rd;
 
+    //cache output signals
+    assign cache_tag_out = cache_1_sel ? cache_2_tag_out : cache_1_tag_out;
+    assign cache_hit = cache_1_hit | cache_2_hit;
+    assign cache_valid = (cache_1_hit & cache_1_valid) | (cache_2_hit & cache_2_valid);
+    assign cache_dirty = cache_2_sel ? cache_1_dirty : cache_2_dirty;
+    assign cache_1_en = comp ? en : ~cache_1_sel;
+    assign cache_2_en = comp ? en : cache_1_sel;
+
+    //state signals
     assign cache_cycle_complete = cache_cycle_complete_w;
     assign cache_count = cache_count_w;
     assign cache_writing = cache_writing_w;
@@ -113,7 +127,7 @@ module mem_system(/*AUTOARG*/
     assign DataOut = dataout_w;
     assign Done = done_w;
     assign Stall = four_stall | stall_w;
-    assign CacheHit = cache_1_hit | cache_2_hit;
+    assign CacheHit = cache_hit & cache_valid;
     assign err = cache_err_1 | cache_err_2 | mem_err | state_err_w | offset[0];
 
     /////////////////////////////////////////////
@@ -122,6 +136,39 @@ module mem_system(/*AUTOARG*/
     dff state_flop[3:0] (
         .d(nxtState),
         .q(state),
+        .clk(clk),
+        .rst(rst)
+    );
+
+    assign cache_1_valid_w = comp ? cache_1_valid : cache_1_valid_flop;
+    dff cache1_valid_flop (
+        .d(cache_1_valid_w),
+        .q(cache_1_valid_flop),
+        .clk(clk),
+        .rst(rst)
+    );
+    assign cache_1_sel = (cache_1_valid_flop & victimWay) | (cache_1_valid_flop & ~cache_2_valid_flop);
+
+    assign cache_2_valid_w = comp ? cache_2_valid : cache_2_valid_flop;
+    dff cache2_valid_flop (
+        .d(cache_2_valid_w),
+        .q(cache_2_valid_flop),
+        .clk(clk),
+        .rst(rst)
+    );
+    assign cache_2_sel = (cache_1_valid_w & victimWay) | (cache_1_valid_w & ~cache_2_valid_w);
+  //assign cache_2_sel = (cache_2_valid_flop & victimWay) | (~cache_1_valid_flop & cache_2_valid_flop);
+    
+    always @(*) begin
+        casex({rst,(cache_hit & cache_valid & comp)})
+            2'b00 : victim_w = victimWay;
+            2'b01 : victim_w = ~victimWay;
+            2'b1x : victim_w = 1'b0;
+        endcase
+    end
+    dff victim_flop (
+        .d(victim_w),
+        .q(victimWay),
         .clk(clk),
         .rst(rst)
     );
@@ -135,7 +182,7 @@ module mem_system(/*AUTOARG*/
                           .valid                (cache_1_valid),
                           .err                  (cache_err_1),
                           // Inputs
-                          .enable               (en),
+                          .enable               (cache_1_en),
                           .clk                  (clk),
                           .rst                  (rst),
                           .createdump           (createdump),
@@ -154,7 +201,7 @@ module mem_system(/*AUTOARG*/
                           .valid                (cache_2_valid),
                           .err                  (cache_err_2),
                           // Inputs
-                          .enable               (en),
+                          .enable               (cache_2_en),
                           .clk                  (clk),
                           .rst                  (rst),
                           .createdump           (createdump),
@@ -195,7 +242,6 @@ module mem_system(/*AUTOARG*/
         cache_count_w = 2'b00;
         cache_writing_w = 1'b1;
         mem_count_w = 2'b00;
-        cache_hit_w = 1'b0;
         four_wr_w = 1'b0;
         four_rd_w = 1'b0;
         stall_w = 1'b0;
@@ -203,11 +249,10 @@ module mem_system(/*AUTOARG*/
         state_err_w = 1'b0;
         case(state)
             IDLE : begin
-                done_w = (hit&valid_out);
-                cache_hit_w = (hit&valid_out);
+                done_w = (cache_hit&cache_valid);
                 comp_w = 1'b1;
                 nxtState = IDLE;
-                casex({Wr,Rd, (hit&valid_out), dirty})
+                casex({Wr,Rd, (cache_hit&cache_valid), cache_dirty})
                     4'b00xx : nxtState = IDLE;
                     4'b01x0 : nxtState = STGE;
                     4'b01x1 : nxtState = WR1;
@@ -313,7 +358,7 @@ module mem_system(/*AUTOARG*/
                 done_w = 1'b1;
                 stall_w = 1'b1;
                 comp_w = 1'b1;
-                casex({Wr,Rd, (hit&valid_out), dirty})
+                casex({Wr,Rd, (cache_hit&cache_valid), cache_dirty})
                     4'b00xx : nxtState = IDLE;
                     4'b01x0 : nxtState = STGE;
                     4'b01x1 : nxtState = WR1;
