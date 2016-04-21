@@ -32,7 +32,7 @@ module mem_system(/*AUTOARG*/
     parameter mem_type = 0;
     // states
     localparam IDLE             = 4'b0000;
-    localparam COMPWR           = 4'b0001;
+   /* localparam COMPWR           = 4'b0001;
     localparam COMPRD           = 4'b0010;
     localparam DONE             = 4'b0011;
     localparam ACESRD           = 4'b0100;
@@ -43,7 +43,21 @@ module mem_system(/*AUTOARG*/
     localparam WAIT_1           = 4'b1001;
     localparam WAIT_2           = 4'b1010;
     localparam WAIT_3           = 4'b1011;
-    localparam ERR              = 4'b1111;
+    localparam ERR              = 4'b1111;*/
+    
+    localparam WR1  = 4'b0001;
+    localparam WR2  = 4'b0010;
+    localparam WR3  = 4'b0011;
+    localparam WRST = 4'b0100;
+    localparam STGE = 4'b0101;
+    localparam WAT1 = 4'b0110;
+    localparam WAT2 = 4'b0111;
+    localparam WAT3 = 4'b1000;
+    localparam WAT4 = 4'b1001;
+    localparam ALT  = 4'b1010;
+    localparam TOCH = 4'b1011;
+    localparam DONE = 4'b1100;
+    localparam ERR  = 4'b1111;
 
     //Outputs
     reg done_w;
@@ -79,6 +93,12 @@ module mem_system(/*AUTOARG*/
     wire [3:0] state;
     reg stall_w;
 
+    //other connections
+    wire cache_cycle_complete, cache_writing;
+    reg  cache_cycle_complete_w, cache_writing_w, cache_hit_w;
+    reg [1:0] mem_count_w, cache_count_w;
+    wire [1:0] mem_count, cache_count;
+
     wire cache_err, mem_err;
     reg state_err_w;
 
@@ -93,20 +113,24 @@ module mem_system(/*AUTOARG*/
     assign write = write_w;
     assign en = Wr ^ Rd;
 
-    assign  comp = comp_w;
-    assign  write = write_w;
-    assign  valid_in = valid_in_w;
-    assign  cache_data_in = cache_data_in_w;
-    assign  four_wr = four_wr_w;
-    assign  four_rd = four_rd_w;
-    assign  four_addr = four_addr_w;
-    assign  four_data_in = four_data_in_w;
+    assign cache_cycle_complete = cache_cycle_complete_w;
+    assign cache_count = cache_count_w;
+    assign cache_writing = cache_writing_w;
+    assign mem_count = mem_count_w;
+    assign comp = comp_w;
+    assign write = write_w;
+    assign valid_in = valid_in_w;
+    assign cache_data_in = cache_data_in_w;
+    assign four_wr = four_wr_w;
+    assign four_rd = four_rd_w;
+    assign four_addr = four_addr_w;
+    assign four_data_in = four_data_in_w;
 
     //outputs
     assign DataOut = dataout_w;
     assign Done = done_w;
     assign Stall = four_stall | stall_w;
-    assign CacheHit = hit & valid_out;
+    assign CacheHit = cache_hit_w;
     assign err = cache_err | mem_err | state_err_w | offset[0];
 
     /////////////////////////////////////////////
@@ -137,7 +161,7 @@ module mem_system(/*AUTOARG*/
                            .data_in              (cache_data_in),
                            .comp                 (comp),
                            .write                (write),
-                           .valid_in             (valid_in));
+                           .valid_in             (1'b1));
 
     four_bank_mem mem(// Outputs
                       .data_out          (four_data_out),
@@ -157,135 +181,148 @@ module mem_system(/*AUTOARG*/
     /////////////////////////////////////////////
     ////            State Machine           ////
     ///////////////////////////////////////////
+    assign write = cache_cycle_complete ? Wr : cache_writing;
+    assign data_in = cache_cycle_complete ? DataIn : four_data_out;
+    assign offset = cache_cycle_complete ? Addr[2:0] : {cache_count, 1'b0};
+
     always @(*) begin
-        state_err_w = 1'b0;
         comp_w = 1'b0;
-        write_w = 1'b0;
-        valid_in_w = 1'b1;
-        cache_data_in_w = 16'h0000;
-        stall_w = 1'b0;
+        done_w = 1'b0;
+        cache_cycle_complete_w = 1'b0;
+        cache_count_w = 2'b00;
+        cache_writing_w = 1'b1;
+        mem_count_w = 2'b00;
+        cache_hit_w = 1'b0;
         four_wr_w = 1'b0;
         four_rd_w = 1'b0;
-        four_addr_w = 16'h0000;
-        four_data_in_w = 16'h0000;
-        done_w = 1'b0;
-        
+        stall_w = 1'b0;
         case(state)
             IDLE : begin
-                case({Wr,Rd})
-                    2'b00 : nxtState = IDLE;
-                    2'b01 : nxtState = COMPRD;
-                    2'b10 : nxtState = COMPWR;
-                    2'b11 : nxtState = ERR;
-                endcase
-            end    
-            
-            COMPRD : begin
+                done_w = (hit&valid_out);
+                cache_hit_w = (hit&valid_out);
                 comp_w = 1'b1;
-                comp_w = 1'b1;
-                case({hit,valid_out,dirty})
-                    3'b0x0 : nxtState = ACESRD;
-                    3'b001 : nxtState = COMPRD;
-                    3'b011 : nxtState = PRE_ACESWR;
-                    3'b100 : nxtState = COMPRD; 
-                    3'b101 : nxtState = COMPRD; 
-                    3'b11x : nxtState = DONE;
-                endcase
-            end
-            
-            COMPWR : begin
-                comp_w = 1'b1;
-                write_w = 1'b1;
-                stall_w = 1'b1;
-                casex({hit, valid_out, dirty})
-                    3'b0x0 : nxtState = ACESRD;
-                    3'b0x1 : nxtState = ACESWR;
-                    3'b10x : nxtState = ACESWR;
-                    3'b11x : nxtState = DONE;
-                endcase
-            end
-            
-            DONE : begin
-                dataout_w = cache_data_out;
-                done_w = 1'b1;
                 nxtState = IDLE;
+                casex({Wr,Rd, (hit&valid_out), dirty})
+                    4'b00xx : nxtState = IDLE;
+                    4'b01x0 : nxtState = STGE;
+                    4'b01x1 : nxtState = WR1;
+                    4'b10x0 : nxtState = STGE;
+                    4'b10x1 : nxtState = WR1;
+                    4'b11xx : nxtState = ERR;
+                endcase
             end
-            
-            ACESRD : begin
+
+            WR1  : begin
                 stall_w = 1'b1;
+                cache_writing_w = 1'b1;
+                cache_cycle_complete_w = 1'b1;
+                nxtState = WR2;
+                four_wr_w  = 1'b1;
+            end
+
+            WR2  : begin
+                stall_w = 1'b1;
+                mem_count_w = 2'b01;
+                cache_writing_w = 1'b1;
+                cache_count_w = 2'b01;
+                cache_cycle_complete_w = 1'b1;
+                nxtState = WR3;
+                four_wr_w  = 1'b1;
+            end
+
+            WR3  : begin
+                stall_w = 1'b1;
+                mem_count_w = 2'b10;
+                cache_writing_w = 1'b1;
+                cache_count_w = 2'b10;
+                cache_cycle_complete_w = 1'b1;
+                nxtState = WRST;
+                four_wr_w  = 1'b1;
+            end
+
+            WRST : begin
+                stall_w = 1'b1;
+                mem_count_w = 2'b11;
+                cache_writing_w = 1'b1;
+                cache_count_w = 2'b11;
+                cache_cycle_complete_w = 1'b1;
+                nxtState = WRST;
+                four_wr_w  = 1'b1;
+            end
+
+            STGE : begin
                 four_rd_w = 1'b1;
-                four_addr_w = Addr;
-                case(four_stall)
-                    1'b0 : nxtState = WAIT_1;
-                    1'b1 : nxtState = ACESRD;
-                endcase
-            end
-            
-            WAIT_1 : begin
                 stall_w = 1'b1;
-                nxtState = WAIT_1;
-                case(four_stall)
-                    1'b0 : nxtState = WAIT_2;
-                    1'b1 : nxtState = WAIT_1;
-                endcase
+                nxtState = WAT1;
+                four_rd_w = 1'b1;
             end
-            
-            WAIT_2 : begin
+
+            WAT1 : begin
+                four_rd_w = 1'b1;
                 stall_w = 1'b1;
-                nxtState = WAIT_2;
-                case(four_stall)
-                    1'b0 : nxtState = WAIT_3;
-                    1'b1 : nxtState = WAIT_2;
-                endcase
+                mem_count_w = 2'b01;
+                nxtState = WAT2;
+                four_rd_w = 1'b1;
             end
-            
-            WAIT_3 : begin
+
+            WAT2 : begin
+                four_rd_w = 1'b1;
                 stall_w = 1'b1;
-                nxtState = WAIT_3;
-                case(four_stall)
-                    1'b0 : nxtState = WRtoCACHE;
-                    1'b1 : nxtState = WAIT_3;
-                endcase
+                mem_count_w = 2'b10;
+                cache_cycle_complete_w = 1'b1;
+                nxtState = WAT3;
+                four_rd_w = 1'b1;
             end
-            
-            WRtoCACHE : begin
+
+            WAT3 : begin
+                four_rd_w = 1'b1;
                 stall_w = 1'b1;
-                case({Wr, Rd})
-                    2'b00 : nxtState = ERR;
-                    2'b01 : nxtState = DONE; 
-                    2'b10 : nxtState = WR_MISS_DONE;
-                    2'b11 : nxtState = ERR;
-                endcase
+                mem_count_w = 2'b11;
+                cache_count_w = 2'b01;
+                cache_cycle_complete_w = 1'b1;
+                nxtState = WAT4;
+                four_rd_w = 1'b1;
             end
             
-            PRE_ACESWR : begin
+            WAT4 : begin
                 stall_w = 1'b1;
-                nxtState = ACESWR;
+                cache_count_w = 2'b10;
+                cache_cycle_complete_w = 1'b1;
+                nxtState = ALT;
             end
-            
-            ACESWR : begin
-                nxtState = ACESRD;
+
+            ALT  : begin
                 stall_w = 1'b1;
-                if(four_stall) begin
-                    four_data_in_w = cache_data_out;
-                    four_addr_w = Addr; 
-                    four_wr_w = 1'b1;
-                    nxtState = ACESWR;
-                end
+                cache_count_w = 2'b11;
+                cache_cycle_complete_w = 1'b1;
+                nxtState = TOCH;
             end
-            
-            WR_MISS_DONE : begin
+
+            TOCH : begin
+                stall_w = 1'b1;
+                nxtState = DONE;
+                comp_w = 1'b1;
+            end
+
+            DONE : begin
                 done_w = 1'b1;
-                nxtState = IDLE;
+                stall_w = 1'b1;
+                comp_w = 1'b1;
+                casex({Wr,Rd, (hit&valid_out), dirty})
+                    4'b00xx : nxtState = IDLE;
+                    4'b01x0 : nxtState = STGE;
+                    4'b01x1 : nxtState = WR1;
+                    4'b10x0 : nxtState = STGE;
+                    4'b10x1 : nxtState = WR1;
+                    4'b11xx : nxtState = ERR;
+                endcase
             end
-            
+
             ERR : begin
-                valid_in_w = 1'b0;
                 state_err_w = 1'b1;
             end
         endcase
     end
-
 
     
 endmodule // mem_system
