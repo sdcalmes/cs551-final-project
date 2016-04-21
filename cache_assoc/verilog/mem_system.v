@@ -63,8 +63,13 @@ module mem_system(/*AUTOARG*/
     wire [7:0] index;
     wire [15:0] cache_data_in;
     reg [15:0] cache_data_in_w;
+   
 
     //Cache output
+    wire[15:0] cache_1_data_out, cache_2_data_out;
+    wire [4:0] cache_tag_out;
+    wire cache_hit, cache_valid, cache_dirty, cache_1_en, cache_2_en, cache_1_write, cache_2_write;
+    wire cache_1_valid_w, cache_2_valid_w;
 
     //Four-bank input
     wire four_wr, four_rd;
@@ -87,6 +92,7 @@ module mem_system(/*AUTOARG*/
     reg  cache_cycle_complete_w, cache_writing_w;
     reg [1:0] mem_count_w, cache_count_w;
     wire [1:0] mem_count, cache_count;
+    wire [15:0] data_in;
 
     wire cache_err_1, cache_err_2, mem_err;
     reg state_err_w;
@@ -94,11 +100,9 @@ module mem_system(/*AUTOARG*/
     /////////////////////////////////////////////
     ////            Assignments             ////
     ///////////////////////////////////////////
-    assign offset = Addr[2:0];
+    //assign offset = Addr[2:0];
     assign tag_in = Addr[15:11];
     assign index = Addr[10:3];
-    assign comp = comp_w;
-    assign write = write_w;
     assign en = Wr ^ Rd;
 
     //cache output signals
