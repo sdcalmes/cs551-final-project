@@ -1,0 +1,46 @@
+ 
+****************************************
+Report : reference
+Design : mem_system
+Version: B-2008.09-SP3
+Date   : Wed Apr 20 21:45:28 2016
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2X1             gscl45nm       2.346500       7     16.425499  
+AND2X2             gscl45nm       2.815800      12     33.789599  
+BUFX2              gscl45nm       2.346500      12     28.157999  
+INVX1              gscl45nm       1.407900      46     64.763399  
+INVX2              gscl45nm       1.877200       2      3.754400  
+INVX4              gscl45nm       3.285100       1      3.285100  
+INVX8              gscl45nm       3.285100       1      3.285100  
+MUX2X1             gscl45nm       3.754400       2      7.508800  
+NAND2X1            gscl45nm       1.877200       3      5.631600  
+NAND3X1            gscl45nm       2.346500      14     32.850999  
+NOR2X1             gscl45nm       2.346500       2      4.693000  
+OAI21X1            gscl45nm       2.815800       2      5.631600  
+OR2X1              gscl45nm       2.346500      11     25.811499  
+OR2X2              gscl45nm       2.815800       8     22.526400  
+XNOR2X1            gscl45nm       4.693000       1      4.693000  
+XOR2X1             gscl45nm       4.693000       1      4.693000  
+cache_cache_id0               47310.601627       1  47310.601627  h, n
+dff_216                          11.732500       1     11.732500  h, n
+dff_217                          11.732500       1     11.732500  h, n
+dff_218                          12.201800       1     12.201800  h, n
+dff_219                          11.732500       1     11.732500  h, n
+four_bank_mem                 21295.895007       1  21295.895007  h, n
+-----------------------------------------------------------------------------
+Total 22 references                                 68921.396927
+1

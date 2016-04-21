@@ -16,7 +16,6 @@ module mem_system(/*AUTOARG*/
     input        createdump;
     input        clk;
     input        rst;
-    
     output [15:0] DataOut;
     output Done;
     output Stall;
@@ -31,20 +30,7 @@ module mem_system(/*AUTOARG*/
     ///////////////////////////////////////////
     parameter mem_type = 0;
     // states
-    localparam IDLE             = 4'b0000;
-   /* localparam COMPWR           = 4'b0001;
-    localparam COMPRD           = 4'b0010;
-    localparam DONE             = 4'b0011;
-    localparam ACESRD           = 4'b0100;
-    localparam WRtoCACHE        = 4'b0101;
-    localparam PRE_ACESWR       = 4'b0110;
-    localparam ACESWR           = 4'b0111;
-    localparam WR_MISS_DONE     = 4'b1000;
-    localparam WAIT_1           = 4'b1001;
-    localparam WAIT_2           = 4'b1010;
-    localparam WAIT_3           = 4'b1011;
-    localparam ERR              = 4'b1111;*/
-    
+    localparam IDLE = 4'b0000;
     localparam WR1  = 4'b0001;
     localparam WR2  = 4'b0010;
     localparam WR3  = 4'b0011;
@@ -106,7 +92,7 @@ module mem_system(/*AUTOARG*/
     /////////////////////////////////////////////
     ////            Assignments             ////
     ///////////////////////////////////////////
-    assign offset = Addr[2:0];
+    //assign offset = Addr[2:0];
     assign tag_in = Addr[15:11];
     assign index = Addr[10:3];
     assign comp = comp_w;
@@ -117,7 +103,6 @@ module mem_system(/*AUTOARG*/
     assign cache_count = cache_count_w;
     assign cache_writing = cache_writing_w;
     assign mem_count = mem_count_w;
-    assign comp = comp_w;
     assign write = write_w;
     assign valid_in = valid_in_w;
     assign cache_data_in = cache_data_in_w;
@@ -196,6 +181,9 @@ module mem_system(/*AUTOARG*/
         four_wr_w = 1'b0;
         four_rd_w = 1'b0;
         stall_w = 1'b0;
+	state_err_w = 1'b0;
+	nxtState = ERR;
+
         case(state)
             IDLE : begin
                 done_w = (hit&valid_out);
