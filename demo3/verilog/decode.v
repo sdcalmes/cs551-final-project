@@ -2,9 +2,9 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA, invB, id_memEn,
         memWrite, id_regWrite, sign_alu, ALUSrc_a, ALUSrc_b, memToReg, pc_dec,
         set_select, alu_op, id_write_reg, reg1_data, reg2_data, sign_ext_low_bits,
-        control_err, createdump, halt, clk, rst, wr_stall);
+        control_err, createdump, halt, clk, rst, flop_stall);
 
-      input wb_regWrite, clk, rst, wr_stall;
+      input wb_regWrite, clk, rst, flop_stall;
       input [2:0] wb_write_reg;
       input [15:0] instruction, mem_write_back;
 
@@ -57,7 +57,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
     reg_1 regWrite_state_flop[1:0] (
         .WriteData(regWrite_nxtState),
         .ReadData(regWrite_state),
-	.WriteSel(wr_stall),
+        .WriteSel(flop_stall),
         .clk(clk),
         .rst(rst)
     );
@@ -65,14 +65,14 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
     reg_1 regWrite1_flop (
         .WriteData(regWrite_w ),
         .ReadData(regWrite_1),
-	.WriteSel(wr_stall),
+        .WriteSel(flop_stall),
         .clk(clk),
         .rst(rst)
     );
     reg_1 regWrite2_flop (
         .WriteData(regWrite_1),
         .ReadData(regWrite_2),
-	.WriteSel(wr_stall),
+        .WriteSel(flop_stall),
         .clk(clk),
         .rst(rst)
     );
@@ -103,7 +103,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
     reg_1 memEn_state_flop[1:0] (
         .WriteData(memEn_nxtState),
         .ReadData(memEn_state),
-	.WriteSel(wr_stall),
+	.WriteSel(flop_stall),
         .clk(clk),
         .rst(rst)
     );
@@ -111,14 +111,14 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
     reg_1 memEn1_flop (
         .WriteData(memEn_w ),
         .ReadData(memEn_1),
-	.WriteSel(wr_stall),
+	.WriteSel(flop_stall),
         .clk(clk),
         .rst(rst)
     );
     reg_1 memEn2_flop (
         .WriteData(memEn_1),
         .ReadData(memEn_2),
-	.WriteSel(wr_stall),
+	.WriteSel(flop_stall),
         .clk(clk),
         .rst(rst)
     );

@@ -1,0 +1,48 @@
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld.asm SUCCESS CPI:5.9 CYCLES:343 ICOUNT:58 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large.asm SUCCESS CPI:4.5 CYCLES:4634 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large_1.asm SUCCESS CPI:4.4 CYCLES:4557 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large_2.asm SUCCESS CPI:4.3 CYCLES:4466 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large_3.asm SUCCESS CPI:4.4 CYCLES:4536 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large_4.asm SUCCESS CPI:4.5 CYCLES:4620 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large_5.asm SUCCESS CPI:4.5 CYCLES:4634 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large_6.asm SUCCESS CPI:4.5 CYCLES:4627 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large_7.asm SUCCESS CPI:4.5 CYCLES:4669 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large_8.asm SUCCESS CPI:4.4 CYCLES:4564 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_large_9.asm SUCCESS CPI:4.4 CYCLES:4550 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small.asm SUCCESS CPI:4.5 CYCLES:4634 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small_1.asm SUCCESS CPI:4.4 CYCLES:4557 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small_2.asm SUCCESS CPI:4.3 CYCLES:4466 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small_3.asm SUCCESS CPI:4.4 CYCLES:4536 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small_4.asm SUCCESS CPI:4.5 CYCLES:4620 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small_5.asm SUCCESS CPI:4.5 CYCLES:4634 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small_6.asm SUCCESS CPI:4.5 CYCLES:4627 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small_7.asm SUCCESS CPI:4.5 CYCLES:4669 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small_8.asm SUCCESS CPI:4.4 CYCLES:4564 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldld_rand_small_9.asm SUCCESS CPI:4.4 CYCLES:4550 ICOUNT:1035 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large_1.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large_2.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large_3.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large_4.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large_5.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large_6.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large_7.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large_8.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_large_9.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small_1.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small_2.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small_3.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small_4.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small_5.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small_6.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small_7.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small_8.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/ldst_rand_small_9.asm FAILED
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/rpt_ld_test_0.asm SUCCESS CPI:4.9 CYCLES:49 ICOUNT:10 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/rpt_ld_test_1.asm SUCCESS CPI:6.6 CYCLES:46 ICOUNT:7 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/rpt_reg_test_0.asm SUCCESS CPI:3.6 CYCLES:32 ICOUNT:9 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/rpt_reg_test_1.asm SUCCESS CPI:5.0 CYCLES:35 ICOUNT:7 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/rpt_st_test_0.asm RELAX-PASS
+/u/k/a/karu/courses/cs552/spring2013/handouts/testprograms/public/rand_ldst/rpt_st_test_1.asm RELAX-PASS

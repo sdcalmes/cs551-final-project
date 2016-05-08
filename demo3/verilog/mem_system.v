@@ -28,13 +28,13 @@ module mem_system(/*AUTOARG*/
 	///////////////////////////////////////////
 
 	localparam IDLE = 4'b0000;
-	localparam STGE = 4'b0110;
-	localparam WR2M = 4'b0111;
 	localparam STL1 = 4'b0001;
 	localparam STL2 = 4'b0010;
 	localparam STL3 = 4'b0011;
 	localparam STL4 = 4'b0100;
 	localparam STL5 = 4'b0101;
+	localparam STGE = 4'b0110;
+	localparam WR2M = 4'b0111;
 	localparam CHCK = 4'b1000;
 	localparam DONE = 4'b1001;
 	localparam ERR  = 4'b1111;
@@ -258,15 +258,15 @@ always @ (*) begin
 			cache_2_valid, cache_2_hit, cache_2_dirty})
 				8'b10_11x_0xx, 8'b10_11x_11x, 8'b10_11x_10x,
 				8'b01_110_0xx, 8'b01_110_110, 8'b01_110_100 : begin
-					stall_w = 1'b0;
 					Done = 1'b1;
+					stall_w = 1'b0;
 					CacheHit = 1'b1;
 				end
 				
 				8'b10_x0x_11x, 8'b10_01x_11x,
 				8'b01_x0x_110, 8'b01_01x_110 : begin
-					stall_w = 1'b0;
 					Done = 1'b1;
+					stall_w = 1'b0;
 					CacheHit = 1'b1;
 					cache_sel = 1'b1;
 				end

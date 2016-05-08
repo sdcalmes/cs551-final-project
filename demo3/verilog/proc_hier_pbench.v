@@ -131,7 +131,7 @@ module proc_hier_pbench();
    assign PC = DUT.p0.fetch0.PC;
    assign Inst = DUT.p0.ex_instruction;
    
-   assign RegWrite = DUT.p0.wb_regWrite;
+   assign RegWrite = DUT.p0.wb_regWrite & ~DUT.p0.icache_stall;
    //assign state = DUT.p0.decode0.state;
    // Is register file being written to, one bit signal (1 means yes, 0 means no)
    //    
@@ -141,10 +141,10 @@ module proc_hier_pbench();
    assign WriteData = DUT.p0.wb_mem_write_back;
    // Data being written to the register. (16 bits)
    
-   assign MemRead =  (DUT.p0.mem_memEn & ~DUT.p0.mem_memWrite);
+   assign MemRead =  (DUT.p0.mem_memEn & ~DUT.p0.mem_memWrite & ~DUT.p0.dcache_stall);
    // Is memory being read, one bit signal (1 means yes, 0 means no)
    
-   assign MemWrite = (DUT.p0.mem_memEn & DUT.p0.mem_memWrite);
+   assign MemWrite = (DUT.p0.mem_memEn & DUT.p0.mem_memWrite & ~DUT.p0.dcache_stall);
    // Is memory being written to (1 bit signal)
    
    assign MemAddress = DUT.p0.mem_alu_out;
@@ -161,7 +161,7 @@ module proc_hier_pbench();
    // Signal indicating a valid instruction read request to cache
    // Above assignment is a dummy example
    
-   //assign ICacheHit = DUT.p0.readData;
+   assign ICacheHit = DUT.p0.icache_hit;
    // Signal indicating a valid instruction cache hit
    // Above assignment is a dummy example
 
@@ -169,7 +169,7 @@ module proc_hier_pbench();
    // Signal indicating a valid instruction data read or write request to cache
    // Above assignment is a dummy example
    //    
-   //assign DCacheHit = DUT.p0.readData;
+   assign DCacheHit = DUT.p0.dcache_hit;
    // Signal indicating a valid data cache hit
    // Above assignment is a dummy example
    

@@ -41,7 +41,6 @@ Model Technology ModelSim SE vlog 5.8b Compiler 2004.01 Jan 26 2004
 
 Top level modules:
 	memory2c_align
-	memory2c
 	proc_hier_pbench
 	stallmem
 Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl 
@@ -64,12 +63,7 @@ Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl
 # Loading __work.fetch
 # Loading __work.reg_16
 # Loading __work.dff
-# Loading __work.mem_system
-# Loading __work.cache
-# Loading __work.memc
-# Loading __work.memv
-# Loading __work.four_bank_mem
-# Loading __work.final_memory
+# Loading __work.memory2c
 # Loading __work.pc_inc
 # Loading __work.cla4
 # Loading __work.if_id
@@ -91,13 +85,16 @@ Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl
 # Loading __work.branch_control
 # Loading __work.ex_mem
 # Loading __work.memory
+# Loading __work.mem_system
+# Loading __work.cache
+# Loading __work.memc
+# Loading __work.memv
+# Loading __work.four_bank_mem
+# Loading __work.final_memory
 # Loading __work.mem_wb
 # Loading __work.write_back
 VSIM 1> run -all
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.ptrace for output
-# Error signal asserted
-# Break at clkrst.v line 34
-# Stopped at clkrst.v line 34 
-VSIM 2> # 
-# <EOF> 
+# ** Note: $finish    : proc_hier_pbench.v(116)
+#    Time: 3105 ns  Iteration: 0  Instance: /proc_hier_pbench
