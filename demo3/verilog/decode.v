@@ -19,6 +19,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
       reg regWrite_w, memEn_w;
       wire regWrite, regWrite_1, regWrite_2, regWrite_3;
       wire memEn, memEn_1, memEn_2, memEn_3;
+      wire [15:0] instruction_1;
       reg [1:0] regWrite_nxtState, memEn_nxtState;
       wire [1:0] regWrite_state, memEn_state;
 
@@ -53,7 +54,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
 
     //assign alu_res_sel = flush ? 1'b0 : alu_res_sel_w;
 
-    /* State Machine for regWrite */
+    // State Machine for regWrite
     reg_1 regWrite_state_flop[1:0] (
         .WriteData(regWrite_nxtState),
         .ReadData(regWrite_state),
@@ -62,8 +63,15 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         .rst(rst)
     );
 
+    reg_1 instruction_flop [15:0] (
+        .WriteData(instruction),
+        .ReadData(instruction_1),
+        .WriteSel(flop_stall),
+        .clk(clk),
+        .rst(rst)
+    );
     reg_1 regWrite1_flop (
-        .WriteData(regWrite_w ),
+        .WriteData(regWrite_w),
         .ReadData(regWrite_1),
         .WriteSel(flop_stall),
         .clk(clk),
@@ -77,7 +85,8 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         .rst(rst)
     );
 
-    assign id_regWrite = regWrite_w;
+    assign id_regWrite = (instruction == instruction_1) ? 1'b0 : regWrite_w;
+    assign id_memEn = (instruction == instruction_1) ? 1'b0 : memEn_w;
 
     always @(*) begin
         regWrite_w = 1'b0;
@@ -97,9 +106,9 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
             default : begin
             end
         endcase
-    end
-
-    /* State Machine for memEn */
+    end 
+    
+    // State Machine for memEn 
     reg_1 memEn_state_flop[1:0] (
         .WriteData(memEn_nxtState),
         .ReadData(memEn_state),
@@ -123,7 +132,6 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         .rst(rst)
     );
 
-    assign id_memEn = memEn_w;
 
     always @(*) begin
         memEn_w = 1'b0;
@@ -143,7 +151,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
             default : begin
             end
         endcase
-    end
+    end 
     
     always@(*) begin
 	sign_ext_low_bits_w = 16'h0000;

@@ -1,41 +1,76 @@
 SIMLOG:: Cycle           4 PC:     0000 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
-SIMLOG:: Cycle           5 PC:     0000 I:     0800 R: 0   0     0000 M: 0 0     0000     0000
-SIMLOG:: Cycle           6 PC:     0000 I:     c164 R: 0   0     0000 M: 0 0     0000     0000
-SIMLOG:: Cycle           7 PC:     0002 I:     c164 R: 0   0     0000 M: 0 0     0000     0000
-SIMLOG:: Cycle           8 PC:     0002 I:     c164 R: 1   1     0064 M: 0 0     0000     0000
-SIMLOG:: Cycle           9 PC:     0002 I:     c263 R: 0   1     0064 M: 0 0     0000     0000
-SIMLOG:: Cycle          10 PC:     0004 I:     c263 R: 0   1     0064 M: 0 0     0000     0000
-SIMLOG:: Cycle          11 PC:     0004 I:     c263 R: 1   2     0063 M: 0 0     0000     0000
-SIMLOG:: Cycle          12 PC:     0004 I:     d94c R: 0   2     0063 M: 0 0     0000     0000
-SIMLOG:: Cycle          13 PC:     0006 I:     d94c R: 0   2     0063 M: 0 0     00c7     0063
-SIMLOG:: Cycle          14 PC:     0006 I:     d94c R: 1   3     00c7 M: 0 0     00c7     0063
-SIMLOG:: Cycle          15 PC:     0006 I:     db28 R: 0   3     00c7 M: 0 0     00c7     0063
-SIMLOG:: Cycle          16 PC:     0008 I:     db28 R: 0   3     00c7 M: 0 0     012b     0064
-SIMLOG:: Cycle          17 PC:     0008 I:     db28 R: 1   2     012b M: 0 0     012b     0064
-SIMLOG:: Cycle          18 PC:     0008 I:     d950 R: 0   2     012b M: 0 0     012b     0064
-SIMLOG:: Cycle          19 PC:     000a I:     d950 R: 0   2     012b M: 0 0     018f     012b
-SIMLOG:: Cycle          20 PC:     000a I:     d950 R: 1   4     018f M: 0 0     018f     012b
-SIMLOG:: Cycle          21 PC:     000a I:     da38 R: 0   4     018f M: 0 0     018f     012b
-SIMLOG:: Cycle          22 PC:     000c I:     da38 R: 0   4     018f M: 0 0     018f     0064
-SIMLOG:: Cycle          23 PC:     000c I:     da38 R: 1   6     018f M: 0 0     018f     0064
-SIMLOG:: Cycle          24 PC:     000c I:     d994 R: 0   6     018f M: 0 0     018f     0064
-SIMLOG:: Cycle          25 PC:     000e I:     d994 R: 0   6     018f M: 0 0     01f3     018f
-SIMLOG:: Cycle          26 PC:     000e I:     d994 R: 1   5     01f3 M: 0 0     01f3     018f
-SIMLOG:: Cycle          27 PC:     000e I:     dd30 R: 0   5     01f3 M: 0 0     01f3     018f
-SIMLOG:: Cycle          28 PC:     0010 I:     dd30 R: 0   5     01f3 M: 0 0     0257     0064
-SIMLOG:: Cycle          29 PC:     0010 I:     dd30 R: 1   4     0257 M: 0 0     0257     0064
-SIMLOG:: Cycle          30 PC:     0010 I:     0000 R: 0   4     0257 M: 0 0     0257     0064
-SIMLOG:: Cycle          31 PC:     0012 I:     0000 R: 0   4     0257 M: 0 0     0000     0000
-SIMLOG:: Cycle          32 PC:     0012 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle           5 PC:     0000 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle           6 PC:     0000 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle           7 PC:     0000 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle           8 PC:     0000 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle           9 PC:     0000 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          10 PC:     0000 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          11 PC:     0000 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          12 PC:     0000 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          13 PC:     0000 I:     0800 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          14 PC:     0000 I:     0800 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          15 PC:     0000 I:     c164 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          16 PC:     0002 I:     c164 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          17 PC:     0002 I:     c164 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          18 PC:     0002 I:     c164 R: 0   0     0000 M: 0 0     0000     0000
+SIMLOG:: Cycle          19 PC:     0002 I:     c164 R: 0   1     0064 M: 0 0     0000     0000
+SIMLOG:: Cycle          20 PC:     0004 I:     c164 R: 1   1     0064 M: 0 0     0000     0000
+SIMLOG:: Cycle          21 PC:     0004 I:     c263 R: 0   1     0064 M: 0 0     0000     0000
+SIMLOG:: Cycle          22 PC:     0004 I:     c263 R: 0   1     0064 M: 0 0     0000     0000
+SIMLOG:: Cycle          23 PC:     0004 I:     c263 R: 0   1     0064 M: 0 0     0000     0000
+SIMLOG:: Cycle          24 PC:     0006 I:     c263 R: 0   1     0064 M: 0 0     0000     0000
+SIMLOG:: Cycle          25 PC:     0006 I:     d94c R: 0   2     0063 M: 0 0     0000     0000
+SIMLOG:: Cycle          26 PC:     0006 I:     d94c R: 1   2     0063 M: 0 0     0000     0000
+SIMLOG:: Cycle          27 PC:     0006 I:     d94c R: 0   2     0063 M: 0 0     0064     0000
+SIMLOG:: Cycle          28 PC:     0008 I:     d94c R: 0   2     0063 M: 0 0     0064     0000
+SIMLOG:: Cycle          29 PC:     0008 I:     db28 R: 0   3     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          30 PC:     0008 I:     db28 R: 0   3     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          31 PC:     0008 I:     db28 R: 0   3     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          32 PC:     0008 I:     db28 R: 0   3     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          33 PC:     0008 I:     db28 R: 0   3     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          34 PC:     0008 I:     db28 R: 0   3     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          35 PC:     0008 I:     db28 R: 0   3     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          36 PC:     0008 I:     db28 R: 0   3     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          37 PC:     0008 I:     db28 R: 0   3     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          38 PC:     0008 I:     db28 R: 0   3     00c7 M: 0 0     0064     0064
+SIMLOG:: Cycle          39 PC:     000a I:     db28 R: 0   3     00c7 M: 0 0     0064     0064
+SIMLOG:: Cycle          40 PC:     000a I:     d950 R: 0   2     0064 M: 0 0     0064     0064
+SIMLOG:: Cycle          41 PC:     000a I:     d950 R: 0   2     0064 M: 0 0     0064     0064
+SIMLOG:: Cycle          42 PC:     000a I:     d950 R: 0   2     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          43 PC:     000c I:     d950 R: 0   2     0064 M: 0 0     00c7     0063
+SIMLOG:: Cycle          44 PC:     000c I:     da38 R: 0   4     00c7 M: 0 0     00c7     0063
+SIMLOG:: Cycle          45 PC:     000c I:     da38 R: 1   4     00c7 M: 0 0     00c7     0063
+SIMLOG:: Cycle          46 PC:     000c I:     da38 R: 0   4     00c7 M: 0 0     00c7     0064
+SIMLOG:: Cycle          47 PC:     000e I:     da38 R: 0   4     00c7 M: 0 0     00c7     0064
+SIMLOG:: Cycle          48 PC:     000e I:     d994 R: 0   6     00c7 M: 0 0     00c7     0064
+SIMLOG:: Cycle          49 PC:     000e I:     d994 R: 0   6     00c7 M: 0 0     00c7     0064
+SIMLOG:: Cycle          50 PC:     000e I:     d994 R: 0   6     00c7 M: 0 0     012b     00c7
+SIMLOG:: Cycle          51 PC:     0010 I:     d994 R: 0   6     00c7 M: 0 0     012b     00c7
+SIMLOG:: Cycle          52 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     012b     00c7
+SIMLOG:: Cycle          53 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     012b     00c7
+SIMLOG:: Cycle          54 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     012b     00c7
+SIMLOG:: Cycle          55 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     012b     00c7
+SIMLOG:: Cycle          56 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     012b     00c7
+SIMLOG:: Cycle          57 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     012b     00c7
+SIMLOG:: Cycle          58 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     012b     00c7
+SIMLOG:: Cycle          59 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     012b     00c7
+SIMLOG:: Cycle          60 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     012b     00c7
+SIMLOG:: Cycle          61 PC:     0010 I:     dd30 R: 0   5     012b M: 0 0     0064     0064
+SIMLOG:: Cycle          62 PC:     0012 I:     dd30 R: 0   5     012b M: 0 0     0064     0064
+SIMLOG:: Cycle          63 PC:     0012 I:     0000 R: 0   4     0064 M: 0 0     0064     0064
+SIMLOG:: Cycle          64 PC:     0012 I:     0000 R: 1   4     0064 M: 0 0     0064     0064
+SIMLOG:: Cycle          65 PC:     0012 I:     0000 R: 0   4     0064 M: 0 0     0000     0000
+SIMLOG:: Cycle          66 PC:     0014 I:     0000 R: 0   4     0064 M: 0 0     0000     0000
+SIMLOG:: Cycle          67 PC:     0014 I:     0000 R: 0   0     0000 M: 0 0     0000     0000
 SIMLOG:: Processor halted
 
-SIMLOG:: sim_cycles          32
+SIMLOG:: sim_cycles          67
 
-SIMLOG:: inst_count           9
+SIMLOG:: inst_count           5
 
 SIMLOG:: dcachehit_count           0
 
-SIMLOG:: icachehit_count           0
+SIMLOG:: icachehit_count          18
 
 SIMLOG:: dcachereq_count           0
 
