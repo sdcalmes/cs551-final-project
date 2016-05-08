@@ -15,6 +15,7 @@ module proc_hier_pbench();
                                   stores instructions fetched from instruction memory
                                */
    wire        RegWrite;       /* Whether register file is being written to */
+   wire [1:0]  state;
    wire [2:0]  WriteRegister;  /* What register is written */
    wire [15:0] WriteData;      /* Data */
    wire        MemWrite;       /* Similar as above but for memory */
@@ -127,51 +128,52 @@ module proc_hier_pbench();
    // Edit the example below. You must change the signal
    // names on the right hand side
     
-   //assign PC = DUT.PC_Out;
-   //assign Inst = DUT.Instruction_f;
+   assign PC = DUT.p0.fetch0.PC;
+   assign Inst = DUT.p0.ex_instruction;
    
-   assign RegWrite = DUT.p0.regWrite;
+   assign RegWrite = DUT.p0.wb_regWrite;
+   //assign state = DUT.p0.decode0.state;
    // Is register file being written to, one bit signal (1 means yes, 0 means no)
    //    
-   assign WriteRegister = DUT.p0.DstwithJmout;
+   assign WriteRegister = DUT.p0.wb_write_reg;
    // The name of the register being written to. (3 bit signal)
    
-   assign WriteData = DUT.p0.wData;
+   assign WriteData = DUT.p0.wb_mem_write_back;
    // Data being written to the register. (16 bits)
    
-   assign MemRead =  (DUT.p0.memRxout & ~DUT.p0.notdonem);
+   assign MemRead =  (DUT.p0.mem_memEn & ~DUT.p0.mem_memWrite);
    // Is memory being read, one bit signal (1 means yes, 0 means no)
    
-   assign MemWrite = (DUT.p0.memWxout & ~DUT.p0.notdonem);
+   assign MemWrite = (DUT.p0.mem_memEn & DUT.p0.mem_memWrite);
    // Is memory being written to (1 bit signal)
    
-   assign MemAddress = DUT.p0.data1out;
+   assign MemAddress = DUT.p0.mem_alu_out;
    // Address to access memory with (for both reads and writes to memory, 16 bits)
    
-   assign MemDataIn = DUT.p0.data2out;
+   assign MemDataIn = DUT.p0.mem_reg2_data;
    // Data to be written to memory for memory writes (16 bits)
    
-   assign MemDataOut = DUT.p0.readData;
+   assign MemDataOut = DUT.p0.mem_read_data;
    // Data read from memory for memory reads (16 bits)
 
    // new added 05/03
-   assign ICacheReq = DUT.p0.readData;
+   //assign ICacheReq = DUT.p0.readData;
    // Signal indicating a valid instruction read request to cache
    // Above assignment is a dummy example
    
-   assign ICacheHit = DUT.p0.readData;
+   //assign ICacheHit = DUT.p0.readData;
    // Signal indicating a valid instruction cache hit
    // Above assignment is a dummy example
 
-   assign DCacheReq = DUT.p0.readData;
+   //assign DCacheReq = DUT.p0.readData;
    // Signal indicating a valid instruction data read or write request to cache
    // Above assignment is a dummy example
    //    
-   assign DCacheHit = DUT.p0.readData;
+   //assign DCacheHit = DUT.p0.readData;
    // Signal indicating a valid data cache hit
    // Above assignment is a dummy example
    
-   assign Halt = DUT.p0.haltxout;
+   assign Halt = DUT.p0.wb_halt;
    // Processor halted
    
    
