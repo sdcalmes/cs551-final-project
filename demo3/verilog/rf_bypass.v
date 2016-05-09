@@ -32,12 +32,12 @@ module rf_bypass (
         tmp_writedata = writedata;
         case(write)
             1'b0 : begin
-                read1Data = outRead1;
-                read2Data = outRead2;
+                read1Data <= outRead1;
+                read2Data <= outRead2;
             end
             2'b1 : begin
-                read1Data = (writeregsel == read1regsel) ? tmp_writedata : outRead1;
-                read2Data = (writeregsel == read2regsel) ? tmp_writedata : outRead2;
+                read1Data <= (writeregsel == read1regsel) ? tmp_writedata : outRead1;
+                read2Data <= (writeregsel == read2regsel) ? tmp_writedata : outRead2;
             end
         endcase
     end

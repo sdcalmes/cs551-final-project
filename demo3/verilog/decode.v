@@ -1,8 +1,8 @@
 module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_sel,
         branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA, invB, id_memEn,
         memWrite, id_regWrite, sign_alu, ALUSrc_a, ALUSrc_b, memToReg, pc_dec,
-        set_select, alu_op, id_write_reg, reg1_data, reg2_data, sign_ext_low_bits,
-        control_err, createdump, halt, clk, rst, flop_stall);
+        set_select, alu_op, id_write_reg, reg1_sel, reg2_sel, reg1_data, reg2_data, 
+        sign_ext_low_bits, control_err, createdump, halt, clk, rst, flop_stall);
 
       input wb_regWrite, clk, rst, flop_stall;
       input [2:0] wb_write_reg;
@@ -12,7 +12,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
             invB, id_memEn, memWrite, id_regWrite, sign_alu, control_err, halt,
             createdump;
       output [1:0] ALUSrc_a, ALUSrc_b, memToReg, pc_dec, set_select;
-      output [2:0] alu_op, id_write_reg;
+      output [2:0] alu_op, id_write_reg, reg1_sel, reg2_sel;
       output [15:0] reg1_data, reg2_data, sign_ext_low_bits;
 
       // state machine logic
@@ -33,11 +33,10 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
       wire [1:0] sign_extd;
       
 
-    rf_bypass   register(.read1regsel(instruction[10:8]),
-                .read2regsel(instruction[7:5]), .writeregsel(wb_write_reg),
-                .writedata(mem_write_back), .write(wb_regWrite), 
-                .read1data(reg1_data), .read2data(reg2_data), .clk(clk),
-                .rst(rst), .err());
+    rf_bypass   register(.read1regsel(reg1_sel), .read2regsel(reg2_sel), 
+                .writeregsel(wb_write_reg), .writedata(mem_write_back), 
+                .write(wb_regWrite), .read1data(reg1_data), 
+                .read2data(reg2_data), .clk(clk), .rst(rst), .err());
 
     control     control(.instr(instruction[15:11]), .regDst(regDst),
                 .regWrite(regWrite), .sign_extd(sign_extd),
@@ -52,20 +51,25 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
     alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op),
                 .lowerBits(instruction[1:0]), .invB(invB), .invA(invA), .Cin(Cin));
 
-    //assign alu_res_sel = flush ? 1'b0 : alu_res_sel_w;
+    assign reg1_sel =  instruction[10:8];
+    assign reg2_sel =  instruction[7:5];
 
-    // State Machine for regWrite
-    reg_1 regWrite_state_flop[1:0] (
-        .WriteData(regWrite_nxtState),
-        .ReadData(regWrite_state),
+
+    reg_1 instruction_flop [15:0] (
+        .WriteData(instruction),
+        .ReadData(instruction_1),
         .WriteSel(flop_stall),
         .clk(clk),
         .rst(rst)
     );
 
-    reg_1 instruction_flop [15:0] (
-        .WriteData(instruction),
-        .ReadData(instruction_1),
+    assign id_regWrite = (instruction == instruction_1) ? 1'b0 : regWrite;
+    assign id_memEn = (instruction == instruction_1) ? 1'b0 : memEn;
+
+    /*// State Machine for regWrite
+    reg_1 regWrite_state_flop[1:0] (
+        .WriteData(regWrite_nxtState),
+        .ReadData(regWrite_state),
         .WriteSel(flop_stall),
         .clk(clk),
         .rst(rst)
@@ -85,8 +89,6 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         .rst(rst)
     );
 
-    assign id_regWrite = (instruction == instruction_1) ? 1'b0 : regWrite_w;
-    assign id_memEn = (instruction == instruction_1) ? 1'b0 : memEn_w;
 
     always @(*) begin
         regWrite_w = 1'b0;
@@ -132,7 +134,6 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         .rst(rst)
     );
 
-
     always @(*) begin
         memEn_w = 1'b0;
         memEn_nxtState = 2'b00;
@@ -151,7 +152,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
             default : begin
             end
         endcase
-    end 
+    end */ 
     
     always@(*) begin
 	sign_ext_low_bits_w = 16'h0000;

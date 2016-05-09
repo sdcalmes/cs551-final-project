@@ -93,6 +93,10 @@ Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl
 # Loading __work.final_memory
 # Loading __work.mem_wb
 # Loading __work.write_back
+# ** Warning: (vsim-3015) proc.v(105): [PCDPC] - Port size (3 or 3) does not match connection size (1) for port 'reg1_sel'.
+#         Region: /proc_hier_pbench/DUT/p0/decode0
+# ** Warning: (vsim-3015) proc.v(105): [PCDPC] - Port size (3 or 3) does not match connection size (1) for port 'reg2_sel'.
+#         Region: /proc_hier_pbench/DUT/p0/decode0
 VSIM 1> run -all
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.ptrace for output
