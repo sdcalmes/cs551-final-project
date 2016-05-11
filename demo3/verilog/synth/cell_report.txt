@@ -1,0 +1,72 @@
+Warning: Design 'proc' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : cell
+Design : proc
+Version: B-2008.09-SP3
+Date   : Mon May  9 16:19:34 2016
+****************************************
+
+Attributes:
+    b - black box (unknown)
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    u - contains unmapped logic
+
+Cell                      Reference       Library             Area  Attributes
+--------------------------------------------------------------------------------
+U5                        AND2X2          gscl45nm        2.815800  
+U8                        AND2X2          gscl45nm        2.815800  
+U9                        AND2X2          gscl45nm        2.815800  
+U10                       AND2X2          gscl45nm        2.815800  
+U11                       AND2X2          gscl45nm        2.815800  
+U13                       AND2X2          gscl45nm        2.815800  
+U14                       AND2X2          gscl45nm        2.815800  
+U15                       AND2X2          gscl45nm        2.815800  
+U17                       AND2X2          gscl45nm        2.815800  
+U23                       INVX1           gscl45nm        1.407900  
+U24                       AND2X1          gscl45nm        2.346500  
+U25                       AND2X1          gscl45nm        2.346500  
+U26                       AND2X1          gscl45nm        2.346500  
+U27                       AND2X1          gscl45nm        2.346500  
+U28                       AND2X1          gscl45nm        2.346500  
+U29                       AND2X1          gscl45nm        2.346500  
+U30                       INVX1           gscl45nm        1.407900  
+U31                       INVX1           gscl45nm        1.407900  
+U32                       INVX1           gscl45nm        1.407900  
+U33                       BUFX2           gscl45nm        2.346500  
+U34                       BUFX2           gscl45nm        2.346500  
+U35                       BUFX2           gscl45nm        2.346500  
+U36                       BUFX2           gscl45nm        2.346500  
+U37                       INVX1           gscl45nm        1.407900  
+U38                       INVX1           gscl45nm        1.407900  
+U39                       AND2X2          gscl45nm        2.815800  
+U40                       INVX4           gscl45nm        3.285100  
+U41                       INVX1           gscl45nm        1.407900  
+U42                       INVX1           gscl45nm        1.407900  
+U43                       INVX2           gscl45nm        1.877200  
+U44                       INVX8           gscl45nm        3.285100  
+U45                       NAND2X1         gscl45nm        1.877200  
+decode0                   decode                          4345.248613
+                                                                    h, n
+execute0                  execute                         4170.669014
+                                                                    h
+fetch0                    fetch                           125310.137595
+                                                                    h, n
+fw0                       forwarding                      725.537785
+                                                                    h
+memory0                   memory                          121838.725647
+                                                                    h, n
+pipe0                     if_id                           695.971887
+                                                                    h, n
+pipe1                     id_ex                           2343.214857
+                                                                    h, n
+pipe2                     ex_mem                          1517.246875
+                                                                    h, n
+pipe3                     mem_wb                          1478.294974
+                                                                    h, n
+write_back                write_back                      0.000000  b
+--------------------------------------------------------------------------------
+Total 42 cells                                            262498.258046
+1

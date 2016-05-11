@@ -101,6 +101,7 @@ module mem_system(/*AUTOARG*/
 				   (cache_in_sel) ? {cache_count, 1'b0} : addrFlopped[2:0];
 
 	always @ (*) begin
+		addrFlopped = addrFlopped;
 	    casex (nxtState)
 		    4'b0000: addrFlopped = addrFlopped;
 		    default: addrFlopped = Addr;
@@ -246,6 +247,7 @@ always @ (*) begin
 					nxtState = STGE;
 					comp = 1'b1;
 					invVictimway = 1'b1;
+					cache_sel = 1'b1;
 				end
 				2'b11 : nxtState = ERR;	
 			endcase

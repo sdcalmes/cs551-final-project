@@ -2,7 +2,8 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
         branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA, invB, id_memEn,
         memWrite, id_regWrite, sign_alu, ALUSrc_a, ALUSrc_b, memToReg, pc_dec,
         set_select, alu_op, id_write_reg, reg1_sel, reg2_sel, reg1_data, reg2_data, 
-        sign_ext_low_bits, control_err, createdump, halt, clk, rst, flop_stall);
+        sign_ext_low_bits, control_err, createdump, halt, clk, rst, flop_stall,
+	rs_valid, rt_valid);
 
       input wb_regWrite, clk, rst, flop_stall;
       input [2:0] wb_write_reg;
@@ -10,7 +11,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
 
       output alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA,
             invB, id_memEn, memWrite, id_regWrite, sign_alu, control_err, halt,
-            createdump;
+            createdump, rs_valid, rt_valid;
       output [1:0] ALUSrc_a, ALUSrc_b, memToReg, pc_dec, set_select;
       output [2:0] alu_op, id_write_reg, reg1_sel, reg2_sel;
       output [15:0] reg1_data, reg2_data, sign_ext_low_bits;
@@ -46,7 +47,7 @@ module decode(wb_regWrite, wb_write_reg, instruction, mem_write_back, alu_res_se
                 .branch(branch), .branch_eqz(branch_eqz), .branch_gtz(branch_gtz),
                 .branch_ltz(branch_ltz), .memEn(memEn), .memWrite(memWrite),
                 .err(control_err), .halt(halt), .createdump(createdump),
-                .rst(rst));
+                .rst(rst), .rs_valid(rs_valid), .rt_valid(rt_valid));
     
     alu_control alu_cntl(.cmd(ALUOp), .alu_op(alu_op),
                 .lowerBits(instruction[1:0]), .invB(invB), .invA(invA), .Cin(Cin));

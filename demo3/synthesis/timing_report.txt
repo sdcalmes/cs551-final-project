@@ -1,0 +1,2725 @@
+Warning: Design 'proc' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 20
+Design : proc
+Version: B-2008.09-SP3
+Date   : Mon May  9 16:19:34 2016
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: gscl45nm
+Wire Load Model Mode: top
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: pipe3/read_data_flop[1]/flops/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U157/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U158/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U213/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U214/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<1> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U224/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U108/Y (BUFX2)                        0.04       1.96 r
+  memory0/dcache/c1/U70/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U71/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<1> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U399/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U400/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U163/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U165/Y (INVX1)                           0.01       2.09 f
+  memory0/dcache/DataOut<1> (mem_system_0)                0.00       2.09 f
+  memory0/read_data<1> (memory)                           0.00       2.09 f
+  pipe3/mem_read_data<1> (mem_wb)                         0.00       2.09 f
+  pipe3/read_data_flop[1]/WriteData (reg_1_17)            0.00       2.09 f
+  pipe3/read_data_flop[1]/U4/Y (INVX1)                    0.00       2.09 r
+  pipe3/read_data_flop[1]/U6/Y (AOI21X1)                  0.01       2.10 f
+  pipe3/read_data_flop[1]/flops/d (dff_577)               0.00       2.10 f
+  pipe3/read_data_flop[1]/flops/U4/Y (AND2X2)             0.03       2.13 f
+  pipe3/read_data_flop[1]/flops/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  pipe3/read_data_flop[1]/flops/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: pipe3/read_data_flop[6]/flops/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U157/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U158/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U219/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U220/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<6> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U232/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U94/Y (BUFX2)                         0.04       1.96 r
+  memory0/dcache/c1/U76/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U77/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<6> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U406/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U72/Y (INVX1)                            0.00       2.04 r
+  memory0/dcache/U177/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U178/Y (INVX1)                           0.01       2.09 f
+  memory0/dcache/DataOut<6> (mem_system_0)                0.00       2.09 f
+  memory0/read_data<6> (memory)                           0.00       2.09 f
+  pipe3/mem_read_data<6> (mem_wb)                         0.00       2.09 f
+  pipe3/read_data_flop[6]/WriteData (reg_1_22)            0.00       2.09 f
+  pipe3/read_data_flop[6]/U4/Y (INVX1)                    0.00       2.09 r
+  pipe3/read_data_flop[6]/U6/Y (AOI21X1)                  0.01       2.10 f
+  pipe3/read_data_flop[6]/flops/d (dff_582)               0.00       2.10 f
+  pipe3/read_data_flop[6]/flops/U4/Y (AND2X2)             0.03       2.13 f
+  pipe3/read_data_flop[6]/flops/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  pipe3/read_data_flop[6]/flops/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m0/reg1[2]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U164/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U161/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U215/Y (OR2X2)                 0.03       1.87 r
+  memory0/dcache/c1/mem_w2/U216/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<2> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U226/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U109/Y (BUFX2)                        0.04       1.96 r
+  memory0/dcache/c1/U72/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U73/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<2> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U402/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U404/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U93/Y (AND2X2)                           0.03       2.07 r
+  memory0/dcache/U33/Y (INVX1)                            0.02       2.10 f
+  memory0/dcache/mem/data_in<2> (four_bank_mem_0)         0.00       2.10 f
+  memory0/dcache/mem/m0/data_in<2> (final_memory_3)       0.00       2.10 f
+  memory0/dcache/mem/m0/reg1[2]/d (dff_186)               0.00       2.10 f
+  memory0/dcache/mem/m0/reg1[2]/U4/Y (AND2X2)             0.04       2.13 f
+  memory0/dcache/mem/m0/reg1[2]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m0/reg1[2]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m1/reg1[2]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U164/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U161/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U215/Y (OR2X2)                 0.03       1.87 r
+  memory0/dcache/c1/mem_w2/U216/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<2> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U226/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U109/Y (BUFX2)                        0.04       1.96 r
+  memory0/dcache/c1/U72/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U73/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<2> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U402/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U404/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U93/Y (AND2X2)                           0.03       2.07 r
+  memory0/dcache/U33/Y (INVX1)                            0.02       2.10 f
+  memory0/dcache/mem/data_in<2> (four_bank_mem_0)         0.00       2.10 f
+  memory0/dcache/mem/m1/data_in<2> (final_memory_2)       0.00       2.10 f
+  memory0/dcache/mem/m1/reg1[2]/d (dff_135)               0.00       2.10 f
+  memory0/dcache/mem/m1/reg1[2]/U4/Y (AND2X2)             0.04       2.13 f
+  memory0/dcache/mem/m1/reg1[2]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m1/reg1[2]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m2/reg1[2]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U164/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U161/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U215/Y (OR2X2)                 0.03       1.87 r
+  memory0/dcache/c1/mem_w2/U216/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<2> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U226/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U109/Y (BUFX2)                        0.04       1.96 r
+  memory0/dcache/c1/U72/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U73/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<2> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U402/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U404/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U93/Y (AND2X2)                           0.03       2.07 r
+  memory0/dcache/U33/Y (INVX1)                            0.02       2.10 f
+  memory0/dcache/mem/data_in<2> (four_bank_mem_0)         0.00       2.10 f
+  memory0/dcache/mem/m2/data_in<2> (final_memory_1)       0.00       2.10 f
+  memory0/dcache/mem/m2/reg1[2]/d (dff_84)                0.00       2.10 f
+  memory0/dcache/mem/m2/reg1[2]/U4/Y (AND2X2)             0.04       2.13 f
+  memory0/dcache/mem/m2/reg1[2]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m2/reg1[2]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m3/reg1[2]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U164/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U161/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U215/Y (OR2X2)                 0.03       1.87 r
+  memory0/dcache/c1/mem_w2/U216/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<2> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U226/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U109/Y (BUFX2)                        0.04       1.96 r
+  memory0/dcache/c1/U72/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U73/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<2> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U402/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U404/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U93/Y (AND2X2)                           0.03       2.07 r
+  memory0/dcache/U33/Y (INVX1)                            0.02       2.10 f
+  memory0/dcache/mem/data_in<2> (four_bank_mem_0)         0.00       2.10 f
+  memory0/dcache/mem/m3/data_in<2> (final_memory_0)       0.00       2.10 f
+  memory0/dcache/mem/m3/reg1[2]/d (dff_33)                0.00       2.10 f
+  memory0/dcache/mem/m3/reg1[2]/U4/Y (AND2X2)             0.04       2.13 f
+  memory0/dcache/mem/m3/reg1[2]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m3/reg1[2]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: pipe3/read_data_flop[2]/flops/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U164/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U161/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U215/Y (OR2X2)                 0.03       1.87 r
+  memory0/dcache/c1/mem_w2/U216/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<2> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U226/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U109/Y (BUFX2)                        0.04       1.96 r
+  memory0/dcache/c1/U72/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U73/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<2> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U402/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U403/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U167/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U169/Y (INVX1)                           0.01       2.09 f
+  memory0/dcache/DataOut<2> (mem_system_0)                0.00       2.09 f
+  memory0/read_data<2> (memory)                           0.00       2.09 f
+  pipe3/mem_read_data<2> (mem_wb)                         0.00       2.09 f
+  pipe3/read_data_flop[2]/WriteData (reg_1_18)            0.00       2.09 f
+  pipe3/read_data_flop[2]/U4/Y (INVX1)                    0.00       2.09 r
+  pipe3/read_data_flop[2]/U6/Y (AOI21X1)                  0.01       2.10 f
+  pipe3/read_data_flop[2]/flops/d (dff_578)               0.00       2.10 f
+  pipe3/read_data_flop[2]/flops/U4/Y (AND2X2)             0.03       2.13 f
+  pipe3/read_data_flop[2]/flops/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  pipe3/read_data_flop[2]/flops/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m0/reg1[13]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.04       0.94 r
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.02       0.96 f
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       0.99 f
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 f
+  memory0/dcache/c1/U41/Y (INVX1)                         0.00       1.04 r
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.04 r
+  memory0/dcache/U80/Y (INVX1)                            0.02       1.05 f
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 r
+  memory0/dcache/U307/Y (INVX1)                           0.02       1.10 f
+  memory0/dcache/U198/Y (OAI21X1)                         0.03       1.13 r
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.13 r
+  memory0/dcache/c1/U132/Y (INVX1)                        0.03       1.16 f
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.04       1.20 f
+  memory0/dcache/c1/U134/Y (INVX1)                        0.00       1.20 r
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.23 r
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.23 r
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.27 r
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.01       1.28 f
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.28 f
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.32 f
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.32 f
+  memory0/dcache/U481/Y (INVX1)                           0.00       1.32 r
+  memory0/dcache/U205/Y (AOI21X1)                         0.02       1.34 f
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.38 f
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.41 f
+  memory0/dcache/U241/Y (INVX1)                           0.00       1.41 r
+  memory0/dcache/U531/Y (NAND3X1)                         0.01       1.42 f
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 f
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.04       1.46 f
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.50 f
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.04       1.54 f
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 f
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.57 f
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.00       1.57 r
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.57 r
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.05       1.62 r
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.62 r
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.66 r
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.69 r
+  memory0/dcache/U152/Y (INVX1)                           0.02       1.72 f
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 f
+  memory0/dcache/c1/U179/Y (INVX1)                        0.01       1.72 r
+  memory0/dcache/c1/U181/Y (INVX1)                        0.01       1.74 f
+  memory0/dcache/c1/U215/Y (NOR3X1)                       0.04       1.78 r
+  memory0/dcache/c1/mem_w0/write (memc_Size16_3)          0.00       1.78 r
+  memory0/dcache/c1/mem_w0/U116/Y (INVX2)                 0.03       1.80 f
+  memory0/dcache/c1/mem_w0/U120/Y (INVX1)                 0.03       1.83 r
+  memory0/dcache/c1/mem_w0/U153/Y (OR2X2)                 0.04       1.87 r
+  memory0/dcache/c1/mem_w0/U154/Y (INVX1)                 0.02       1.88 f
+  memory0/dcache/c1/mem_w0/data_out<13> (memc_Size16_3)
+                                                          0.00       1.88 f
+  memory0/dcache/c1/U243/Y (AOI22X1)                      0.05       1.93 r
+  memory0/dcache/c1/U99/Y (BUFX2)                         0.04       1.96 r
+  memory0/dcache/c1/U80/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U81/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<13> (cache_cache_id1_0)      0.00       2.01 f
+  memory0/dcache/U417/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U418/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U129/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U29/Y (INVX2)                            0.03       2.10 f
+  memory0/dcache/mem/data_in<13> (four_bank_mem_0)        0.00       2.10 f
+  memory0/dcache/mem/m0/data_in<13> (final_memory_3)      0.00       2.10 f
+  memory0/dcache/mem/m0/reg1[13]/d (dff_175)              0.00       2.10 f
+  memory0/dcache/mem/m0/reg1[13]/U4/Y (AND2X2)            0.03       2.13 f
+  memory0/dcache/mem/m0/reg1[13]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m0/reg1[13]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.06       0.94
+  data required time                                                 0.94
+  --------------------------------------------------------------------------
+  data required time                                                 0.94
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m0/reg1[6]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U157/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U158/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U219/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U220/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<6> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U232/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U94/Y (BUFX2)                         0.04       1.96 r
+  memory0/dcache/c1/U76/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U77/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<6> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U406/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U407/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U99/Y (AND2X2)                           0.03       2.07 r
+  memory0/dcache/U36/Y (INVX1)                            0.02       2.10 f
+  memory0/dcache/mem/data_in<6> (four_bank_mem_0)         0.00       2.10 f
+  memory0/dcache/mem/m0/data_in<6> (final_memory_3)       0.00       2.10 f
+  memory0/dcache/mem/m0/reg1[6]/d (dff_182)               0.00       2.10 f
+  memory0/dcache/mem/m0/reg1[6]/U4/Y (AND2X2)             0.04       2.13 f
+  memory0/dcache/mem/m0/reg1[6]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m0/reg1[6]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m1/reg1[6]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U157/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U158/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U219/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U220/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<6> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U232/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U94/Y (BUFX2)                         0.04       1.96 r
+  memory0/dcache/c1/U76/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U77/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<6> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U406/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U407/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U99/Y (AND2X2)                           0.03       2.07 r
+  memory0/dcache/U36/Y (INVX1)                            0.02       2.10 f
+  memory0/dcache/mem/data_in<6> (four_bank_mem_0)         0.00       2.10 f
+  memory0/dcache/mem/m1/data_in<6> (final_memory_2)       0.00       2.10 f
+  memory0/dcache/mem/m1/reg1[6]/d (dff_131)               0.00       2.10 f
+  memory0/dcache/mem/m1/reg1[6]/U4/Y (AND2X2)             0.04       2.13 f
+  memory0/dcache/mem/m1/reg1[6]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m1/reg1[6]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m2/reg1[6]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U157/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U158/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U219/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U220/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<6> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U232/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U94/Y (BUFX2)                         0.04       1.96 r
+  memory0/dcache/c1/U76/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U77/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<6> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U406/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U407/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U99/Y (AND2X2)                           0.03       2.07 r
+  memory0/dcache/U36/Y (INVX1)                            0.02       2.10 f
+  memory0/dcache/mem/data_in<6> (four_bank_mem_0)         0.00       2.10 f
+  memory0/dcache/mem/m2/data_in<6> (final_memory_1)       0.00       2.10 f
+  memory0/dcache/mem/m2/reg1[6]/d (dff_80)                0.00       2.10 f
+  memory0/dcache/mem/m2/reg1[6]/U4/Y (AND2X2)             0.04       2.13 f
+  memory0/dcache/mem/m2/reg1[6]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m2/reg1[6]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m3/reg1[6]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U157/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U158/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c1/mem_w2/U219/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U220/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c1/mem_w2/data_out<6> (memc_Size16_1)
+                                                          0.00       1.89 f
+  memory0/dcache/c1/U232/Y (AOI22X1)                      0.04       1.93 r
+  memory0/dcache/c1/U94/Y (BUFX2)                         0.04       1.96 r
+  memory0/dcache/c1/U76/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U77/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<6> (cache_cache_id1_0)       0.00       2.01 f
+  memory0/dcache/U406/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U407/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U99/Y (AND2X2)                           0.03       2.07 r
+  memory0/dcache/U36/Y (INVX1)                            0.02       2.10 f
+  memory0/dcache/mem/data_in<6> (four_bank_mem_0)         0.00       2.10 f
+  memory0/dcache/mem/m3/data_in<6> (final_memory_0)       0.00       2.10 f
+  memory0/dcache/mem/m3/reg1[6]/d (dff_29)                0.00       2.10 f
+  memory0/dcache/mem/m3/reg1[6]/U4/Y (AND2X2)             0.04       2.13 f
+  memory0/dcache/mem/m3/reg1[6]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m3/reg1[6]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m2/reg1[13]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.04       0.94 r
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.02       0.96 f
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       0.99 f
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 f
+  memory0/dcache/c1/U41/Y (INVX1)                         0.00       1.04 r
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.04 r
+  memory0/dcache/U80/Y (INVX1)                            0.02       1.05 f
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 r
+  memory0/dcache/U307/Y (INVX1)                           0.02       1.10 f
+  memory0/dcache/U198/Y (OAI21X1)                         0.03       1.13 r
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.13 r
+  memory0/dcache/c1/U132/Y (INVX1)                        0.03       1.16 f
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.04       1.20 f
+  memory0/dcache/c1/U134/Y (INVX1)                        0.00       1.20 r
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.23 r
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.23 r
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.27 r
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.01       1.28 f
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.28 f
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.32 f
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.32 f
+  memory0/dcache/U481/Y (INVX1)                           0.00       1.32 r
+  memory0/dcache/U205/Y (AOI21X1)                         0.02       1.34 f
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.38 f
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.41 f
+  memory0/dcache/U241/Y (INVX1)                           0.00       1.41 r
+  memory0/dcache/U531/Y (NAND3X1)                         0.01       1.42 f
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 f
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.04       1.46 f
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.50 f
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.04       1.54 f
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 f
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.57 f
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.00       1.57 r
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.57 r
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.05       1.62 r
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.62 r
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.66 r
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.69 r
+  memory0/dcache/U152/Y (INVX1)                           0.02       1.72 f
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 f
+  memory0/dcache/c1/U179/Y (INVX1)                        0.01       1.72 r
+  memory0/dcache/c1/U181/Y (INVX1)                        0.01       1.74 f
+  memory0/dcache/c1/U215/Y (NOR3X1)                       0.04       1.78 r
+  memory0/dcache/c1/mem_w0/write (memc_Size16_3)          0.00       1.78 r
+  memory0/dcache/c1/mem_w0/U116/Y (INVX2)                 0.03       1.80 f
+  memory0/dcache/c1/mem_w0/U120/Y (INVX1)                 0.03       1.83 r
+  memory0/dcache/c1/mem_w0/U153/Y (OR2X2)                 0.04       1.87 r
+  memory0/dcache/c1/mem_w0/U154/Y (INVX1)                 0.02       1.88 f
+  memory0/dcache/c1/mem_w0/data_out<13> (memc_Size16_3)
+                                                          0.00       1.88 f
+  memory0/dcache/c1/U243/Y (AOI22X1)                      0.05       1.93 r
+  memory0/dcache/c1/U99/Y (BUFX2)                         0.04       1.96 r
+  memory0/dcache/c1/U80/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U81/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<13> (cache_cache_id1_0)      0.00       2.01 f
+  memory0/dcache/U417/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U418/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U129/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U29/Y (INVX2)                            0.03       2.10 f
+  memory0/dcache/mem/data_in<13> (four_bank_mem_0)        0.00       2.10 f
+  memory0/dcache/mem/m2/data_in<13> (final_memory_1)      0.00       2.10 f
+  memory0/dcache/mem/m2/reg1[13]/d (dff_73)               0.00       2.10 f
+  memory0/dcache/mem/m2/reg1[13]/U4/Y (AND2X2)            0.03       2.13 f
+  memory0/dcache/mem/m2/reg1[13]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m2/reg1[13]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.06       0.94
+  data required time                                                 0.94
+  --------------------------------------------------------------------------
+  data required time                                                 0.94
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: pipe3/read_data_flop[13]/flops/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.04       0.94 r
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.02       0.96 f
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       0.99 f
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 f
+  memory0/dcache/c1/U41/Y (INVX1)                         0.00       1.04 r
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.04 r
+  memory0/dcache/U80/Y (INVX1)                            0.02       1.05 f
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 r
+  memory0/dcache/U307/Y (INVX1)                           0.02       1.10 f
+  memory0/dcache/U198/Y (OAI21X1)                         0.03       1.13 r
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.13 r
+  memory0/dcache/c1/U132/Y (INVX1)                        0.03       1.16 f
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.04       1.20 f
+  memory0/dcache/c1/U134/Y (INVX1)                        0.00       1.20 r
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.23 r
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.23 r
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.27 r
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.01       1.28 f
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.28 f
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.32 f
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.32 f
+  memory0/dcache/U481/Y (INVX1)                           0.00       1.32 r
+  memory0/dcache/U205/Y (AOI21X1)                         0.02       1.34 f
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.38 f
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.41 f
+  memory0/dcache/U241/Y (INVX1)                           0.00       1.41 r
+  memory0/dcache/U531/Y (NAND3X1)                         0.01       1.42 f
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 f
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.04       1.46 f
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.50 f
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.04       1.54 f
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 f
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.57 f
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.00       1.57 r
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.57 r
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.05       1.62 r
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.62 r
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.66 r
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.69 r
+  memory0/dcache/U152/Y (INVX1)                           0.02       1.72 f
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 f
+  memory0/dcache/c1/U179/Y (INVX1)                        0.01       1.72 r
+  memory0/dcache/c1/U181/Y (INVX1)                        0.01       1.74 f
+  memory0/dcache/c1/U215/Y (NOR3X1)                       0.04       1.78 r
+  memory0/dcache/c1/mem_w0/write (memc_Size16_3)          0.00       1.78 r
+  memory0/dcache/c1/mem_w0/U116/Y (INVX2)                 0.03       1.80 f
+  memory0/dcache/c1/mem_w0/U120/Y (INVX1)                 0.03       1.83 r
+  memory0/dcache/c1/mem_w0/U153/Y (OR2X2)                 0.04       1.87 r
+  memory0/dcache/c1/mem_w0/U154/Y (INVX1)                 0.02       1.88 f
+  memory0/dcache/c1/mem_w0/data_out<13> (memc_Size16_3)
+                                                          0.00       1.88 f
+  memory0/dcache/c1/U243/Y (AOI22X1)                      0.05       1.93 r
+  memory0/dcache/c1/U99/Y (BUFX2)                         0.04       1.96 r
+  memory0/dcache/c1/U80/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U81/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<13> (cache_cache_id1_0)      0.00       2.01 f
+  memory0/dcache/U417/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U71/Y (INVX1)                            0.00       2.04 r
+  memory0/dcache/U191/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U192/Y (INVX1)                           0.01       2.08 f
+  memory0/dcache/DataOut<13> (mem_system_0)               0.00       2.08 f
+  memory0/read_data<13> (memory)                          0.00       2.08 f
+  pipe3/mem_read_data<13> (mem_wb)                        0.00       2.08 f
+  pipe3/read_data_flop[13]/WriteData (reg_1_29)           0.00       2.08 f
+  pipe3/read_data_flop[13]/U3/Y (INVX1)                   0.00       2.09 r
+  pipe3/read_data_flop[13]/U6/Y (AOI21X1)                 0.01       2.10 f
+  pipe3/read_data_flop[13]/flops/d (dff_589)              0.00       2.10 f
+  pipe3/read_data_flop[13]/flops/U4/Y (AND2X2)            0.03       2.13 f
+  pipe3/read_data_flop[13]/flops/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  pipe3/read_data_flop[13]/flops/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: pipe3/read_data_flop[10]/flops/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U162/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U160/Y (INVX1)                 0.02       1.85 r
+  memory0/dcache/c1/mem_w2/U244/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U245/Y (INVX1)                 0.01       1.90 f
+  memory0/dcache/c1/mem_w2/data_out<10> (memc_Size16_1)
+                                                          0.00       1.90 f
+  memory0/dcache/c1/U193/Y (AND2X2)                       0.03       1.93 f
+  memory0/dcache/c1/U105/Y (OR2X2)                        0.04       1.96 f
+  memory0/dcache/c1/U106/Y (INVX1)                        0.00       1.96 r
+  memory0/dcache/c1/U54/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U55/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<10> (cache_cache_id1_0)      0.00       2.01 f
+  memory0/dcache/U266/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U268/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U185/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U186/Y (INVX1)                           0.01       2.08 f
+  memory0/dcache/DataOut<10> (mem_system_0)               0.00       2.08 f
+  memory0/read_data<10> (memory)                          0.00       2.08 f
+  pipe3/mem_read_data<10> (mem_wb)                        0.00       2.08 f
+  pipe3/read_data_flop[10]/WriteData (reg_1_26)           0.00       2.08 f
+  pipe3/read_data_flop[10]/U4/Y (INVX1)                   0.00       2.09 r
+  pipe3/read_data_flop[10]/U6/Y (AOI21X1)                 0.01       2.10 f
+  pipe3/read_data_flop[10]/flops/d (dff_586)              0.00       2.10 f
+  pipe3/read_data_flop[10]/flops/U4/Y (AND2X2)            0.03       2.13 f
+  pipe3/read_data_flop[10]/flops/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  pipe3/read_data_flop[10]/flops/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m0/reg1[10]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U162/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U160/Y (INVX1)                 0.02       1.85 r
+  memory0/dcache/c1/mem_w2/U244/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U245/Y (INVX1)                 0.01       1.90 f
+  memory0/dcache/c1/mem_w2/data_out<10> (memc_Size16_1)
+                                                          0.00       1.90 f
+  memory0/dcache/c1/U193/Y (AND2X2)                       0.03       1.93 f
+  memory0/dcache/c1/U105/Y (OR2X2)                        0.04       1.96 f
+  memory0/dcache/c1/U106/Y (INVX1)                        0.00       1.96 r
+  memory0/dcache/c1/U54/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U55/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<10> (cache_cache_id1_0)      0.00       2.01 f
+  memory0/dcache/U266/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U268/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U185/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U123/Y (INVX1)                           0.03       2.10 f
+  memory0/dcache/mem/data_in<10> (four_bank_mem_0)        0.00       2.10 f
+  memory0/dcache/mem/m0/data_in<10> (final_memory_3)      0.00       2.10 f
+  memory0/dcache/mem/m0/reg1[10]/d (dff_178)              0.00       2.10 f
+  memory0/dcache/mem/m0/reg1[10]/U4/Y (AND2X2)            0.04       2.13 f
+  memory0/dcache/mem/m0/reg1[10]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m0/reg1[10]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m1/reg1[10]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U162/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U160/Y (INVX1)                 0.02       1.85 r
+  memory0/dcache/c1/mem_w2/U244/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U245/Y (INVX1)                 0.01       1.90 f
+  memory0/dcache/c1/mem_w2/data_out<10> (memc_Size16_1)
+                                                          0.00       1.90 f
+  memory0/dcache/c1/U193/Y (AND2X2)                       0.03       1.93 f
+  memory0/dcache/c1/U105/Y (OR2X2)                        0.04       1.96 f
+  memory0/dcache/c1/U106/Y (INVX1)                        0.00       1.96 r
+  memory0/dcache/c1/U54/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U55/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<10> (cache_cache_id1_0)      0.00       2.01 f
+  memory0/dcache/U266/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U268/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U185/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U123/Y (INVX1)                           0.03       2.10 f
+  memory0/dcache/mem/data_in<10> (four_bank_mem_0)        0.00       2.10 f
+  memory0/dcache/mem/m1/data_in<10> (final_memory_2)      0.00       2.10 f
+  memory0/dcache/mem/m1/reg1[10]/d (dff_127)              0.00       2.10 f
+  memory0/dcache/mem/m1/reg1[10]/U4/Y (AND2X2)            0.04       2.13 f
+  memory0/dcache/mem/m1/reg1[10]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m1/reg1[10]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m2/reg1[10]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U162/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U160/Y (INVX1)                 0.02       1.85 r
+  memory0/dcache/c1/mem_w2/U244/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U245/Y (INVX1)                 0.01       1.90 f
+  memory0/dcache/c1/mem_w2/data_out<10> (memc_Size16_1)
+                                                          0.00       1.90 f
+  memory0/dcache/c1/U193/Y (AND2X2)                       0.03       1.93 f
+  memory0/dcache/c1/U105/Y (OR2X2)                        0.04       1.96 f
+  memory0/dcache/c1/U106/Y (INVX1)                        0.00       1.96 r
+  memory0/dcache/c1/U54/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U55/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<10> (cache_cache_id1_0)      0.00       2.01 f
+  memory0/dcache/U266/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U268/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U185/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U123/Y (INVX1)                           0.03       2.10 f
+  memory0/dcache/mem/data_in<10> (four_bank_mem_0)        0.00       2.10 f
+  memory0/dcache/mem/m2/data_in<10> (final_memory_1)      0.00       2.10 f
+  memory0/dcache/mem/m2/reg1[10]/d (dff_76)               0.00       2.10 f
+  memory0/dcache/mem/m2/reg1[10]/U4/Y (AND2X2)            0.04       2.13 f
+  memory0/dcache/mem/m2/reg1[10]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m2/reg1[10]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: memory0/dcache/mem/m3/reg1[10]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.03       0.93 f
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.03       0.96 r
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       1.00 r
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 r
+  memory0/dcache/c1/U41/Y (INVX1)                         0.01       1.05 f
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.05 f
+  memory0/dcache/U80/Y (INVX1)                            0.01       1.06 r
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 f
+  memory0/dcache/U307/Y (INVX1)                           0.01       1.08 r
+  memory0/dcache/U198/Y (OAI21X1)                         0.02       1.10 f
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.10 f
+  memory0/dcache/c1/U132/Y (INVX1)                        0.01       1.11 r
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.03       1.14 r
+  memory0/dcache/c1/U134/Y (INVX1)                        0.01       1.15 f
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.19 f
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.19 f
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.22 f
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.00       1.22 r
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.22 r
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.26 r
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.26 r
+  memory0/dcache/U481/Y (INVX1)                           0.02       1.28 f
+  memory0/dcache/U205/Y (AOI21X1)                         0.03       1.31 r
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.35 r
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.38 r
+  memory0/dcache/U241/Y (INVX1)                           0.02       1.39 f
+  memory0/dcache/U531/Y (NAND3X1)                         0.03       1.42 r
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 r
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.05       1.47 r
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.51 r
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.03       1.54 r
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 r
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.58 r
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.01       1.59 f
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.59 f
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.04       1.64 f
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.64 f
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.67 f
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.71 f
+  memory0/dcache/U152/Y (INVX1)                           0.01       1.72 r
+  memory0/dcache/c1/offset<2> (cache_cache_id1_0)         0.00       1.72 r
+  memory0/dcache/c1/U120/Y (AND2X2)                       0.03       1.75 r
+  memory0/dcache/c1/U121/Y (INVX1)                        0.02       1.77 f
+  memory0/dcache/c1/U39/Y (OR2X2)                         0.04       1.80 f
+  memory0/dcache/c1/U25/Y (INVX1)                         0.01       1.81 r
+  memory0/dcache/c1/mem_w2/write (memc_Size16_1)          0.00       1.81 r
+  memory0/dcache/c1/mem_w2/U162/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c1/mem_w2/U160/Y (INVX1)                 0.02       1.85 r
+  memory0/dcache/c1/mem_w2/U244/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c1/mem_w2/U245/Y (INVX1)                 0.01       1.90 f
+  memory0/dcache/c1/mem_w2/data_out<10> (memc_Size16_1)
+                                                          0.00       1.90 f
+  memory0/dcache/c1/U193/Y (AND2X2)                       0.03       1.93 f
+  memory0/dcache/c1/U105/Y (OR2X2)                        0.04       1.96 f
+  memory0/dcache/c1/U106/Y (INVX1)                        0.00       1.96 r
+  memory0/dcache/c1/U54/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c1/U55/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c1/data_out<10> (cache_cache_id1_0)      0.00       2.01 f
+  memory0/dcache/U266/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U268/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U185/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U123/Y (INVX1)                           0.03       2.10 f
+  memory0/dcache/mem/data_in<10> (four_bank_mem_0)        0.00       2.10 f
+  memory0/dcache/mem/m3/data_in<10> (final_memory_0)      0.00       2.10 f
+  memory0/dcache/mem/m3/reg1[10]/d (dff_25)               0.00       2.10 f
+  memory0/dcache/mem/m3/reg1[10]/U4/Y (AND2X2)            0.04       2.13 f
+  memory0/dcache/mem/m3/reg1[10]/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  memory0/dcache/mem/m3/reg1[10]/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+  Startpoint: pipe2/memWrite_flop/flops/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: pipe3/read_data_flop[0]/flops/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pipe2/memWrite_flop/flops/state_reg/CLK (DFFPOSX1)      0.00 #     0.00 r
+  pipe2/memWrite_flop/flops/state_reg/Q (DFFPOSX1)        0.11       0.11 f
+  pipe2/memWrite_flop/flops/q (dff_708)                   0.00       0.11 f
+  pipe2/memWrite_flop/ReadData (reg_1_143)                0.00       0.11 f
+  pipe2/mem_memWrite (ex_mem)                             0.00       0.11 f
+  memory0/memWrite (memory)                               0.00       0.11 f
+  memory0/U3/Y (NOR2X1)                                   0.03       0.14 r
+  memory0/dcache/Rd (mem_system_0)                        0.00       0.14 r
+  memory0/dcache/U321/Y (INVX1)                           0.02       0.16 f
+  memory0/dcache/U323/Y (INVX1)                           0.01       0.17 r
+  memory0/dcache/U532/Y (XNOR2X1)                         0.03       0.19 f
+  memory0/dcache/U533/Y (AOI21X1)                         0.03       0.22 r
+  memory0/dcache/c0/comp (cache_cache_id0_0)              0.00       0.22 r
+  memory0/dcache/c0/U152/Y (INVX1)                        0.02       0.25 f
+  memory0/dcache/c0/U22/Y (NAND2X1)                       0.01       0.26 r
+  memory0/dcache/c0/U119/Y (BUFX2)                        0.04       0.29 r
+  memory0/dcache/c0/U33/Y (OR2X2)                         0.04       0.33 r
+  memory0/dcache/c0/U34/Y (INVX1)                         0.02       0.35 f
+  memory0/dcache/c0/mem_vl/write (memv_1)                 0.00       0.35 f
+  memory0/dcache/c0/mem_vl/U634/Y (NOR3X1)                0.04       0.39 r
+  memory0/dcache/c0/mem_vl/data_out (memv_1)              0.00       0.39 r
+  memory0/dcache/c0/U184/Y (AND2X2)                       0.04       0.43 r
+  memory0/dcache/c0/valid (cache_cache_id0_0)             0.00       0.43 r
+  memory0/dcache/U267/Y (NAND2X1)                         0.02       0.45 f
+  memory0/dcache/U292/Y (BUFX2)                           0.04       0.48 f
+  memory0/dcache/U290/Y (INVX1)                           0.00       0.48 r
+  memory0/dcache/U134/Y (OR2X2)                           0.04       0.52 r
+  memory0/dcache/U133/Y (OR2X2)                           0.05       0.56 r
+  memory0/dcache/U149/Y (AOI21X1)                         0.02       0.59 f
+  memory0/dcache/U248/Y (BUFX2)                           0.04       0.62 f
+  memory0/dcache/U560/Y (OR2X2)                           0.04       0.66 f
+  memory0/dcache/U104/Y (OAI21X1)                         0.08       0.74 r
+  memory0/dcache/c1/index<0> (cache_cache_id1_0)          0.00       0.74 r
+  memory0/dcache/c1/U37/Y (BUFX4)                         0.02       0.77 r
+  memory0/dcache/c1/mem_tg/addr<0> (memc_Size5_0)         0.00       0.77 r
+  memory0/dcache/c1/mem_tg/U176/Y (AND2X2)                0.03       0.80 r
+  memory0/dcache/c1/mem_tg/U177/Y (INVX1)                 0.01       0.81 f
+  memory0/dcache/c1/mem_tg/U701/Y (OAI21X1)               0.02       0.83 r
+  memory0/dcache/c1/mem_tg/U2/Y (OR2X2)                   0.04       0.87 r
+  memory0/dcache/c1/mem_tg/U3/Y (INVX2)                   0.03       0.90 f
+  memory0/dcache/c1/mem_tg/data_out<2> (memc_Size5_0)     0.00       0.90 f
+  memory0/dcache/c1/U137/Y (XNOR2X1)                      0.04       0.94 r
+  memory0/dcache/c1/U210/Y (NAND3X1)                      0.02       0.96 f
+  memory0/dcache/c1/U169/Y (BUFX2)                        0.04       0.99 f
+  memory0/dcache/c1/U40/Y (OR2X2)                         0.04       1.04 f
+  memory0/dcache/c1/U41/Y (INVX1)                         0.00       1.04 r
+  memory0/dcache/c1/hit (cache_cache_id1_0)               0.00       1.04 r
+  memory0/dcache/U80/Y (INVX1)                            0.02       1.05 f
+  memory0/dcache/U308/Y (NOR3X1)                          0.02       1.08 r
+  memory0/dcache/U307/Y (INVX1)                           0.02       1.10 f
+  memory0/dcache/U198/Y (OAI21X1)                         0.03       1.13 r
+  memory0/dcache/c1/write (cache_cache_id1_0)             0.00       1.13 r
+  memory0/dcache/c1/U132/Y (INVX1)                        0.03       1.16 f
+  memory0/dcache/c1/U135/Y (AND2X2)                       0.04       1.20 f
+  memory0/dcache/c1/U134/Y (INVX1)                        0.00       1.20 r
+  memory0/dcache/c1/U140/Y (AND2X2)                       0.03       1.23 r
+  memory0/dcache/c1/mem_dr/write (memc_Size1_0)           0.00       1.23 r
+  memory0/dcache/c1/mem_dr/U22/Y (OR2X2)                  0.04       1.27 r
+  memory0/dcache/c1/mem_dr/U23/Y (INVX1)                  0.01       1.28 f
+  memory0/dcache/c1/mem_dr/data_out<0> (memc_Size1_0)     0.00       1.28 f
+  memory0/dcache/c1/U220/Y (AND2X2)                       0.04       1.32 f
+  memory0/dcache/c1/dirty (cache_cache_id1_0)             0.00       1.32 f
+  memory0/dcache/U481/Y (INVX1)                           0.00       1.32 r
+  memory0/dcache/U205/Y (AOI21X1)                         0.02       1.34 f
+  memory0/dcache/U472/Y (BUFX2)                           0.04       1.38 f
+  memory0/dcache/U240/Y (AND2X2)                          0.03       1.41 f
+  memory0/dcache/U241/Y (INVX1)                           0.00       1.41 r
+  memory0/dcache/U531/Y (NAND3X1)                         0.01       1.42 f
+  memory0/dcache/c0/write (cache_cache_id0_0)             0.00       1.42 f
+  memory0/dcache/c0/U123/Y (BUFX2)                        0.04       1.46 f
+  memory0/dcache/c0/U122/Y (OR2X2)                        0.04       1.50 f
+  memory0/dcache/c0/U121/Y (AND2X2)                       0.04       1.54 f
+  memory0/dcache/c0/mem_dr/write (memc_Size1_1)           0.00       1.54 f
+  memory0/dcache/c0/mem_dr/U12/Y (OR2X2)                  0.04       1.57 f
+  memory0/dcache/c0/mem_dr/U13/Y (INVX1)                  0.00       1.57 r
+  memory0/dcache/c0/mem_dr/data_out<0> (memc_Size1_1)     0.00       1.57 r
+  memory0/dcache/c0/U186/Y (AND2X2)                       0.05       1.62 r
+  memory0/dcache/c0/dirty (cache_cache_id0_0)             0.00       1.62 r
+  memory0/dcache/U467/Y (AND2X2)                          0.03       1.66 r
+  memory0/dcache/U151/Y (OR2X2)                           0.04       1.69 r
+  memory0/dcache/U87/Y (INVX1)                            0.02       1.71 f
+  memory0/dcache/c0/offset<2> (cache_cache_id0_0)         0.00       1.71 f
+  memory0/dcache/c0/U158/Y (INVX1)                        0.01       1.72 r
+  memory0/dcache/c0/U161/Y (INVX1)                        0.02       1.73 f
+  memory0/dcache/c0/U63/Y (OR2X2)                         0.04       1.77 f
+  memory0/dcache/c0/U64/Y (INVX1)                         0.00       1.77 r
+  memory0/dcache/c0/U181/Y (AND2X2)                       0.04       1.81 r
+  memory0/dcache/c0/mem_w1/write (memc_Size16_6)          0.00       1.81 r
+  memory0/dcache/c0/mem_w1/U119/Y (INVX1)                 0.02       1.83 f
+  memory0/dcache/c0/mem_w1/U123/Y (INVX1)                 0.01       1.84 r
+  memory0/dcache/c0/mem_w1/U188/Y (OR2X2)                 0.03       1.88 r
+  memory0/dcache/c0/mem_w1/U189/Y (INVX1)                 0.02       1.89 f
+  memory0/dcache/c0/mem_w1/data_out<0> (memc_Size16_6)
+                                                          0.00       1.89 f
+  memory0/dcache/c0/U189/Y (AOI22X1)                      0.03       1.93 r
+  memory0/dcache/c0/U95/Y (BUFX2)                         0.03       1.96 r
+  memory0/dcache/c0/U35/Y (AND2X2)                        0.03       1.99 r
+  memory0/dcache/c0/U36/Y (INVX1)                         0.01       2.01 f
+  memory0/dcache/c0/data_out<0> (cache_cache_id0_0)       0.00       2.01 f
+  memory0/dcache/U274/Y (AND2X2)                          0.03       2.04 f
+  memory0/dcache/U276/Y (INVX1)                           0.00       2.04 r
+  memory0/dcache/U159/Y (AND2X2)                          0.03       2.07 r
+  memory0/dcache/U161/Y (INVX1)                           0.01       2.08 f
+  memory0/dcache/DataOut<0> (mem_system_0)                0.00       2.08 f
+  memory0/read_data<0> (memory)                           0.00       2.08 f
+  pipe3/mem_read_data<0> (mem_wb)                         0.00       2.08 f
+  pipe3/read_data_flop[0]/WriteData (reg_1_16)            0.00       2.08 f
+  pipe3/read_data_flop[0]/U4/Y (INVX1)                    0.00       2.09 r
+  pipe3/read_data_flop[0]/U6/Y (AOI21X1)                  0.01       2.10 f
+  pipe3/read_data_flop[0]/flops/d (dff_576)               0.00       2.10 f
+  pipe3/read_data_flop[0]/flops/U4/Y (AND2X2)             0.03       2.13 f
+  pipe3/read_data_flop[0]/flops/state_reg/D (DFFPOSX1)
+                                                          0.00       2.13 f
+  data arrival time                                                  2.13
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  pipe3/read_data_flop[0]/flops/state_reg/CLK (DFFPOSX1)
+                                                          0.00       1.00 r
+  library setup time                                     -0.05       0.95
+  data required time                                                 0.95
+  --------------------------------------------------------------------------
+  data required time                                                 0.95
+  data arrival time                                                 -2.13
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.19
+
+
+1

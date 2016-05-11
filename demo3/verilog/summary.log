@@ -1,1 +1,7 @@
-../../tests/simple/add_0.asm SUCCESS CPI:3.6 CYCLES:32 ICOUNT:9 IHITRATE: 0 DHITRATE: 0
+/u/k/a/karu//courses/cs552/spring2013/handouts/testprograms/public/inst_tests/add_0.asm SUCCESS CPI:9.0 CYCLES:81 ICOUNT:9 IHITRATE: 89.3 DHITRATE: 0
+/u/k/a/karu//courses/cs552/spring2013/handouts/testprograms/public/inst_tests/add_1.asm SUCCESS CPI:11.0 CYCLES:44 ICOUNT:4 IHITRATE: 84.6 DHITRATE: 0
+/u/k/a/karu//courses/cs552/spring2013/handouts/testprograms/public/inst_tests/add_2.asm SUCCESS CPI:11.0 CYCLES:44 ICOUNT:4 IHITRATE: 84.6 DHITRATE: 0
+/u/k/a/karu//courses/cs552/spring2013/handouts/testprograms/public/inst_tests/addi_0.asm SUCCESS CPI:10.3 CYCLES:31 ICOUNT:3 IHITRATE: 90.0 DHITRATE: 0
+/u/k/a/karu//courses/cs552/spring2013/handouts/testprograms/public/inst_tests/addi_1.asm SUCCESS CPI:10.3 CYCLES:31 ICOUNT:3 IHITRATE: 90.0 DHITRATE: 0
+/u/k/a/karu//courses/cs552/spring2013/handouts/testprograms/public/inst_tests/addi_2.asm SUCCESS CPI:10.3 CYCLES:31 ICOUNT:3 IHITRATE: 90.0 DHITRATE: 0
+/u/k/a/karu//courses/cs552/spring2013/handouts/testprograms/public/inst_tests/addi_3.asm SUCCESS CPI:11.0 CYCLES:44 ICOUNT:4 IHITRATE: 84.6 DHITRATE: 0

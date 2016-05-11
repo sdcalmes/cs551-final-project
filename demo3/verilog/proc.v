@@ -67,6 +67,10 @@ module proc (/*AUTOARG*/
     //write back - output
     wire [15:0] wb_mem_write_back;
 
+    //forwarding
+    wire rs_valid, rt_valid;
+    wire [15:0] reg1_forward,reg2_forward;
+
     //errors
     wire fetch_err;
     wire control_err;
@@ -81,7 +85,7 @@ module proc (/*AUTOARG*/
     fetch	fetch0(.createdump(mem_createdump), .pc_decision(pc_decision),
             .instruction(if_instruction), .pc_plus(if_pc_plus), 
             .valid(if_valid), .clk(clk), .rst(rst), .icache_err(fetch_err), .icache_done(icache_done),
-    	    .icache_stall(icache_stall), .icache_hit(icache_hit));
+    	    .icache_stall(icache_stall), .icache_hit(icache_hit), .flop_stall(flop_stall), .flush(flush));
 
     if_id   pipe0(.if_pc_plus(if_pc_plus), .if_instruction(if_instruction),
             .if_valid(if_valid), .id_pc_plus(id_pc_plus), 
@@ -98,11 +102,12 @@ module proc (/*AUTOARG*/
             .ALUSrc_a(id_ALUSrc_a), .ALUSrc_b(id_ALUSrc_b),
             .memToReg(id_memToReg), .pc_dec(id_pc_dec),
             .set_select(id_set_select), .alu_op(id_alu_op),
-            .id_write_reg(id_write_reg), .reg1_sel(reg1_sel), .reg2_sel(reg2_sel), 
+            .id_write_reg(id_write_reg), .reg1_sel(id_reg1_sel), .reg2_sel(id_reg2_sel), 
             .reg1_data(id_reg1_data), .reg2_data(id_reg2_data), 
             .sign_ext_low_bits(id_sign_ext_low_bits),
             .control_err(control_err), .createdump(id_createdump),
-            .halt(id_halt), .clk(clk), .rst(rst), .flop_stall(flop_stall));
+            .halt(id_halt), .clk(clk), .rst(rst), .flop_stall(flop_stall),
+            .rs_valid(id_rs_valid), .rt_valid(id_rt_valid));
 
     id_ex pipe1(.id_alu_res_sel(id_alu_res_sel), .id_branch(id_branch),
             .id_branch_eqz(id_branch_eqz), .id_branch_gtz(id_branch_gtz),
@@ -128,7 +133,16 @@ module proc (/*AUTOARG*/
             .ex_pc_plus(ex_pc_plus), .ex_write_reg(ex_write_reg),
             .ex_reg1_data(ex_reg1_data), .ex_reg2_data(ex_reg2_data),
             .ex_sign_ext_low_bits(ex_sign_ext_low_bits),
-            .ex_halt(ex_halt), .clk(clk), .rst(rst), .flop_stall(flop_stall));
+            .ex_halt(ex_halt), .clk(clk), .rst(rst), .flop_stall(flop_stall), .id_rs_valid(id_rs_valid), 
+	    .id_rt_valid(id_rt_valid), .ex_rs_valid(ex_rs_valid), .ex_rt_valid(ex_rt_valid), 
+	    .id_reg1_sel(id_reg1_sel), .id_reg2_sel(id_reg2_sel), .ex_reg1_sel(ex_reg1_sel), 
+	    .ex_reg2_sel(ex_reg2_sel));
+
+    forwarding fw0(.mem_regWrite(mem_regWrite), .wb_regWrite(wb_regWrite), .ex_rs_valid(ex_rs_valid), 
+	    .ex_rt_valid(ex_rt_valid), .id_rs(ex_reg1_sel), .id_rt(ex_reg2_sel), .em_rd(mem_write_reg), 
+	    .mw_rd(wb_write_reg), .mem_alu_out(mem_alu_out), .wb_mem_write_back(wb_mem_write_back), 
+	    .ex_reg1_data(ex_reg1_data), .ex_reg2_data(ex_reg2_data), .reg1_forward(reg1_forward), 
+	    .reg2_forward(reg2_forward));
 
     execute	execute0(.alu_res_sel(ex_alu_res_sel), .branch(ex_branch),
             .branch_eqz(ex_branch_eqz), .branch_gtz(ex_branch_gtz),
@@ -136,9 +150,9 @@ module proc (/*AUTOARG*/
             .invB(ex_invB), .sign_alu(ex_sign_alu), .ALUSrc_a(ex_ALUSrc_a),
             .ALUSrc_b(ex_ALUSrc_b), .pc_dec(ex_pc_dec), .set_select(ex_set_select),
             .alu_op(ex_alu_op), .pc_plus(ex_pc_plus), .instruction(ex_instruction),
-            .reg1_data(ex_reg1_data), .reg2_data(ex_reg2_data),
+            .reg1_data(reg1_forward), .reg2_data(reg2_forward),
             .sign_ext_low_bits(ex_sign_ext_low_bits), .alu_out(ex_alu_out),
-            .pc_decision(pc_decision));
+            .pc_decision(pc_decision), .flush(flush));
 
     ex_mem  pipe2(.ex_memEn(ex_memEn), .ex_memWrite(ex_memWrite),
             .ex_regWrite(ex_regWrite), .ex_memToReg(ex_memToReg),

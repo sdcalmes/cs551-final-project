@@ -13,6 +13,7 @@ Model Technology ModelSim SE vlog 5.8b Compiler 2004.01 Jan 26 2004
 -- Compiling module ex_mem
 -- Compiling module fetch
 -- Compiling module final_memory
+-- Compiling module forwarding
 -- Compiling module four_bank_mem
 -- Compiling module id_ex
 -- Compiling module if_id
@@ -41,6 +42,7 @@ Model Technology ModelSim SE vlog 5.8b Compiler 2004.01 Jan 26 2004
 
 Top level modules:
 	memory2c_align
+	memory2c
 	proc_hier_pbench
 	stallmem
 Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl 
@@ -63,7 +65,12 @@ Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl
 # Loading __work.fetch
 # Loading __work.reg_16
 # Loading __work.dff
-# Loading __work.memory2c
+# Loading __work.mem_system
+# Loading __work.cache
+# Loading __work.memc
+# Loading __work.memv
+# Loading __work.four_bank_mem
+# Loading __work.final_memory
 # Loading __work.pc_inc
 # Loading __work.cla4
 # Loading __work.if_id
@@ -74,6 +81,7 @@ Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl
 # Loading __work.control
 # Loading __work.alu_control
 # Loading __work.id_ex
+# Loading __work.forwarding
 # Loading __work.execute
 # Loading __work.alu
 # Loading __work.shifter
@@ -85,20 +93,382 @@ Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl
 # Loading __work.branch_control
 # Loading __work.ex_mem
 # Loading __work.memory
+# Loading __work.mem_wb
+# Loading __work.write_back
+VSIM 1> run -all
+# Hello world...simulation starting
+# See verilogsim.log and verilogsim.ptrace for output
+# ** Note: $finish    : proc_hier_pbench.v(116)
+#    Time: 8005 ns  Iteration: 0  Instance: /proc_hier_pbench
+Created the following files
+loadfile_0.img
+loadfile_1.img
+loadfile_2.img
+loadfile_3.img
+loadfile_all.img
+loadfile.lst
+Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl 
+
+# 5.8b
+
+# vsim -lib __work -c proc_hier_pbench 
+# //  ModelSim SE 5.8b Jan 01 2004 Linux 2.6.32-573.7.1.el6.x86_64
+# //
+# //  Copyright Model Technology, a Mentor Graphics Corporation company, 2004
+# //                         All Rights Reserved.
+# //                   UNPUBLISHED, LICENSED SOFTWARE.
+# //         CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+# //        PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS.
+# //
+# Loading __work.proc_hier_pbench
+# Loading __work.proc_hier
+# Loading __work.clkrst
+# Loading __work.proc
+# Loading __work.fetch
+# Loading __work.reg_16
+# Loading __work.dff
 # Loading __work.mem_system
 # Loading __work.cache
 # Loading __work.memc
 # Loading __work.memv
 # Loading __work.four_bank_mem
 # Loading __work.final_memory
+# Loading __work.pc_inc
+# Loading __work.cla4
+# Loading __work.if_id
+# Loading __work.reg_1
+# Loading __work.decode
+# Loading __work.rf_bypass
+# Loading __work.rf
+# Loading __work.control
+# Loading __work.alu_control
+# Loading __work.id_ex
+# Loading __work.forwarding
+# Loading __work.execute
+# Loading __work.alu
+# Loading __work.shifter
+# Loading __work.shift1
+# Loading __work.shift2
+# Loading __work.shift4
+# Loading __work.shift8
+# Loading __work.add_16
+# Loading __work.branch_control
+# Loading __work.ex_mem
+# Loading __work.memory
 # Loading __work.mem_wb
 # Loading __work.write_back
-# ** Warning: (vsim-3015) proc.v(105): [PCDPC] - Port size (3 or 3) does not match connection size (1) for port 'reg1_sel'.
-#         Region: /proc_hier_pbench/DUT/p0/decode0
-# ** Warning: (vsim-3015) proc.v(105): [PCDPC] - Port size (3 or 3) does not match connection size (1) for port 'reg2_sel'.
-#         Region: /proc_hier_pbench/DUT/p0/decode0
 VSIM 1> run -all
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.ptrace for output
 # ** Note: $finish    : proc_hier_pbench.v(116)
-#    Time: 3105 ns  Iteration: 0  Instance: /proc_hier_pbench
+#    Time: 4305 ns  Iteration: 0  Instance: /proc_hier_pbench
+Created the following files
+loadfile_0.img
+loadfile_1.img
+loadfile_2.img
+loadfile_3.img
+loadfile_all.img
+loadfile.lst
+Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl 
+
+# 5.8b
+
+# vsim -lib __work -c proc_hier_pbench 
+# //  ModelSim SE 5.8b Jan 01 2004 Linux 2.6.32-573.7.1.el6.x86_64
+# //
+# //  Copyright Model Technology, a Mentor Graphics Corporation company, 2004
+# //                         All Rights Reserved.
+# //                   UNPUBLISHED, LICENSED SOFTWARE.
+# //         CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+# //        PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS.
+# //
+# Loading __work.proc_hier_pbench
+# Loading __work.proc_hier
+# Loading __work.clkrst
+# Loading __work.proc
+# Loading __work.fetch
+# Loading __work.reg_16
+# Loading __work.dff
+# Loading __work.mem_system
+# Loading __work.cache
+# Loading __work.memc
+# Loading __work.memv
+# Loading __work.four_bank_mem
+# Loading __work.final_memory
+# Loading __work.pc_inc
+# Loading __work.cla4
+# Loading __work.if_id
+# Loading __work.reg_1
+# Loading __work.decode
+# Loading __work.rf_bypass
+# Loading __work.rf
+# Loading __work.control
+# Loading __work.alu_control
+# Loading __work.id_ex
+# Loading __work.forwarding
+# Loading __work.execute
+# Loading __work.alu
+# Loading __work.shifter
+# Loading __work.shift1
+# Loading __work.shift2
+# Loading __work.shift4
+# Loading __work.shift8
+# Loading __work.add_16
+# Loading __work.branch_control
+# Loading __work.ex_mem
+# Loading __work.memory
+# Loading __work.mem_wb
+# Loading __work.write_back
+VSIM 1> run -all
+# Hello world...simulation starting
+# See verilogsim.log and verilogsim.ptrace for output
+# ** Note: $finish    : proc_hier_pbench.v(116)
+#    Time: 4305 ns  Iteration: 0  Instance: /proc_hier_pbench
+Created the following files
+loadfile_0.img
+loadfile_1.img
+loadfile_2.img
+loadfile_3.img
+loadfile_all.img
+loadfile.lst
+Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl 
+
+# 5.8b
+
+# vsim -lib __work -c proc_hier_pbench 
+# //  ModelSim SE 5.8b Jan 01 2004 Linux 2.6.32-573.7.1.el6.x86_64
+# //
+# //  Copyright Model Technology, a Mentor Graphics Corporation company, 2004
+# //                         All Rights Reserved.
+# //                   UNPUBLISHED, LICENSED SOFTWARE.
+# //         CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+# //        PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS.
+# //
+# Loading __work.proc_hier_pbench
+# Loading __work.proc_hier
+# Loading __work.clkrst
+# Loading __work.proc
+# Loading __work.fetch
+# Loading __work.reg_16
+# Loading __work.dff
+# Loading __work.mem_system
+# Loading __work.cache
+# Loading __work.memc
+# Loading __work.memv
+# Loading __work.four_bank_mem
+# Loading __work.final_memory
+# Loading __work.pc_inc
+# Loading __work.cla4
+# Loading __work.if_id
+# Loading __work.reg_1
+# Loading __work.decode
+# Loading __work.rf_bypass
+# Loading __work.rf
+# Loading __work.control
+# Loading __work.alu_control
+# Loading __work.id_ex
+# Loading __work.forwarding
+# Loading __work.execute
+# Loading __work.alu
+# Loading __work.shifter
+# Loading __work.shift1
+# Loading __work.shift2
+# Loading __work.shift4
+# Loading __work.shift8
+# Loading __work.add_16
+# Loading __work.branch_control
+# Loading __work.ex_mem
+# Loading __work.memory
+# Loading __work.mem_wb
+# Loading __work.write_back
+VSIM 1> run -all
+# Hello world...simulation starting
+# See verilogsim.log and verilogsim.ptrace for output
+# ** Note: $finish    : proc_hier_pbench.v(116)
+#    Time: 3005 ns  Iteration: 0  Instance: /proc_hier_pbench
+Created the following files
+loadfile_0.img
+loadfile_1.img
+loadfile_2.img
+loadfile_3.img
+loadfile_all.img
+loadfile.lst
+Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl 
+
+# 5.8b
+
+# vsim -lib __work -c proc_hier_pbench 
+# //  ModelSim SE 5.8b Jan 01 2004 Linux 2.6.32-573.7.1.el6.x86_64
+# //
+# //  Copyright Model Technology, a Mentor Graphics Corporation company, 2004
+# //                         All Rights Reserved.
+# //                   UNPUBLISHED, LICENSED SOFTWARE.
+# //         CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+# //        PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS.
+# //
+# Loading __work.proc_hier_pbench
+# Loading __work.proc_hier
+# Loading __work.clkrst
+# Loading __work.proc
+# Loading __work.fetch
+# Loading __work.reg_16
+# Loading __work.dff
+# Loading __work.mem_system
+# Loading __work.cache
+# Loading __work.memc
+# Loading __work.memv
+# Loading __work.four_bank_mem
+# Loading __work.final_memory
+# Loading __work.pc_inc
+# Loading __work.cla4
+# Loading __work.if_id
+# Loading __work.reg_1
+# Loading __work.decode
+# Loading __work.rf_bypass
+# Loading __work.rf
+# Loading __work.control
+# Loading __work.alu_control
+# Loading __work.id_ex
+# Loading __work.forwarding
+# Loading __work.execute
+# Loading __work.alu
+# Loading __work.shifter
+# Loading __work.shift1
+# Loading __work.shift2
+# Loading __work.shift4
+# Loading __work.shift8
+# Loading __work.add_16
+# Loading __work.branch_control
+# Loading __work.ex_mem
+# Loading __work.memory
+# Loading __work.mem_wb
+# Loading __work.write_back
+VSIM 1> run -all
+# Hello world...simulation starting
+# See verilogsim.log and verilogsim.ptrace for output
+# ** Note: $finish    : proc_hier_pbench.v(116)
+#    Time: 3005 ns  Iteration: 0  Instance: /proc_hier_pbench
+Created the following files
+loadfile_0.img
+loadfile_1.img
+loadfile_2.img
+loadfile_3.img
+loadfile_all.img
+loadfile.lst
+Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl 
+
+# 5.8b
+
+# vsim -lib __work -c proc_hier_pbench 
+# //  ModelSim SE 5.8b Jan 01 2004 Linux 2.6.32-573.7.1.el6.x86_64
+# //
+# //  Copyright Model Technology, a Mentor Graphics Corporation company, 2004
+# //                         All Rights Reserved.
+# //                   UNPUBLISHED, LICENSED SOFTWARE.
+# //         CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+# //        PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS.
+# //
+# Loading __work.proc_hier_pbench
+# Loading __work.proc_hier
+# Loading __work.clkrst
+# Loading __work.proc
+# Loading __work.fetch
+# Loading __work.reg_16
+# Loading __work.dff
+# Loading __work.mem_system
+# Loading __work.cache
+# Loading __work.memc
+# Loading __work.memv
+# Loading __work.four_bank_mem
+# Loading __work.final_memory
+# Loading __work.pc_inc
+# Loading __work.cla4
+# Loading __work.if_id
+# Loading __work.reg_1
+# Loading __work.decode
+# Loading __work.rf_bypass
+# Loading __work.rf
+# Loading __work.control
+# Loading __work.alu_control
+# Loading __work.id_ex
+# Loading __work.forwarding
+# Loading __work.execute
+# Loading __work.alu
+# Loading __work.shifter
+# Loading __work.shift1
+# Loading __work.shift2
+# Loading __work.shift4
+# Loading __work.shift8
+# Loading __work.add_16
+# Loading __work.branch_control
+# Loading __work.ex_mem
+# Loading __work.memory
+# Loading __work.mem_wb
+# Loading __work.write_back
+VSIM 1> run -all
+# Hello world...simulation starting
+# See verilogsim.log and verilogsim.ptrace for output
+# ** Note: $finish    : proc_hier_pbench.v(116)
+#    Time: 3005 ns  Iteration: 0  Instance: /proc_hier_pbench
+Created the following files
+loadfile_0.img
+loadfile_1.img
+loadfile_2.img
+loadfile_3.img
+loadfile_all.img
+loadfile.lst
+Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl 
+
+# 5.8b
+
+# vsim -lib __work -c proc_hier_pbench 
+# //  ModelSim SE 5.8b Jan 01 2004 Linux 2.6.32-573.7.1.el6.x86_64
+# //
+# //  Copyright Model Technology, a Mentor Graphics Corporation company, 2004
+# //                         All Rights Reserved.
+# //                   UNPUBLISHED, LICENSED SOFTWARE.
+# //         CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+# //        PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS.
+# //
+# Loading __work.proc_hier_pbench
+# Loading __work.proc_hier
+# Loading __work.clkrst
+# Loading __work.proc
+# Loading __work.fetch
+# Loading __work.reg_16
+# Loading __work.dff
+# Loading __work.mem_system
+# Loading __work.cache
+# Loading __work.memc
+# Loading __work.memv
+# Loading __work.four_bank_mem
+# Loading __work.final_memory
+# Loading __work.pc_inc
+# Loading __work.cla4
+# Loading __work.if_id
+# Loading __work.reg_1
+# Loading __work.decode
+# Loading __work.rf_bypass
+# Loading __work.rf
+# Loading __work.control
+# Loading __work.alu_control
+# Loading __work.id_ex
+# Loading __work.forwarding
+# Loading __work.execute
+# Loading __work.alu
+# Loading __work.shifter
+# Loading __work.shift1
+# Loading __work.shift2
+# Loading __work.shift4
+# Loading __work.shift8
+# Loading __work.add_16
+# Loading __work.branch_control
+# Loading __work.ex_mem
+# Loading __work.memory
+# Loading __work.mem_wb
+# Loading __work.write_back
+VSIM 1> run -all
+# Hello world...simulation starting
+# See verilogsim.log and verilogsim.ptrace for output
+# ** Note: $finish    : proc_hier_pbench.v(116)
+#    Time: 4305 ns  Iteration: 0  Instance: /proc_hier_pbench
