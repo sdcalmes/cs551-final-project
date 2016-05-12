@@ -1,16 +1,17 @@
 module execute(alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin,
         invA, invB, sign_alu, ALUSrc_a, ALUSrc_b, pc_dec, set_select, alu_op,
-        pc_plus, instruction, reg1_data, reg2_data, sign_ext_low_bits, alu_out,
-        pc_decision);
+        pc_plus, instruction, reg1_data, reg2_data, sign_ext_low_bits, br_tkn, alu_out,
+        pc_decision, flush);
 
     input alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin, invA,
-          invB, sign_alu;
+          invB, sign_alu, flush;
     input [1:0] ALUSrc_a, ALUSrc_b, pc_dec, set_select;
     input [2:0] alu_op;
     input [15:0] pc_plus, instruction, reg1_data, reg2_data, sign_ext_low_bits;
+    output br_tkn;
     output [15:0] alu_out, pc_decision;
 
-    reg shifted_data_err_w, alu_src_err_w;
+    reg shifted_data_err_w, alu_src_err_w, br_tkn_w;
     reg [15:0] alu_a_input_w, alu_b_input_w, set_out, pc_decision_w;
 
     wire alu_z, alu_ltz, alu_Cout, sle_lt_zero, shifted_data_err, alu_src_err;
@@ -74,13 +75,18 @@ module execute(alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, Cin,
     assign alu_src_err = alu_src_err_w;
 
     always @(*) begin
+        br_tkn_w = 1'b1;
         case(pc_dec)
-            2'b00 : pc_decision_w = pc_plus;
+            2'b00 : begin
+                br_tkn_w = 1'b0;
+                pc_decision_w = pc_plus;
+            end
             2'b01 : pc_decision_w = branch_address;
             2'b10 : pc_decision_w = jump_address;
             2'b11 : pc_decision_w = alu_out;
         endcase
     end
+    assign br_tkn = br_tkn_w;
     assign pc_decision = pc_decision_w;
 
 endmodule

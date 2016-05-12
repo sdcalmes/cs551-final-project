@@ -1,0 +1,88 @@
+Model Technology ModelSim SE vlog 5.8b Compiler 2004.01 Jan 26 2004
+-- Compiling module add_16
+-- Compiling module alu_control
+-- Compiling module alu
+-- Compiling module branch_control
+-- Compiling module cla4
+-- Compiling module clkrst
+-- Compiling module control
+-- Compiling module decode
+-- Compiling module dff
+-- Compiling module execute
+-- Compiling module ex_mem
+-- Compiling module fetch
+-- Compiling module forwarding
+-- Compiling module id_ex
+-- Compiling module if_id
+-- Compiling module memory2c
+-- Compiling module memory
+-- Compiling module mem_wb
+-- Compiling module pc_inc
+-- Compiling module proc_hier_pbench
+-- Compiling module proc_hier
+-- Compiling module proc
+-- Compiling module reg_16
+-- Compiling module reg_1
+-- Compiling module rf_bypass
+-- Compiling module rf
+-- Compiling module shift1
+-- Compiling module shift2
+-- Compiling module shift4
+-- Compiling module shift8
+-- Compiling module shifter
+-- Compiling module stallmem
+-- Compiling module write_back
+
+Top level modules:
+	proc_hier_pbench
+	stallmem
+Reading /afs/cs.wisc.edu/s/mentor-2004/common/modeltech-5.8b/tcl/vsim/pref.tcl 
+
+# 5.8b
+
+# vsim -lib __work -c proc_hier_pbench 
+# //  ModelSim SE 5.8b Jan 01 2004 Linux 2.6.32-573.7.1.el6.x86_64
+# //
+# //  Copyright Model Technology, a Mentor Graphics Corporation company, 2004
+# //                         All Rights Reserved.
+# //                   UNPUBLISHED, LICENSED SOFTWARE.
+# //         CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+# //        PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS.
+# //
+# Loading __work.proc_hier_pbench
+# Loading __work.proc_hier
+# Loading __work.clkrst
+# Loading __work.proc
+# Loading __work.fetch
+# Loading __work.reg_16
+# Loading __work.dff
+# Loading __work.memory2c
+# Loading __work.pc_inc
+# Loading __work.cla4
+# Loading __work.if_id
+# Loading __work.reg_1
+# Loading __work.decode
+# Loading __work.rf_bypass
+# Loading __work.rf
+# Loading __work.control
+# Loading __work.alu_control
+# Loading __work.id_ex
+# Loading __work.forwarding
+# Loading __work.execute
+# Loading __work.alu
+# Loading __work.shifter
+# Loading __work.shift1
+# Loading __work.shift2
+# Loading __work.shift4
+# Loading __work.shift8
+# Loading __work.add_16
+# Loading __work.branch_control
+# Loading __work.ex_mem
+# Loading __work.memory
+# Loading __work.mem_wb
+# Loading __work.write_back
+VSIM 1> run -all
+# Hello world...simulation starting
+# See verilogsim.log and verilogsim.ptrace for output
+# ** Note: $finish    : proc_hier_pbench.v(116)
+#    Time: 1505 ns  Iteration: 0  Instance: /proc_hier_pbench

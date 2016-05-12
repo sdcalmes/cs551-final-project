@@ -1,17 +1,19 @@
 module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, sign_alu, set_select, alu_res_sel, 
-            memToReg, pc_dec, branch, branch_eqz, branch_gtz, branch_ltz, memEn, memWrite, err, halt, createdump, rst);
+            memToReg, pc_dec, branch, branch_eqz, branch_gtz, branch_ltz, memEn, memWrite, rs_valid, rt_valid, 
+            err, halt, createdump, rst);
 
     input rst;
     input [4:0] instr;
 
-    output regWrite, sign_alu, alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, memEn, memWrite;
+    output regWrite, sign_alu, alu_res_sel, branch, branch_eqz, branch_gtz, branch_ltz, memEn, memWrite,
+        rs_valid, rt_valid;
     output [1:0] regDst, sign_extd, ALUSrc_a, ALUSrc_b, set_select, memToReg, pc_dec;
     output [3:0] ALUOp;
     
     output reg halt, err, createdump;
     
     reg regWrite_w, sign_alu_w, alu_res_sel_w, branch_w, branch_eqz_w, branch_gtz_w,
-        branch_ltz_w, memEn_w, memWrite_w;
+        branch_ltz_w, memEn_w, memWrite_w, rs_valid_w, rt_valid_w;
     reg [1:0] regDst_w, sign_extd_w, ALUSrc_a_w, ALUSrc_b_w, set_select_w, memToReg_w, pc_dec_w;
     reg [3:0] ALUOp_w;
 
@@ -66,6 +68,8 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
     assign branch_ltz = branch_ltz_w;     //1
     assign memEn = memEn_w;             //1
     assign memWrite = memWrite_w;           //1
+    assign rs_valid = rs_valid_w;
+    assign rt_valid = rt_valid_w;
 
     always@(*)begin
 
@@ -87,6 +91,8 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
         branch_ltz_w = 1'b0;
         memEn_w = 1'b0;
         memWrite_w = 1'b0;
+        rs_valid_w = 1'b1;
+        rt_valid_w = 1'b0;
         halt = 1'b0;
         createdump = 1'b0;
         err = 1'b0;
@@ -110,6 +116,8 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 branch_ltz_w = 1'b0;
                 memEn_w = 1'b0;
                 memWrite_w = 1'b0;
+                rs_valid_w = 1'b1;
+                rt_valid_w = 1'b0;
                 halt = 1'b0;
                 createdump = 1'b0;
                 err = 1'b0;
@@ -153,6 +161,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 ALUOp_w = 4'b1100;
                 memEn_w = 1'b1;
                 memWrite_w = 1'b1;
+                rt_valid_w = 1'b1;
             end
 
             LD: begin
@@ -173,6 +182,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 ALUOp_w = 4'b1100;
                 memEn_w = 1'b1;
                 memWrite_w = 1'b1;
+                rt_valid_w = 1'b1;
             end
 
             BTR: begin
@@ -188,6 +198,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 regDst_w = 2'b01;
                 regWrite_w = 1'b1;
                 ALUOp_w = {1'b0, instr[0], 2'b00};
+                rt_valid_w = 1'b1;
             end
 
             SEQ: begin
@@ -197,6 +208,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 ALUOp_w = 4'b1101;
                 set_select_w = instr[1:0];
                 alu_res_sel_w = 1'b1;
+                rt_valid_w = 1'b1;
             end
 
             SLT: begin
@@ -208,6 +220,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 ALUOp_w = 4'b1101;
                 set_select_w = instr[1:0];
                 alu_res_sel_w = 1'b1;
+                rt_valid_w = 1'b1;
             end
 
             SLE: begin
@@ -219,6 +232,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 ALUOp_w = 4'b1101;
                 set_select_w = instr[1:0];
                 alu_res_sel_w = 1'b1;
+                rt_valid_w = 1'b1;
             end
 
             SCO: begin
@@ -228,6 +242,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 ALUOp_w = 4'b1100;
                 set_select_w = instr[1:0];
                 alu_res_sel_w = 1'b1;
+                rt_valid_w = 1'b1;
             end
 
             BEQZ: begin
@@ -278,6 +293,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 ALUSrc_b_w = 2'b01;
                 sign_alu_w = 1'b1;
                 memToReg_w = 2'b11;
+                rs_valid_w = 1'b0;
             end
 
             SLBI: begin
@@ -293,6 +309,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 sign_alu_w = 1'b1;
                 ALUOp_w = 4'b1100;
                 pc_dec_w = 2'b10;
+                rs_valid_w = 1'b0;
             end
 
             JR: begin
@@ -309,6 +326,7 @@ module control(instr, regDst, regWrite, sign_extd, ALUSrc_a, ALUSrc_b, ALUOp, si
                 ALUOp_w = 4'b1100;
                 memToReg_w = 2'b10;
                 pc_dec_w = 2'b10;
+                rs_valid_w = 1'b0;
             end
 
             JALR: begin
